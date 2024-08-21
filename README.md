@@ -4,3 +4,5 @@ Enhanced Power Platform ALM Accelerator (from CoE Starter Kit) to improve automa
 
 Article / Documentations / YouTube demo in progress !
 Release will be in few days.
+
+Solution will be there by the end of August
