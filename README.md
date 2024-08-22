@@ -32,7 +32,7 @@
     <a href="https://github.com/AurelienClere-365/AutomationALM/wiki"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://www.youtube.com/channel/UCVcla2nTDw1HLOx-Vio0Z2w">View YouTube Demo</a>
+    <a href="https://www.youtube.com/watch?v=YO7h5M0k7Yk">View YouTube Demo</a>
     ·
     <a href="https://github.com/AurelienClere-365/AutomationALM/issues/new?assignees=AurelienClere-365&labels=bug&projects=&template=bug_report.md&title=%5BBUG%5D+Title+of+the+bug">Report Bug</a>
     ·
