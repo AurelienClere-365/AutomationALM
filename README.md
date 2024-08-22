@@ -12,7 +12,8 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 [![MIT License][license-shield]][license-url]
 
-![image](https://github.com/user-attachments/assets/7bc02206-732d-47d0-bf52-e40d633aa1c0)
+![AutomationALM-PowerPlatform](https://github.com/user-attachments/assets/3c6c0559-af20-43d6-82fe-31636930278e)
+
 
 # 🚀 AutomationALM for Power Platform and Dynamics 365 CE/CRM
 
