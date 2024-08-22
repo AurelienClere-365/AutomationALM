@@ -145,6 +145,7 @@ Contributions are what make the open source community such an amazing place to l
 
 If you have a suggestion that would make this better, please open an issue with the tag "enhancement".
 I have shared now the source code, if you want to contribute with me, go the [Discussion space](https://github.com/AurelienClere-365/AutomationALM/discussions)
+
 Please fork it, create your branch and a Pull Request
 
 Don't forget to give the project a star! Thanks again!
