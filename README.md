@@ -95,7 +95,7 @@ _Below is the intrusctions to use the solution._
 
 1. Install it
 2. For the Connection references, use a service account and dedicated one that have access to the DevOps Organization and Project with the right permissions. Same thing for the Dataverse connector. You could setup a different one if you like for the Office 365 Outlook
-3. You have multiple environment variables to setup too. A dedicated Flow (after installation called : * 0 - Setup - GetDevOps Config * will help you to fill 3 of them : ApproverId + RepositoryId + ExportGit) so at firsr you could leave it empty for those 3 ones.
+3. You have multiple environment variables to setup too. A dedicated Flow (after installation called : *0 - Setup - GetDevOps Config* will help you to fill 3 of them : ApproverId + RepositoryId + ExportGit) so at first you could leave it empty for those 3 ones.
 4. Go to the Model Driven App installed, change your personal settings with the right timezone. You could also share it to other users in your Dataverse.
 5. Change the default view on the Environment variables section in the Model Driven App, my side I have added the field *Environment variable definition* + doing a filter on *dyna_* and then after pin as the default view and share to everyone. You could after review the list and check if all is good.
 6. Activate FLOWS and in the right order ! Yes, there are 18 Power Automate. I made it normally simple based on the name and the number convention (to read it like an order by DESC :smile:) so 99 first and last are 10
