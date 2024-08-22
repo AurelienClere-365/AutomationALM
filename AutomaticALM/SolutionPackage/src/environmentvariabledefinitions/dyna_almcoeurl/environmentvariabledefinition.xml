@@ -1,0 +1,13 @@
+<environmentvariabledefinition schemaname="dyna_almcoeurl">
+  <description default="Url of the ALM Accelerator Dataverse">
+    <label description="Url of the ALM Accelerator Dataverse" languagecode="1033" />
+  </description>
+  <displayname default="ALM_ALMAccelerator_Url">
+    <label description="ALM_ALMAccelerator_Url" languagecode="1033" />
+  </displayname>
+  <introducedversion>1.0.0.1</introducedversion>
+  <iscustomizable>1</iscustomizable>
+  <isrequired>0</isrequired>
+  <secretstore>0</secretstore>
+  <type>100000000</type>
+</environmentvariabledefinition>

@@ -1,0 +1,14 @@
+<environmentvariabledefinition schemaname="dyna_ALM_RetryMax">
+  <defaultvalue>5</defaultvalue>
+  <description default="Number of Retry when build in error">
+    <label description="Number of Retry when build in error" languagecode="1033" />
+  </description>
+  <displayname default="ALM_RetryMax">
+    <label description="ALM_RetryMax" languagecode="1033" />
+  </displayname>
+  <introducedversion>1.0.0.2</introducedversion>
+  <iscustomizable>1</iscustomizable>
+  <isrequired>0</isrequired>
+  <secretstore>0</secretstore>
+  <type>100000001</type>
+</environmentvariabledefinition>

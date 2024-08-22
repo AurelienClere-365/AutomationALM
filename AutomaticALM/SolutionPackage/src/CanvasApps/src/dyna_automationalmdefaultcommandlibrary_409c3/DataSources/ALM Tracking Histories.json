@@ -1,0 +1,100 @@
+[
+  {
+    "CdsFCBContext": "{\"FileType\":true,\"ImageExternalStorage\":true}",
+    "EntitySetName": "dyna_almtrackinghistories",
+    "IsHidden": false,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "LogicalName": "dyna_almtrackinghistory",
+    "Name": "ALM Tracking Histories",
+    "NativeCDSDataSourceInfoNameMapping": {
+      "_ownerid_value": "Owner",
+      "createdby": "Created By",
+      "createdon": "Created On",
+      "createdonbehalfby": "Created By (Delegate)",
+      "dyna_ALMDeployment": "ALM Deployment",
+      "dyna_almtrackinghistory_AsyncOperations": "System Jobs",
+      "dyna_almtrackinghistory_BulkDeleteFailures": "Bulk Delete Failures",
+      "dyna_almtrackinghistory_DuplicateBaseRecord": "Duplicate Records (dyna_almtrackinghistory_DuplicateBaseRecord)",
+      "dyna_almtrackinghistory_DuplicateMatchingRecord": "Duplicate Records (dyna_almtrackinghistory_DuplicateMatchingRecord)",
+      "dyna_almtrackinghistory_MailboxTrackingFolders": "Mailbox Auto Tracking Folders",
+      "dyna_almtrackinghistory_PrincipalObjectAttributeAccesses": "Field Sharing",
+      "dyna_almtrackinghistory_ProcessSession": "Process Sessions",
+      "dyna_almtrackinghistory_SyncErrors": "Sync Errors",
+      "dyna_almtrackinghistoryid": "ALM Tracking History",
+      "dyna_name": "Name",
+      "dyna_Solution": "Solution",
+      "importsequencenumber": "Import Sequence Number",
+      "modifiedby": "Modified By",
+      "modifiedon": "Modified On",
+      "modifiedonbehalfby": "Modified By (Delegate)",
+      "overriddencreatedon": "Record Created On",
+      "owningbusinessunit": "Owning Business Unit",
+      "owningteam": "Owning Team",
+      "owninguser": "Owning User",
+      "statecode": "Status",
+      "statuscode": "Status Reason",
+      "timezoneruleversionnumber": "Time Zone Rule Version Number",
+      "utcconversiontimezonecode": "UTC Conversion Time Zone Code",
+      "versionnumber": "Version Number"
+    },
+    "PreferredName": "ALM Tracking Histories",
+    "Type": "NativeCDSDataSourceInfo"
+  },
+  {
+    "DisplayName": "ALM Tracking Histories (Views)",
+    "Name": "_dyna_almtrackinghistory_views",
+    "RelatedEntityName": "ALM Tracking Histories",
+    "TrimmedViewName": true,
+    "Type": "ViewInfo",
+    "ViewInfoNameMapping": {
+      "0ec1af13-aa95-4c85-b01c-77b551fda998": "ALM Tracking History Lookup View",
+      "228f41da-bcfc-4e98-98e4-ae6a4c8e6070": "Inactive ALM Tracking Histories",
+      "4c7b67ed-0226-4317-99d4-84f8d0e13c5c": "ALM Tracking History Advanced Find View",
+      "682fec34-985d-47f9-909e-2ccc88c50f3d": "Active ALM Tracking Histories",
+      "89daabed-8ee9-45c9-bcbf-58063a83b655": "ALM Tracking History Associated View"
+    }
+  },
+  {
+    "DisplayName": "Status (ALM Tracking Histories)",
+    "Name": "dyna_almtrackinghistory_statecode",
+    "OptionSetInfoNameMapping": {
+      "0": "Active",
+      "1": "Inactive"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statecode",
+        "OptionSetReferenceEntityName": "ALM Tracking Histories"
+      }
+    },
+    "OptionSetTypeKey": "StateType",
+    "RelatedColumnInvariantName": "statecode",
+    "RelatedEntityName": "ALM Tracking Histories",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Status Reason (ALM Tracking Histories)",
+    "Name": "dyna_almtrackinghistory_statuscode",
+    "OptionSetInfoNameMapping": {
+      "1": "OK",
+      "2": "Inactive",
+      "538000001": "Error",
+      "538000002": "No change"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statuscode",
+        "OptionSetReferenceEntityName": "ALM Tracking Histories"
+      }
+    },
+    "OptionSetTypeKey": "StatusType",
+    "RelatedColumnInvariantName": "statuscode",
+    "RelatedEntityName": "ALM Tracking Histories",
+    "Type": "OptionSetInfo"
+  }
+]

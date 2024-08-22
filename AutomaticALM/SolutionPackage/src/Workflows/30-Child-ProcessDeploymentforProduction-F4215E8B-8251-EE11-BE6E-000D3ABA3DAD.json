@@ -1,0 +1,121 @@
+{
+  "properties": {
+    "connectionReferences": {},
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        }
+      },
+      "triggers": {
+        "manual": {
+          "type": "Request",
+          "kind": "Button",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "title": "SolutionName",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "DYN_XXXXX",
+                  "x-ms-content-hint": "TEXT"
+                },
+                "text_1": {
+                  "description": "Please enter your input",
+                  "title": "ALMDeploymentId",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                },
+                "text_2": {
+                  "description": "Please enter your input",
+                  "title": "ALMSolutionId",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                }
+              },
+              "required": [
+                "text",
+                "text_1",
+                "text_2"
+              ]
+            }
+          },
+          "metadata": {
+            "operationMetadataId": "7ce65134-23ba-4aed-accb-c038f4230f10"
+          }
+        }
+      },
+      "actions": {
+        "Launch_the_whole_deployment_for_this_solution_in_PROD": {
+          "type": "Workflow",
+          "inputs": {
+            "host": {
+              "workflowReferenceName": "81e835a8-8151-ee11-be6e-000d3a65936e"
+            },
+            "body": {
+              "text": "@triggerBody()['text']"
+            }
+          },
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "f4ddd224-ea51-40bc-aac5-97f3698a0ef4"
+          }
+        },
+        "Check_progress": {
+          "type": "Workflow",
+          "inputs": {
+            "host": {
+              "workflowReferenceName": "5d14b3f8-d454-ef11-a317-00224806bd16"
+            },
+            "body": {
+              "text": "0",
+              "text_1": "@triggerBody()?['text']",
+              "text_2": "PROD",
+              "text_3": "@triggerBody()?['text_1']",
+              "text_4": "@triggerBody()?['text_2']"
+            },
+            "retryPolicy": {
+              "type": "none"
+            }
+          },
+          "runAfter": {
+            "Launch_the_whole_deployment_for_this_solution_in_PROD": [
+              "Succeeded"
+            ]
+          }
+        },
+        "Respond_to_a_Power_App_or_flow": {
+          "type": "Response",
+          "kind": "PowerApp",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": {}
+            },
+            "statusCode": 200
+          },
+          "runAfter": {
+            "Check_progress": [
+              "Succeeded"
+            ]
+          }
+        }
+      },
+      "description": "ChildFlow - Process the Deployment for Production"
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}

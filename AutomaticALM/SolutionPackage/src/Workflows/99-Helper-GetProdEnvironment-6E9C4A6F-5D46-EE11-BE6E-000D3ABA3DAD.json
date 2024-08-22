@@ -1,0 +1,174 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_commondataserviceforapps": {
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        },
+        "connection": {
+          "connectionReferenceLogicalName": "dyna_sharedcommondataserviceforapps_c708f"
+        },
+        "runtimeSource": "embedded"
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        }
+      },
+      "triggers": {
+        "manual": {
+          "type": "Request",
+          "kind": "Button",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "description": "Please enter your input",
+                  "title": "ALMDeploymentId",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                }
+              },
+              "required": [
+                "text"
+              ]
+            }
+          },
+          "metadata": {
+            "operationMetadataId": "c67f1949-1811-4eea-9502-910104a629df"
+          }
+        }
+      },
+      "actions": {
+        "Initialize_URL": {
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "URL",
+                "type": "string"
+              }
+            ]
+          },
+          "runAfter": {}
+        },
+        "Respond_to_a_Power_App_or_flow": {
+          "type": "Response",
+          "kind": "PowerApp",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "urlprod": {
+                  "title": "URLProd",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                }
+              },
+              "additionalProperties": {}
+            },
+            "statusCode": 200,
+            "body": {
+              "urlprod": "@variables('URL')"
+            }
+          },
+          "runAfter": {
+            "For_each": [
+              "SUCCEEDED"
+            ]
+          }
+        },
+        "Get_Deployment": {
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "entityName": "dyna_almdeployments",
+              "recordId": "@triggerBody()?['text']"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+              "operationId": "GetItem",
+              "connectionName": "shared_commondataserviceforapps"
+            }
+          },
+          "runAfter": {
+            "Initialize_URL": [
+              "SUCCEEDED"
+            ]
+          }
+        },
+        "Get_Deployment_Step_for_Prod": {
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "entityName": "cat_deploymentsteps",
+              "$filter": "cat_name eq 'Prod' and _cat_deploymentprofileid_value eq @{body('Get_Deployment')?['_dyna_almdeploymentprofile_value']}"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+              "operationId": "ListRecords",
+              "connectionName": "shared_commondataserviceforapps"
+            }
+          },
+          "runAfter": {
+            "Get_Deployment": [
+              "SUCCEEDED"
+            ]
+          }
+        },
+        "For_each": {
+          "type": "foreach",
+          "foreach": "@outputs('Get_Deployment_Step_for_Prod')?['body/value']",
+          "actions": {
+            "Get_Deployment_Environment": {
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "entityName": "cat_deploymentenvironments",
+                  "recordId": "@item()?['_cat_deploymentenvironmentid_value']"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                  "operationId": "GetItem",
+                  "connectionName": "shared_commondataserviceforapps"
+                }
+              }
+            },
+            "Set_URL": {
+              "type": "SetVariable",
+              "inputs": {
+                "name": "URL",
+                "value": "@body('Get_Deployment_Environment')?['cat_url']"
+              },
+              "runAfter": {
+                "Get_Deployment_Environment": [
+                  "SUCCEEDED"
+                ]
+              }
+            }
+          },
+          "runAfter": {
+            "Get_Deployment_Step_for_Prod": [
+              "SUCCEEDED"
+            ]
+          }
+        }
+      },
+      "description": "Retrieve the URL of PROD Environment dynamically"
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}

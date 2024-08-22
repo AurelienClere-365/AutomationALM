@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{682fec34-985d-47f9-909e-2ccc88c50f3d}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="dyna_name" select="1" icon="1" preview="1">
+        <row name="result" id="dyna_almtrackinghistoryid">
+          <cell name="dyna_name" width="143" />
+          <cell name="a_0465642bfca847d9ade397f81be5751f.dyna_name" width="191" />
+          <cell name="a_527ae0f6b68b4d6aaa7ecc6c1f4a9368.dyna_commitscope" width="184" />
+          <cell name="a_527ae0f6b68b4d6aaa7ecc6c1f4a9368.dyna_solution" width="148" />
+          <cell name="a_527ae0f6b68b4d6aaa7ecc6c1f4a9368.dyna_step" width="126" />
+          <cell name="a_527ae0f6b68b4d6aaa7ecc6c1f4a9368.dyna_powerpages" width="173" />
+          <cell name="statuscode" width="119" />
+          <cell name="dyna_startdatetime" width="126" />
+          <cell name="dyna_enddatetime" width="122" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="dyna_almtrackinghistory">
+          <attribute name="dyna_almtrackinghistoryid" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+          </filter>
+          <link-entity alias="a_527ae0f6b68b4d6aaa7ecc6c1f4a9368" name="dyna_almsolution" to="dyna_solution" from="dyna_almsolutionid" link-type="outer" visible="false">
+            <attribute name="dyna_commitscope" />
+            <attribute name="dyna_solution" />
+            <attribute name="dyna_step" />
+            <attribute name="dyna_powerpages" />
+          </link-entity>
+          <link-entity alias="a_0465642bfca847d9ade397f81be5751f" name="dyna_almdeployment" to="dyna_almdeployment" from="dyna_almdeploymentid" link-type="outer" visible="false">
+            <attribute name="dyna_name" />
+          </link-entity>
+          <attribute name="statuscode" />
+          <attribute name="dyna_name" />
+          <attribute name="dyna_startdatetime" />
+          <attribute name="dyna_enddatetime" />
+          <order attribute="dyna_startdatetime" descending="true" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Active ALM Tracking Histories" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

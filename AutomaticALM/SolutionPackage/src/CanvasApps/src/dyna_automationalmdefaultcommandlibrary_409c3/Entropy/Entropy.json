@@ -1,0 +1,85 @@
+{
+  "ComponentIndexes": {
+    "Clone it !_2": 2,
+    "Launch it !_1": 1,
+    "ReLaunch it !_3": 3
+  },
+  "ControlUniqueGuids": {},
+  "ControlUniqueIds": {
+    "App": 1,
+    "Clone it !_2": 5,
+    "HelperScreen": 6,
+    "Host": 3,
+    "Launch it !_1": 4,
+    "ReLaunch it !_3": 8
+  },
+  "FunctionParamsInvariantScripts": {},
+  "FunctionParamsInvariantScriptsOnInstances": {},
+  "HeaderLastSavedDateTimeUTC": "08/19/2024 15:57:29",
+  "IsLegacyComponentAllowGlobalScopeCase": false,
+  "LocalConnectionIDReferences": {},
+  "LocalDatabaseReferencesAsEmpty": false,
+  "LocalResourceFileNames": {},
+  "LocalResourceRootPaths": {},
+  "OrderComponentMetadata": {
+    "9d401206a2c44e7da3de7f44e2153391": 2,
+    "dcce71e496844d228c2582da76d2fe30": 0,
+    "f87c29ec79d4491bb40b8860b835adf2": 1
+  },
+  "OrderComponentTemplate": {
+    "9d401206a2c44e7da3de7f44e2153391": 2,
+    "dcce71e496844d228c2582da76d2fe30": 0,
+    "f87c29ec79d4491bb40b8860b835adf2": 1
+  },
+  "OrderDataSource": {
+    "ALM Deployments": 10,
+    "ALM Deployments\\default.cds_dyna_almdeployment_views": 8,
+    "ALM Deployments\\dyna_almdeployment_dyna_duplicate": 0,
+    "ALM Deployments\\dyna_almdeployment_dyna_launch": 1,
+    "ALM Deployments\\dyna_almdeployment_statecode": 4,
+    "ALM Deployments\\dyna_almdeployment_statuscode": 5,
+    "ALM Deployments\\dyna_deliverytype": 2,
+    "ALM Deployments\\dyna_deploymenttype": 3,
+    "ALM Tracking Histories": 11,
+    "ALM Tracking Histories\\default.cds_dyna_almtrackinghistory_views": 9,
+    "ALM Tracking Histories\\dyna_almtrackinghistory_statecode": 6,
+    "ALM Tracking Histories\\dyna_almtrackinghistory_statuscode": 7
+  },
+  "OrderGroupControls": {},
+  "OrderPcfTemplate": {},
+  "OrderTemplate": {},
+  "OrderXMLTemplate": {},
+  "OverridablePropertiesEntry": {
+    "App": {},
+    "Clone it !_2": {},
+    "HelperScreen": {},
+    "Host": {},
+    "Launch it !_1": {},
+    "ReLaunch it !_3": {}
+  },
+  "PCFDynamicSchemaForIRRetrievalEntry": {},
+  "PCFTemplateEntry": {},
+  "PublishOrderIndices": {
+    "App": 0,
+    "Clone it !_2": 0,
+    "HelperScreen": 0,
+    "Host": 0,
+    "Launch it !_1": 0,
+    "ReLaunch it !_3": 0
+  },
+  "ResourcesJsonIndices": {
+    "Image-SampleImage": 0
+  },
+  "RuleScreenIdWithoutScreen": {},
+  "TemplateVersions": {},
+  "VolatileProperties": {
+    "AnalysisLoadTime": 0.14170840000000001,
+    "ControlCount": {
+      "dcce71e496844d228c2582da76d2fe30": 1,
+      "f87c29ec79d4491bb40b8860b835adf2": 1,
+      "screen": 1
+    },
+    "DeserializationLoadTime": 1.1740356000000001
+  },
+  "WasLocalDatabaseReferencesEmpty": false
+}

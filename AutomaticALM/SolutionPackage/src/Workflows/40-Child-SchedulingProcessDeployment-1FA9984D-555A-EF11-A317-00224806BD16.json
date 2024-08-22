@@ -1,0 +1,180 @@
+{
+  "properties": {
+    "connectionReferences": {},
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        }
+      },
+      "triggers": {
+        "manual": {
+          "type": "Request",
+          "kind": "Button",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "title": "Type",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "QA or PROD",
+                  "x-ms-content-hint": "TEXT"
+                },
+                "text_1": {
+                  "description": "Please enter your input",
+                  "title": "SolutionName",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                },
+                "text_2": {
+                  "description": "Please enter your input",
+                  "title": "PowerPagesSiteName",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                },
+                "text_3": {
+                  "description": "Please enter your input",
+                  "title": "CommitScope",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                },
+                "text_4": {
+                  "description": "Please enter your input",
+                  "title": "ALMDeploymentId",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                },
+                "text_5": {
+                  "description": "Please enter your input",
+                  "title": "ALMSolutionId",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                }
+              },
+              "required": [
+                "text",
+                "text_1",
+                "text_2",
+                "text_3",
+                "text_4",
+                "text_5"
+              ]
+            }
+          },
+          "metadata": {
+            "operationMetadataId": "72f08f73-daaa-4438-89e9-be38518a3ee9"
+          }
+        }
+      },
+      "actions": {
+        "Condition_for_TEST": {
+          "type": "If",
+          "expression": {
+            "and": [
+              {
+                "equals": [
+                  "@triggerBody()?['text']",
+                  "QA"
+                ]
+              }
+            ]
+          },
+          "actions": {
+            "Launch_deployment": {
+              "type": "Workflow",
+              "inputs": {
+                "host": {
+                  "workflowReferenceName": "dcf348a4-e545-ee11-be6e-000d3a65936e"
+                },
+                "body": {
+                  "text": "@triggerBody()?['text_1']",
+                  "text_1": "@triggerBody()?['text_2']",
+                  "text_2": "@string(triggerBody()?['text_3'])",
+                  "text_3": "@triggerBody()?['text_4']",
+                  "text_4": "@triggerBody()?['text_5']"
+                }
+              }
+            }
+          },
+          "else": {
+            "actions": {}
+          },
+          "runAfter": {
+            "Respond_to_a_Power_App_or_flow": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "1c0a2206-b657-4471-a9c3-4173c8c57491"
+          }
+        },
+        "Respond_to_a_Power_App_or_flow": {
+          "type": "Response",
+          "kind": "PowerApp",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": {}
+            },
+            "statusCode": 200
+          },
+          "runAfter": {}
+        },
+        "Condition_for_PROD": {
+          "type": "If",
+          "expression": {
+            "and": [
+              {
+                "equals": [
+                  "@triggerBody()?['text']",
+                  "PROD"
+                ]
+              }
+            ]
+          },
+          "actions": {
+            "Launch_deployment_2": {
+              "type": "Workflow",
+              "inputs": {
+                "host": {
+                  "workflowReferenceName": "f4215e8b-8251-ee11-be6e-000d3aba3dad"
+                },
+                "body": {
+                  "text": "@triggerBody()?['text_1']",
+                  "text_1": "@triggerBody()?['text_4']",
+                  "text_2": "@triggerBody()?['text_5']"
+                }
+              }
+            }
+          },
+          "else": {
+            "actions": {}
+          },
+          "runAfter": {
+            "Condition_for_TEST": [
+              "SUCCEEDED"
+            ]
+          }
+        }
+      },
+      "description": "Process the deployment ASYNC when it has been trigger via the Main Scheduler Flow"
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}

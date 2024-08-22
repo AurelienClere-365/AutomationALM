@@ -1,0 +1,282 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <systemform>
+    <formid>{7719301e-d080-4182-902b-5ae951ce49d6}</formid>
+    <IntroducedVersion>1.0</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form headerdensity="HighWithControls">
+      <tabs>
+        <tab verticallayout="true" id="{72af62d0-7a2c-4a98-964e-8eac00a9b2d1}" IsUserDefined="1">
+          <labels>
+            <label description="General" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section showlabel="false" showbar="false" IsUserDefined="0" id="{0ed765b5-78c4-46a2-a094-e984cf672c58}" height="auto">
+                  <labels>
+                    <label description="General" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{7112c5e0-5b74-4dca-a056-4431fdd5da40}">
+                        <labels>
+                          <label description="Name" languagecode="1033" />
+                        </labels>
+                        <control id="dyna_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="dyna_name" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{884bb5ce-9df9-4b44-8aa8-7005f8135054}" locklevel="0" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Delivery Type" languagecode="1033" />
+                        </labels>
+                        <control id="dyna_deliverytype" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="dyna_deliverytype" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{75ce2f22-8c5a-4c5b-a2e0-c94c7aa7d1f1}" locklevel="0" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="DEV Environment" languagecode="1033" />
+                        </labels>
+                        <control id="dyna_devenvironment" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="dyna_devenvironment" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{3ec1b093-dbc6-448f-a20e-3c8799ffaf53}" locklevel="0" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="ALM Deployment Profile" languagecode="1033" />
+                        </labels>
+                        <control id="dyna_almdeploymentprofile" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="dyna_almdeploymentprofile" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{fb7fb71b-0cde-4a2c-ac63-493db3a6300d}" locklevel="0" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Type" languagecode="1033" />
+                        </labels>
+                        <control id="dyna_type" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="dyna_type" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{c9285001-2443-44ff-88ac-8ef924926448}" locklevel="1" colspan="1" rowspan="1" visible="false">
+                        <labels>
+                          <label description="Begin DateTime" languagecode="1033" />
+                        </labels>
+                        <control id="dyna_begindatetime" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="dyna_begindatetime" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{90ba2012-4802-44fc-9cdc-89b569561457}" locklevel="1" colspan="1" rowspan="1" visible="false">
+                        <labels>
+                          <label description="Format Scheduler" languagecode="1033" />
+                        </labels>
+                        <control id="dyna_formatscheduler" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="dyna_formatscheduler" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{f577e13d-b7ef-439d-ab95-cfa07447b4a9}" locklevel="1" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Status" languagecode="1033" />
+                        </labels>
+                        <control id="statecode" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="statecode" disabled="true" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{21686395-86d0-45c3-bb76-a520c8321ae5}" locklevel="1" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Status Reason" languagecode="1033" />
+                        </labels>
+                        <control id="statuscode" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="statuscode" disabled="true" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{fbce5f4d-2fb3-4534-a7cd-f76d4decd11c}" locklevel="1" colspan="1" rowspan="1" visible="false">
+                        <labels>
+                          <label description="Created On" languagecode="1033" />
+                        </labels>
+                        <control id="createdon" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="createdon" disabled="true" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{89ba952b-e864-4ec8-a5c2-fd417f7eac0c}">
+                        <labels>
+                          <label description="Owner" languagecode="1033" />
+                        </labels>
+                        <control id="ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell locklevel="0" id="{63bca01a-4099-4599-a514-f628dcc96328}" rowspan="4" colspan="1">
+                        <labels>
+                          <label description="Solutions to deliver" languagecode="1033" />
+                        </labels>
+                        <control indicationOfSubgrid="true" id="Subgrid_solutions" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
+                          <parameters>
+                            <RecordsPerPage>10</RecordsPerPage>
+                            <AutoExpand>Auto</AutoExpand>
+                            <EnableQuickFind>false</EnableQuickFind>
+                            <EnableViewPicker>false</EnableViewPicker>
+                            <EnableChartPicker>false</EnableChartPicker>
+                            <ChartGridMode>Grid</ChartGridMode>
+                            <TargetEntityType>dyna_almsolution</TargetEntityType>
+                            <ViewId>{A513597F-18EE-4619-8917-32B9AAB6386D}</ViewId>
+                            <ViewIds>{A513597F-18EE-4619-8917-32B9AAB6386D}</ViewIds>
+                            <RelationshipName>dyna_ALMDeployment_ALMSolution</RelationshipName>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                    <row />
+                    <row>
+                      <cell locklevel="0" id="{7d40918c-7b32-4081-ac72-d3b2ba78f330}" rowspan="4" colspan="1" auto="true" showlabel="true">
+                        <labels>
+                          <label description="Tracking history deployment" languagecode="1033" />
+                        </labels>
+                        <control indicationOfSubgrid="true" id="Subgrid_tracking" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
+                          <parameters>
+                            <RecordsPerPage>25</RecordsPerPage>
+                            <AutoExpand>Auto</AutoExpand>
+                            <EnableQuickFind>false</EnableQuickFind>
+                            <EnableViewPicker>false</EnableViewPicker>
+                            <EnableChartPicker>false</EnableChartPicker>
+                            <ChartGridMode>Grid</ChartGridMode>
+                            <TargetEntityType>dyna_almtrackinghistory</TargetEntityType>
+                            <ViewId>{682FEC34-985D-47F9-909E-2CCC88C50F3D}</ViewId>
+                            <ViewIds>{682FEC34-985D-47F9-909E-2CCC88C50F3D}</ViewIds>
+                            <RelationshipName>dyna_ALMDeployment_ALMTrackingHistory</RelationshipName>
+                            <HeaderColorCode>#F3F3F3</HeaderColorCode>
+                            <IsUserView>false</IsUserView>
+                            <EnableJumpBar>false</EnableJumpBar>
+                            <VisualizationId />
+                            <IsUserChart>false</IsUserChart>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                    <row />
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <header id="{f51b3c74-6259-4e40-84b3-71e523b47911}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+        <rows>
+          <row>
+            <cell id="{07b8a4f7-d91e-49c0-b809-11ac10892f45}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{5559c77a-7340-4bd6-b3f2-8328bbb7db9a}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{5b01eb1b-6dc8-4bf8-8d6f-c916c6861b90}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </header>
+      <footer id="{36a4c293-4290-4282-90cc-7cce17865cc2}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+        <rows>
+          <row>
+            <cell id="{c6fe3c6d-ab8c-47ac-994c-e89586a76747}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{8bbbfb8d-5943-4523-94ee-3d4e2d0c3837}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{1bdda437-7d44-449a-8850-dbe2fc6d3643}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </footer>
+      <Navigation>
+        <NavBar />
+        <NavBarAreas>
+          <NavBarArea Id="Info">
+            <Titles>
+              <Title LCID="1033" Text="Common" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Sales">
+            <Titles>
+              <Title LCID="1033" Text="Sales" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Service">
+            <Titles>
+              <Title LCID="1033" Text="Service" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Marketing">
+            <Titles>
+              <Title LCID="1033" Text="Marketing" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="ProcessCenter">
+            <Titles>
+              <Title LCID="1033" Text="Process Sessions" />
+            </Titles>
+          </NavBarArea>
+        </NavBarAreas>
+      </Navigation>
+      <formLibraries>
+        <Library name="dyna_utils" libraryUniqueId="{79fd692e-6e4b-4bc0-b39f-328981e9e4e7}" />
+      </formLibraries>
+      <events>
+        <event name="onsave" application="false" active="false">
+          <Handlers>
+            <Handler functionName="CheckDateSave" libraryName="dyna_utils" handlerUniqueId="{42cb2302-5158-4141-99a6-e24beffe11fa}" enabled="true" parameters="" passExecutionContext="true" />
+            <Handler functionName="checkFormatSchedulerSave" libraryName="dyna_utils" handlerUniqueId="{68472776-fcc5-4a24-a89d-a8ce52857fce}" enabled="true" parameters="" passExecutionContext="true" />
+          </Handlers>
+        </event>
+        <event name="onchange" application="false" active="false" attribute="dyna_begindatetime">
+          <Handlers>
+            <Handler functionName="CheckDateChange" libraryName="dyna_utils" handlerUniqueId="{db0f95c0-73b0-4e89-83a6-0961d28dff51}" enabled="true" parameters="" passExecutionContext="false" />
+          </Handlers>
+        </event>
+        <event name="onchange" application="false" active="false" attribute="dyna_formatscheduler">
+          <Handlers>
+            <Handler functionName="checkFormatSchedulerChange" libraryName="dyna_utils" handlerUniqueId="{fa613158-5c6f-4374-be7d-125324c5fbf1}" enabled="true" parameters="" passExecutionContext="false" />
+          </Handlers>
+        </event>
+        <event name="onload" application="false" active="false">
+          <Handlers>
+            <Handler functionName="putDefaultDateOnLoad" libraryName="dyna_utils" handlerUniqueId="{555a433c-e869-4353-9525-2593a3574f8b}" enabled="true" parameters="" passExecutionContext="false" />
+          </Handlers>
+        </event>
+      </events>
+      <controlDescriptions />
+      <DisplayConditions Order="0" FallbackForm="true">
+        <Everyone />
+      </DisplayConditions>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Information" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="A form for this entity." languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>

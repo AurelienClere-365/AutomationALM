@@ -1,0 +1,164 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_commondataserviceforapps": {
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        },
+        "connection": {
+          "connectionReferenceLogicalName": "dyna_sharedcommondataserviceforapps_c708f"
+        },
+        "runtimeSource": "embedded"
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        }
+      },
+      "triggers": {
+        "When_deployment_need_to_be_duplicated": {
+          "type": "OpenApiConnectionWebhook",
+          "inputs": {
+            "parameters": {
+              "subscriptionRequest/message": 3,
+              "subscriptionRequest/entityname": "dyna_almdeployment",
+              "subscriptionRequest/scope": 4,
+              "subscriptionRequest/filterexpression": "dyna_duplicate eq true"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+              "operationId": "SubscribeWebhookTrigger",
+              "connectionName": "shared_commondataserviceforapps"
+            }
+          },
+          "metadata": {
+            "operationMetadataId": "903aeecd-a2b4-417c-9bab-df7d24a23ca1"
+          }
+        }
+      },
+      "actions": {
+        "Create_new_deployment": {
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "entityName": "dyna_almdeployments",
+              "item/dyna_ALMDeploymentProfile@odata.bind": "cat_deploymentprofiles(@{triggerBody()?['_dyna_almdeploymentprofile_value']})",
+              "item/dyna_deliverytype": "@triggerBody()?['dyna_deliverytype']",
+              "item/dyna_DEVEnvironment@odata.bind": "dyna_almdevenvironments(@{triggerBody()?['_dyna_devenvironment_value']})",
+              "item/dyna_name": "Clone - @{triggerBody()?['dyna_name']}",
+              "item/dyna_type": "@triggerBody()?['dyna_type']",
+              "item/dyna_begindatetime": "@addMinutes(utcNow(),1)",
+              "item/dyna_formatscheduler": "@triggerBody()?['dyna_formatscheduler']",
+              "item/statuscode": 1
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+              "operationId": "CreateRecord",
+              "connectionName": "shared_commondataserviceforapps"
+            }
+          },
+          "runAfter": {}
+        },
+        "List_solutions_origin": {
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "entityName": "dyna_almsolutions",
+              "$filter": "_dyna_almdeployment_value eq @{triggerBody()?['dyna_almdeploymentid']}"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+              "operationId": "ListRecords",
+              "connectionName": "shared_commondataserviceforapps"
+            }
+          },
+          "runAfter": {
+            "Create_new_deployment": [
+              "Succeeded"
+            ]
+          }
+        },
+        "For_each": {
+          "type": "Foreach",
+          "foreach": "@outputs('List_solutions_origin')?['body/value']",
+          "actions": {
+            "Condition": {
+              "type": "If",
+              "expression": {
+                "and": [
+                  {
+                    "not": {
+                      "equals": [
+                        "@item()?['_dyna_powerpages_value']",
+                        "@null"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "actions": {
+                "Add_Solution_to_the_new_deployment": {
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "parameters": {
+                      "entityName": "dyna_almsolutions",
+                      "item/dyna_ALMDeployment@odata.bind": "dyna_almdeployments(@{body('Create_new_deployment')?['dyna_almdeploymentid']})",
+                      "item/dyna_commitscope": "@items('For_each')?['dyna_commitscope']",
+                      "item/dyna_name": "@item()?['dyna_name']",
+                      "item/dyna_Solution@odata.bind": "dyna_solutions(@{item()?['_dyna_solution_value']})",
+                      "item/dyna_step": "@item()?['dyna_step']",
+                      "item/dyna_PowerPages@odata.bind": "dyna_powerpageses(@{item()?['_dyna_powerpages_value']})"
+                    },
+                    "host": {
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                      "operationId": "CreateRecord",
+                      "connectionName": "shared_commondataserviceforapps"
+                    }
+                  }
+                }
+              },
+              "else": {
+                "actions": {
+                  "Add_Solution_to_the_new_deployment_2": {
+                    "type": "OpenApiConnection",
+                    "inputs": {
+                      "parameters": {
+                        "entityName": "dyna_almsolutions",
+                        "item/dyna_ALMDeployment@odata.bind": "dyna_almdeployments(@{body('Create_new_deployment')?['dyna_almdeploymentid']})",
+                        "item/dyna_commitscope": "@items('For_each')?['dyna_commitscope']",
+                        "item/dyna_name": "@item()?['dyna_name']",
+                        "item/dyna_Solution@odata.bind": "dyna_solutions(@{item()?['_dyna_solution_value']})",
+                        "item/dyna_step": "@item()?['dyna_step']"
+                      },
+                      "host": {
+                        "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                        "operationId": "CreateRecord",
+                        "connectionName": "shared_commondataserviceforapps"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "runAfter": {
+            "List_solutions_origin": [
+              "Succeeded"
+            ]
+          }
+        }
+      }
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}

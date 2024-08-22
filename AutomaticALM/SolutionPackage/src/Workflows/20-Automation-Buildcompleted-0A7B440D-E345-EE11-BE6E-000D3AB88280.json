@@ -1,0 +1,189 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_visualstudioteamservices": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "dyna_sharedvisualstudioteamservices_0874f"
+        },
+        "api": {
+          "name": "shared_visualstudioteamservices"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "ALM_DevOps_ProjectName (dyna_almdevopsprojectname)": {
+          "defaultValue": "Automate ALM Accelerator",
+          "type": "String",
+          "metadata": {
+            "schemaName": "dyna_almdevopsprojectname",
+            "description": "Name of the DevOps Project link to ALM"
+          }
+        },
+        "ALM_DevOps_OrganizationName (dyna_almdevopsorganizationname)": {
+          "defaultValue": "aurelienclere",
+          "type": "String",
+          "metadata": {
+            "schemaName": "dyna_almdevopsorganizationname",
+            "description": "Name of DevOps Organization"
+          }
+        },
+        "ALM_BuildId_ExportGit (dyna_almbuildidexportgit)": {
+          "defaultValue": "4",
+          "type": "String",
+          "metadata": {
+            "schemaName": "dyna_almbuildidexportgit"
+          }
+        }
+      },
+      "triggers": {
+        "When_a_build_completes": {
+          "recurrence": {
+            "frequency": "Minute",
+            "interval": 1
+          },
+          "splitOn": "@triggerOutputs()?['body/value']",
+          "metadata": {
+            "operationMetadataId": "2d5351d6-32c6-4d8f-8cfa-0a9dba7e18f7"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "account": "@parameters('ALM_DevOps_OrganizationName (dyna_almdevopsorganizationname)')",
+              "project": "@parameters('ALM_DevOps_ProjectName (dyna_almdevopsprojectname)')",
+              "resultFilter": "succeeded"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_visualstudioteamservices",
+              "connectionName": "shared_visualstudioteamservices",
+              "operationId": "OnBuildCompleted"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        }
+      },
+      "actions": {
+        "build_name": {
+          "runAfter": {
+            "formatDate": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "052c6160-681c-41f1-a0dc-71923c216f6d"
+          },
+          "type": "Compose",
+          "inputs": "@triggerOutputs()?['body/definition/name']"
+        },
+        "Only_go_on_if_it_is_Export_Git_Build": {
+          "actions": {
+            "SolutionName": {
+              "metadata": {
+                "operationMetadataId": "ac122368-268b-4d92-890d-3049801d699f"
+              },
+              "type": "Compose",
+              "inputs": "@split(triggerOutputs()?['body/buildNumber'], '-')[1]"
+            },
+            "Launch_the_PR_for_this_Solution": {
+              "runAfter": {
+                "SolutionName": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "469f27e1-029c-479f-bfc8-64f5f26e131e"
+              },
+              "type": "Workflow",
+              "inputs": {
+                "host": {
+                  "workflowReferenceName": "219cb947-e445-ee11-be6e-000d3aba3dad"
+                },
+                "body": {
+                  "text": "@outputs('SolutionName')"
+                },
+                "retryPolicy": {
+                  "type": "none"
+                }
+              }
+            }
+          },
+          "runAfter": {
+            "build_id": [
+              "Succeeded"
+            ]
+          },
+          "else": {
+            "actions": {}
+          },
+          "expression": {
+            "and": [
+              {
+                "equals": [
+                  "@int(triggerOutputs()?['body/definition/id'])",
+                  "@int(parameters('ALM_BuildId_ExportGit (dyna_almbuildidexportgit)'))"
+                ]
+              }
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "b9292bd6-37bc-4f84-824f-12594c82e11e"
+          },
+          "type": "If"
+        },
+        "build_id": {
+          "runAfter": {
+            "build_name": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "d9d672de-6bab-42ee-bf20-fd128b8c2ba7"
+          },
+          "type": "Compose",
+          "inputs": "@triggerOutputs()?['body/id']"
+        },
+        "todayDate": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "683af396-a322-4459-a1cd-633ed62601ac"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "todayDate",
+                "type": "string",
+                "value": "@{utcNow()}"
+              }
+            ]
+          }
+        },
+        "formatDate": {
+          "runAfter": {
+            "todayDate": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "3789dc74-6edb-40ff-a1e1-72774dce9819"
+          },
+          "type": "Compose",
+          "inputs": "@formatDateTime(variables('todayDate'),'ddMMyy')"
+        }
+      }
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}

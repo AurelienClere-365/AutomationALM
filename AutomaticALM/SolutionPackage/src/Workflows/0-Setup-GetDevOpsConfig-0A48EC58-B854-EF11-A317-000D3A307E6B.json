@@ -1,0 +1,298 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_visualstudioteamservices": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "dyna_sharedvisualstudioteamservices_0874f"
+        },
+        "api": {
+          "name": "shared_visualstudioteamservices"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "ALM_DevOps_OrganizationName (dyna_almdevopsorganizationname)": {
+          "defaultValue": "aurelienclere",
+          "type": "String",
+          "metadata": {
+            "schemaName": "dyna_almdevopsorganizationname",
+            "description": "Name of DevOps Organization"
+          }
+        },
+        "ALM_DevOps_ProjectName (dyna_almdevopsprojectname)": {
+          "defaultValue": "Automate ALM Accelerator",
+          "type": "String",
+          "metadata": {
+            "schemaName": "dyna_almdevopsprojectname",
+            "description": "Name of the DevOps Project link to ALM"
+          }
+        }
+      },
+      "triggers": {
+        "manual": {
+          "metadata": {
+            "operationMetadataId": "a5641211-b2ab-48a7-b14f-bbb4afce71ed"
+          },
+          "type": "Request",
+          "kind": "Button",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        }
+      },
+      "actions": {
+        "List_Git_repositories": {
+          "runAfter": {
+            "Initialize_ALM_PR_Approver_ID": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "6c663dd6-aec6-4c65-a55c-b0268a8434b1"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "account": "@parameters('ALM_DevOps_OrganizationName (dyna_almdevopsorganizationname)')",
+              "project": "@parameters('ALM_DevOps_ProjectName (dyna_almdevopsprojectname)')"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_visualstudioteamservices",
+              "connectionName": "shared_visualstudioteamservices",
+              "operationId": "ListGitRepositories"
+            },
+            "authentication": {
+              "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']",
+              "type": "Raw"
+            }
+          }
+        },
+        "Get_Current_User_Profile": {
+          "runAfter": {
+            "List_Git_repositories": [
+              "Succeeded"
+            ]
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "id": "me"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_visualstudioteamservices",
+              "connectionName": "shared_visualstudioteamservices",
+              "operationId": "GetProfile"
+            },
+            "authentication": {
+              "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']",
+              "type": "Raw"
+            }
+          }
+        },
+        "For_each": {
+          "foreach": "@outputs('List_Git_repositories')?['body/value']",
+          "actions": {
+            "Compose": {
+              "type": "Compose",
+              "inputs": "ProfileApproverId : \"@{outputs('Get_Current_User_Profile')?['body/id']}\",\nGitIdRepo : \"@{items('For_each')?['id']}\" link to the name \"@{item()?['name']}\"\n"
+            },
+            "Condition_1": {
+              "actions": {
+                "Set_ALM_PR_Approver_ID": {
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "ALM_PR_Approver_ID",
+                    "value": "@outputs('Get_Current_User_Profile')?['body/id']"
+                  }
+                },
+                "Set_ALM_DevOps_RepositoryID": {
+                  "runAfter": {
+                    "Set_ALM_PR_Approver_ID": [
+                      "Succeeded"
+                    ]
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "ALM_DevOps_RepositoryID",
+                    "value": "@item()?['id']"
+                  }
+                }
+              },
+              "runAfter": {
+                "Compose": [
+                  "Succeeded"
+                ]
+              },
+              "else": {
+                "actions": {}
+              },
+              "expression": {
+                "and": [
+                  {
+                    "not": {
+                      "equals": [
+                        "@item()?['name']",
+                        "coe-alm-accelerator-templates"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "type": "If"
+            }
+          },
+          "runAfter": {
+            "For_each_1": [
+              "Succeeded"
+            ]
+          },
+          "type": "Foreach"
+        },
+        "List_pipelines": {
+          "runAfter": {
+            "Get_Current_User_Profile": [
+              "Succeeded"
+            ]
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "account": "@parameters('ALM_DevOps_OrganizationName (dyna_almdevopsorganizationname)')",
+              "project": "@parameters('ALM_DevOps_ProjectName (dyna_almdevopsprojectname)')"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_visualstudioteamservices",
+              "connectionName": "shared_visualstudioteamservices",
+              "operationId": "ListPipelines"
+            },
+            "authentication": {
+              "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']",
+              "type": "Raw"
+            }
+          }
+        },
+        "For_each_1": {
+          "foreach": "@outputs('List_pipelines')?['body/value']",
+          "actions": {
+            "Condition": {
+              "actions": {
+                "ALM_BuildId_ExportGit": {
+                  "type": "Compose",
+                  "inputs": "@item()?['id']"
+                },
+                "Set_ALM_BuildId_ExportGit": {
+                  "runAfter": {
+                    "ALM_BuildId_ExportGit": [
+                      "Succeeded"
+                    ]
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "ALM_BuildId_ExportGit",
+                    "value": "@string(outputs('ALM_BuildId_ExportGit'))"
+                  }
+                }
+              },
+              "else": {
+                "actions": {}
+              },
+              "expression": {
+                "and": [
+                  {
+                    "equals": [
+                      "@items('For_each_1')?['name']",
+                      "export-solution-to-git"
+                    ]
+                  }
+                ]
+              },
+              "type": "If"
+            }
+          },
+          "runAfter": {
+            "List_pipelines": [
+              "Succeeded"
+            ]
+          },
+          "type": "Foreach"
+        },
+        "Initialize_ALM_BuildId_ExportGit": {
+          "runAfter": {},
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "ALM_BuildId_ExportGit",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "Initialize_ALM_DevOps_RepositoryID": {
+          "runAfter": {
+            "Initialize_ALM_BuildId_ExportGit": [
+              "Succeeded"
+            ]
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "ALM_DevOps_RepositoryID",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "Initialize_ALM_PR_Approver_ID": {
+          "runAfter": {
+            "Initialize_ALM_DevOps_RepositoryID": [
+              "Succeeded"
+            ]
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "ALM_PR_Approver_ID",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "Results_to_read_here_to_setup_environment_variables": {
+          "actions": {
+            "Final_Output": {
+              "type": "Compose",
+              "inputs": " ALM_DevOps_RepositoryID : \"@{variables('ALM_DevOps_RepositoryID')}\",\n ALM_PR_Approver_ID : \"@{variables('ALM_PR_Approver_ID')}\",\n ALM_BuildId_ExportGit : \"@{variables('ALM_BuildId_ExportGit')}\""
+            }
+          },
+          "runAfter": {
+            "For_each": [
+              "Succeeded"
+            ]
+          },
+          "type": "Scope"
+        }
+      }
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}

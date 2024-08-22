@@ -1,0 +1,37 @@
+<appaction uniquename="dyna__ReLaunchit!697ac3732cdd4688b92f100c94665c6d!dyna_AutomationALM!dyna_almdeployment!0">
+  <appmoduleid>
+    <uniquename>dyna_AutomationALM</uniquename>
+  </appmoduleid>
+  <buttonlabeltext default="ReLaunch it !">
+    <label description="ReLaunch it !" languagecode="1033" />
+  </buttonlabeltext>
+  <context>1</context>
+  <contextentity>
+    <logicalname>dyna_almdeployment</logicalname>
+  </contextentity>
+  <contextvalue>dyna_almdeployment</contextvalue>
+  <fonticon>CloudUpload</fonticon>
+  <hidden>0</hidden>
+  <iscustomizable>1</iscustomizable>
+  <isdisabled>0</isdisabled>
+  <isgrouptitlehidden>0</isgrouptitlehidden>
+  <location>0</location>
+  <name>ReLaunchit!697ac3732cdd4688b92f100c94665c6d</name>
+  <onclickeventformulacomponentlibraryid>
+    <name>dyna_automationalmdefaultcommandlibrary_409c3</name>
+  </onclickeventformulacomponentlibraryid>
+  <onclickeventformulacomponentname>9d401206a2c44e7da3de7f44e2153391</onclickeventformulacomponentname>
+  <onclickeventformulafunctionname>OnSelect</onclickeventformulafunctionname>
+  <onclickeventtype>1</onclickeventtype>
+  <origin>0</origin>
+  <sequence>100100068.1250000000</sequence>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+  <type>0</type>
+  <visibilityformulacomponentlibraryid>
+    <name>dyna_automationalmdefaultcommandlibrary_409c3</name>
+  </visibilityformulacomponentlibraryid>
+  <visibilityformulacomponentname>9d401206a2c44e7da3de7f44e2153391</visibilityformulacomponentname>
+  <visibilityformulafunctionname>Visible</visibilityformulafunctionname>
+  <visibilitytype>1</visibilitytype>
+</appaction>

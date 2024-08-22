@@ -1,0 +1,13 @@
+<environmentvariabledefinition schemaname="dyna_almbuildidexportgit">
+  <description default="Pipeline Id of DevOps to Export Solution.">
+    <label description="Pipeline Id of DevOps to Export Solution." languagecode="1033" />
+  </description>
+  <displayname default="ALM_BuildId_ExportGit">
+    <label description="ALM_BuildId_ExportGit" languagecode="1033" />
+  </displayname>
+  <introducedversion>1.0.0.1</introducedversion>
+  <iscustomizable>1</iscustomizable>
+  <isrequired>0</isrequired>
+  <secretstore>0</secretstore>
+  <type>100000000</type>
+</environmentvariabledefinition>

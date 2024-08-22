@@ -1,0 +1,13 @@
+<environmentvariabledefinition schemaname="dyna_ALM_DLToNotify">
+  <description default="Email to be notified in case of Error. Could be a distribution list email address">
+    <label description="Email to be notified in case of Error. Could be a distribution list email address" languagecode="1033" />
+  </description>
+  <displayname default="ALM_DLToNotify">
+    <label description="ALM_DLToNotify" languagecode="1033" />
+  </displayname>
+  <introducedversion>1.0.0.2</introducedversion>
+  <iscustomizable>1</iscustomizable>
+  <isrequired>0</isrequired>
+  <secretstore>0</secretstore>
+  <type>100000000</type>
+</environmentvariabledefinition>

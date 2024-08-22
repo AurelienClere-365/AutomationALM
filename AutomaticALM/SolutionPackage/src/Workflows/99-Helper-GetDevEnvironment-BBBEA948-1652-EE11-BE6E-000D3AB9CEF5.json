@@ -1,0 +1,149 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_commondataserviceforapps": {
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        },
+        "connection": {
+          "connectionReferenceLogicalName": "dyna_sharedcommondataserviceforapps_c708f"
+        },
+        "runtimeSource": "embedded"
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        }
+      },
+      "triggers": {
+        "manual": {
+          "type": "Request",
+          "kind": "Button",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "description": "Please enter your input",
+                  "title": "ALMDeploymentId",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                }
+              },
+              "required": [
+                "text"
+              ]
+            }
+          },
+          "metadata": {
+            "operationMetadataId": "d9b30297-8034-4d67-964d-9fcb2d44cec9"
+          }
+        }
+      },
+      "actions": {
+        "Respond_to_a_Power_App_or_flow": {
+          "type": "Response",
+          "kind": "PowerApp",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "urldevenvironment": {
+                  "title": "URLDEVEnvironment",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                }
+              },
+              "additionalProperties": {}
+            },
+            "statusCode": 200,
+            "body": {
+              "urldevenvironment": "@variables('URL')"
+            }
+          },
+          "runAfter": {
+            "Set_variable_URL": [
+              "SUCCEEDED"
+            ]
+          }
+        },
+        "Get_Deployment": {
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "entityName": "dyna_almdeployments",
+              "recordId": "@triggerBody()?['text']"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+              "operationId": "GetItem",
+              "connectionName": "shared_commondataserviceforapps"
+            }
+          },
+          "runAfter": {
+            "Initialize_URL": [
+              "Succeeded"
+            ]
+          }
+        },
+        "Initialize_URL": {
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "URL",
+                "type": "string"
+              }
+            ]
+          },
+          "runAfter": {}
+        },
+        "Get_Environment_URL": {
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "entityName": "dyna_almdevenvironments",
+              "recordId": "@body('Get_Deployment')?['_dyna_devenvironment_value']"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+              "operationId": "GetItem",
+              "connectionName": "shared_commondataserviceforapps"
+            }
+          },
+          "runAfter": {
+            "Get_Deployment": [
+              "Succeeded"
+            ]
+          }
+        },
+        "Set_variable_URL": {
+          "type": "SetVariable",
+          "inputs": {
+            "name": "URL",
+            "value": "@body('Get_Environment_URL')?['dyna_url']"
+          },
+          "runAfter": {
+            "Get_Environment_URL": [
+              "SUCCEEDED"
+            ]
+          }
+        }
+      },
+      "description": "Retrieve the URL of Dev Environment dynamically"
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}

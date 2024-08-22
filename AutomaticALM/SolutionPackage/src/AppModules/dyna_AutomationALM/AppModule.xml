@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AppModule>
+  <UniqueName>dyna_AutomationALM</UniqueName>
+  <IntroducedVersion>1.0.0.2</IntroducedVersion>
+  <WebResourceId>44e09ad8-8958-ef11-a317-000d3a328599</WebResourceId>
+  <OptimizedFor></OptimizedFor>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+  <FormFactor>1</FormFactor>
+  <ClientType>4</ClientType>
+  <NavigationType>0</NavigationType>
+  <AppModuleComponents>
+    <AppModuleComponent type="1" schemaName="dyna_almdeployment" />
+    <AppModuleComponent type="1" schemaName="dyna_almdevenvironment" />
+    <AppModuleComponent type="1" schemaName="dyna_almsolution" />
+    <AppModuleComponent type="1" schemaName="dyna_almtrackinghistory" />
+    <AppModuleComponent type="1" schemaName="dyna_powerpages" />
+    <AppModuleComponent type="1" schemaName="dyna_solution" />
+    <AppModuleComponent type="1" schemaName="environmentvariablevalue" />
+    <AppModuleComponent type="29" id="{0a48ec58-b854-ef11-a317-000d3a307e6b}" />
+    <AppModuleComponent type="29" id="{dcf348a4-e545-ee11-be6e-000d3a65936e}" />
+    <AppModuleComponent type="29" id="{81e835a8-8151-ee11-be6e-000d3a65936e}" />
+    <AppModuleComponent type="29" id="{0a7b440d-e345-ee11-be6e-000d3ab88280}" />
+    <AppModuleComponent type="29" id="{bbbea948-1652-ee11-be6e-000d3ab9cef5}" />
+    <AppModuleComponent type="29" id="{219cb947-e445-ee11-be6e-000d3aba3dad}" />
+    <AppModuleComponent type="29" id="{9edadfd3-e445-ee11-be6e-000d3aba3dad}" />
+    <AppModuleComponent type="29" id="{9b00f5fb-e745-ee11-be6e-000d3aba3dad}" />
+    <AppModuleComponent type="29" id="{aae5cf8b-e845-ee11-be6e-000d3aba3dad}" />
+    <AppModuleComponent type="29" id="{736ee3ec-f945-ee11-be6e-000d3aba3dad}" />
+    <AppModuleComponent type="29" id="{6e9c4a6f-5d46-ee11-be6e-000d3aba3dad}" />
+    <AppModuleComponent type="29" id="{30e14cf9-c04d-ee11-be6e-000d3aba3dad}" />
+    <AppModuleComponent type="29" id="{f4215e8b-8251-ee11-be6e-000d3aba3dad}" />
+    <AppModuleComponent type="29" id="{5d14b3f8-d454-ef11-a317-00224806bd16}" />
+    <AppModuleComponent type="62" schemaName="dyna_AutomationALM" />
+  </AppModuleComponents>
+  <AppModuleRoleMaps>
+    <Role id="{627090ff-40a3-4053-8790-584edc5be201}" />
+    <Role id="{119f245c-3cc8-4b62-b31c-d1a046ced15d}" />
+  </AppModuleRoleMaps>
+  <LocalizedNames>
+    <LocalizedName description="Automation ALM" languagecode="1033" />
+  </LocalizedNames>
+  <Descriptions>
+    <Description description="Streamline your application lifecycle management with Automation ALM, empowering business users to automate and track deployment processes efficiently. Enhance productivity by leveraging advanced workflows to manage and monitor every stage of your DevOps pipeline seamlessly." languagecode="1033" />
+  </Descriptions>
+  <appelements>
+    <appelement uniquename="dyna_dyna_AutomationALM_canvasappid_dyna_automationalmdefaultcommandlibrary_409c3">
+      <canvasappid>
+        <name>dyna_automationalmdefaultcommandlibrary_409c3</name>
+      </canvasappid>
+      <iscustomizable>1</iscustomizable>
+      <name>dyna_dyna_AutomationALM_canvasappid_dyna_automationalmdefaultcommandlibrary_409c3</name>
+    </appelement>
+  </appelements>
+  <appsettings>
+    <appsetting settingdefinitionid.uniquename="AppChannel">
+      <iscustomizable>1</iscustomizable>
+      <value>1</value>
+    </appsetting>
+  </appsettings>
+</AppModule>

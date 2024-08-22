@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <systemform>
+    <formid>{17e3356d-2c3f-4a60-86f2-61e34aed12b5}</formid>
+    <IntroducedVersion>1.0</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form headerdensity="HighWithControls">
+      <tabs>
+        <tab verticallayout="true" id="{c2b0f54f-0a46-4253-ba9a-f5b785ab0d4c}" IsUserDefined="1" name="general">
+          <labels>
+            <label description="General" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section showlabel="false" showbar="false" IsUserDefined="0" id="{e14ee078-d65e-43bd-89c4-52cf6949da24}">
+                  <labels>
+                    <label description="General" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{1853c160-f11e-4c1f-8783-5e43dce71d02}" locklevel="1">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="dyna_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="dyna_name" disabled="true" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{4aaf0f72-3c15-40a1-8dce-b4fb12a1e37c}" locklevel="1" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="dyna_almdeployment" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="dyna_almdeployment" disabled="true" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{8fbfac88-c4c2-4a6d-9b6c-214277d54003}" locklevel="1" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="dyna_solution" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="dyna_solution" disabled="true" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{ada7b0dc-b665-4394-8a91-6434b650b040}" locklevel="1" colspan="1" rowspan="1" visible="true">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="dyna_buildid" classid="{C6D124CA-7EDA-4A60-AEA9-7FB8D318B68F}" datafieldname="dyna_buildid" disabled="true" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{a9d4fefd-7cd7-4c64-91ae-3e9b7d0e5954}" locklevel="1" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="dyna_devopsbuild" classid="{71716B6C-711E-476C-8AB8-5D11542BFB47}" datafieldname="dyna_devopsbuild" disabled="true" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{0e192cac-c40e-4503-a64d-d5ea13a91489}" locklevel="1" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="dyna_pullrequestid" classid="{C6D124CA-7EDA-4A60-AEA9-7FB8D318B68F}" datafieldname="dyna_pullrequestid" disabled="true" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{ac089dc5-f632-4b07-acdd-21f25a07250c}" locklevel="1" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="dyna_devopspr" classid="{71716B6C-711E-476C-8AB8-5D11542BFB47}" datafieldname="dyna_devopspr" disabled="true" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{b20877f4-e821-49ae-bd74-39528c65e1a6}" locklevel="1" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="dyna_startdatetime" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="dyna_startdatetime" disabled="true" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{ab6c1cdb-c550-40f5-8502-9b850453665f}" locklevel="1" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="dyna_enddatetime" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="dyna_enddatetime" disabled="true" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{4d88b3a2-1c68-405c-b65f-fc73f4b3b4e7}" locklevel="1" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="statuscode" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="statuscode" disabled="true" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{115fce21-e5f1-4c77-ba9c-0b1efc5e914f}" locklevel="1" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" disabled="true" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{b4d02e24-f702-4350-88ef-c2f7b834ab06}" locklevel="1" colspan="1" rowspan="1" visible="false">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="createdon" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="createdon" disabled="true" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <header id="{0072dab1-e35e-4729-9576-65c9c66b0001}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+        <rows>
+          <row>
+            <cell id="{fa504bc0-32df-4544-b403-952f91db8cf2}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{46a38d5d-edcd-4508-a8f7-d2f5776e9541}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{f58e6c9e-6d61-4c5c-871b-2a83f0955901}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </header>
+      <footer id="{63481307-81b8-40ed-ae2c-87f1d6f87cd0}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+        <rows>
+          <row>
+            <cell id="{e67746a6-1ab7-4906-824b-21e45944fe47}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{56f6725e-537e-43ec-8e15-2061ae3f0856}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{4eb0f1cc-3033-42b4-955f-136e8aa7fd89}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </footer>
+      <DisplayConditions Order="0" FallbackForm="true">
+        <Everyone />
+      </DisplayConditions>
+      <formLibraries>
+        <Library name="dyna_utils" libraryUniqueId="{1739818c-2074-4956-a57c-6ba00cd2fbc7}" />
+      </formLibraries>
+      <events>
+        <event name="onsave" application="false" active="false">
+          <Handlers>
+            <Handler functionName="blockHistory" libraryName="dyna_utils" handlerUniqueId="{c91f943d-c4d5-4fcd-9c9c-7019d9b9b37a}" enabled="true" parameters="" passExecutionContext="true" />
+          </Handlers>
+        </event>
+      </events>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Information" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="A form for this entity." languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>

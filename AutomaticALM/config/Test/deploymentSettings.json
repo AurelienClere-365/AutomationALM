@@ -1,0 +1,25 @@
+{
+    "EnvironmentVariables":  [
+
+                             ],
+    "ConnectionReferences":  [
+                                 {
+                                     "LogicalName":  "dyna_sharedvisualstudioteamservices_0874f",
+                                     "ConnectionId":  "#{connectionreference.dyna_sharedvisualstudioteamservices_0874f}#",
+                                     "ConnectorId":  "/providers/Microsoft.PowerApps/apis/shared_visualstudioteamservices",
+                                     "ConnectionOwner":  "#{connectionreference.user.dyna_sharedvisualstudioteamservices_0874f}#"
+                                 },
+                                 {
+                                     "LogicalName":  "dyna_sharedcommondataserviceforapps_c708f",
+                                     "ConnectionId":  "#{connectionreference.dyna_sharedcommondataserviceforapps_c708f}#",
+                                     "ConnectorId":  "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                                     "ConnectionOwner":  "#{connectionreference.user.dyna_sharedcommondataserviceforapps_c708f}#"
+                                 },
+                                 {
+                                     "LogicalName":  "dyna_sharedoffice365_ea39d",
+                                     "ConnectionId":  "#{connectionreference.dyna_sharedoffice365_ea39d}#",
+                                     "ConnectorId":  "/providers/Microsoft.PowerApps/apis/shared_office365",
+                                     "ConnectionOwner":  "#{connectionreference.user.dyna_sharedoffice365_ea39d}#"
+                                 }
+                             ]
+}

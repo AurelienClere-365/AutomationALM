@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{c016b5a9-a482-4556-9b28-18d57a0a4986}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="dyna_name" select="1" icon="1" preview="1">
+        <row name="result" id="dyna_solutionid">
+          <cell name="dyna_name" width="300" />
+          <cell name="createdon" width="125" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="dyna_solution">
+          <attribute name="dyna_solutionid" />
+          <attribute name="dyna_name" />
+          <attribute name="createdon" />
+          <order attribute="dyna_name" descending="false" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="1" />
+          </filter>
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Inactive Solutions" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

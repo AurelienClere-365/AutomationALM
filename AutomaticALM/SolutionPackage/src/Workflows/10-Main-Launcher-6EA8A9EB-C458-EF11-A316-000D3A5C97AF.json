@@ -1,0 +1,499 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_commondataserviceforapps": {
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        },
+        "connection": {
+          "connectionReferenceLogicalName": "dyna_sharedcommondataserviceforapps_c708f"
+        },
+        "runtimeSource": "embedded"
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        }
+      },
+      "triggers": {
+        "When_deployment_has_been_validated_and_launched": {
+          "type": "OpenApiConnectionWebhook",
+          "inputs": {
+            "parameters": {
+              "subscriptionRequest/message": 3,
+              "subscriptionRequest/entityname": "dyna_almdeployment",
+              "subscriptionRequest/scope": 4,
+              "subscriptionRequest/filterexpression": "dyna_launch eq true"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+              "operationId": "SubscribeWebhookTrigger",
+              "connectionName": "shared_commondataserviceforapps"
+            }
+          },
+          "metadata": {
+            "operationMetadataId": "1e61722d-15aa-4d0d-ad56-288e1e84d131"
+          }
+        }
+      },
+      "actions": {
+        "Condition_if_Draft_or_Ended_only_and_active": {
+          "type": "If",
+          "expression": {
+            "and": [
+              {
+                "equals": [
+                  "@triggerBody()?['statecode']",
+                  0
+                ]
+              },
+              {
+                "or": [
+                  {
+                    "equals": [
+                      "@triggerBody()?['statuscode']",
+                      1
+                    ]
+                  },
+                  {
+                    "equals": [
+                      "@triggerBody()?['statuscode']",
+                      538000003
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "actions": {
+            "Switch_on_the_Type": {
+              "type": "Switch",
+              "expression": "@triggerBody()?['dyna_type']",
+              "default": {
+                "actions": {
+                  "Terminate_for_scheduling": {
+                    "type": "Terminate",
+                    "inputs": {
+                      "runStatus": "Succeeded"
+                    },
+                    "runAfter": {
+                      "Update_ALM_Status_HoldOn": [
+                        "Succeeded"
+                      ]
+                    }
+                  },
+                  "Update_ALM_Status_HoldOn": {
+                    "type": "OpenApiConnection",
+                    "inputs": {
+                      "parameters": {
+                        "entityName": "dyna_almdeployments",
+                        "recordId": "@triggerBody()?['dyna_almdeploymentid']",
+                        "item/statuscode": 538000001
+                      },
+                      "host": {
+                        "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                        "operationId": "UpdateRecord",
+                        "connectionName": "shared_commondataserviceforapps"
+                      }
+                    }
+                  }
+                }
+              },
+              "cases": {
+                "Right_away": {
+                  "actions": {},
+                  "case": 538000000
+                },
+                "On-demand_postponed": {
+                  "actions": {
+                    "Delay_Until": {
+                      "type": "Wait",
+                      "inputs": {
+                        "until": {
+                          "timestamp": "@triggerBody()?['dyna_begindatetime']"
+                        }
+                      },
+                      "runAfter": {
+                        "Update_ALM_Status_Reason_HoldOn": [
+                          "Succeeded"
+                        ]
+                      }
+                    },
+                    "Update_ALM_Status_Reason_HoldOn": {
+                      "type": "OpenApiConnection",
+                      "inputs": {
+                        "parameters": {
+                          "entityName": "dyna_almdeployments",
+                          "recordId": "@triggerBody()?['dyna_almdeploymentid']",
+                          "item/statuscode": 538000001
+                        },
+                        "host": {
+                          "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                          "operationId": "UpdateRecord",
+                          "connectionName": "shared_commondataserviceforapps"
+                        }
+                      }
+                    }
+                  },
+                  "case": 538000001
+                }
+              }
+            },
+            "Scope_for_the_deployment_process": {
+              "type": "Scope",
+              "actions": {
+                "List_Solutions_to_deploy": {
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "parameters": {
+                      "entityName": "dyna_almsolutions",
+                      "$filter": "_dyna_almdeployment_value eq @{triggerBody()?['dyna_almdeploymentid']}",
+                      "$orderby": "dyna_step asc"
+                    },
+                    "host": {
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                      "operationId": "ListRecords",
+                      "connectionName": "shared_commondataserviceforapps"
+                    }
+                  }
+                },
+                "Switch_on_Delivery_Type": {
+                  "type": "Switch",
+                  "expression": "@triggerBody()?['dyna_deliverytype']",
+                  "default": {
+                    "actions": {}
+                  },
+                  "cases": {
+                    "Validation_Test": {
+                      "actions": {
+                        "For_each": {
+                          "type": "Foreach",
+                          "foreach": "@outputs('List_Solutions_to_deploy')?['body/value']",
+                          "actions": {
+                            "Get_Solution_Name": {
+                              "type": "OpenApiConnection",
+                              "inputs": {
+                                "parameters": {
+                                  "entityName": "dyna_solutions",
+                                  "recordId": "@item()?['_dyna_solution_value']"
+                                },
+                                "host": {
+                                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                                  "operationId": "GetItem",
+                                  "connectionName": "shared_commondataserviceforapps"
+                                }
+                              }
+                            },
+                            "Condition_Power_Pages": {
+                              "type": "If",
+                              "expression": {
+                                "and": [
+                                  {
+                                    "not": {
+                                      "equals": [
+                                        "@item()?['_dyna_powerpages_value']",
+                                        "@null"
+                                      ]
+                                    }
+                                  }
+                                ]
+                              },
+                              "actions": {
+                                "Get_Power_Pages": {
+                                  "type": "OpenApiConnection",
+                                  "inputs": {
+                                    "parameters": {
+                                      "entityName": "dyna_powerpageses",
+                                      "recordId": "@item()?['_dyna_powerpages_value']"
+                                    },
+                                    "host": {
+                                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                                      "operationId": "GetItem",
+                                      "connectionName": "shared_commondataserviceforapps"
+                                    }
+                                  }
+                                },
+                                "Set_Power_Pages": {
+                                  "type": "SetVariable",
+                                  "inputs": {
+                                    "name": "PowerPages",
+                                    "value": "@body('Get_Power_Pages')?['dyna_name']"
+                                  },
+                                  "runAfter": {
+                                    "Get_Power_Pages": [
+                                      "Succeeded"
+                                    ]
+                                  }
+                                }
+                              },
+                              "else": {
+                                "actions": {}
+                              },
+                              "runAfter": {
+                                "Get_Solution_Name": [
+                                  "Succeeded"
+                                ]
+                              }
+                            },
+                            "Launch_deployment_": {
+                              "type": "Workflow",
+                              "inputs": {
+                                "host": {
+                                  "workflowReferenceName": "dcf348a4-e545-ee11-be6e-000d3a65936e"
+                                },
+                                "body": {
+                                  "text": "@body('Get_Solution_Name')?['dyna_name']",
+                                  "text_1": "@variables('PowerPages')",
+                                  "text_2": "@string(item()?['dyna_commitscope'])",
+                                  "text_3": "@triggerBody()?['dyna_almdeploymentid']",
+                                  "text_4": "@item()?['dyna_almsolutionid']"
+                                },
+                                "retryPolicy": {
+                                  "type": "none"
+                                }
+                              },
+                              "runAfter": {
+                                "Update_ALM_Status_Reason": [
+                                  "Succeeded"
+                                ]
+                              }
+                            },
+                            "Update_ALM_Status_Reason": {
+                              "type": "OpenApiConnection",
+                              "inputs": {
+                                "parameters": {
+                                  "entityName": "dyna_almdeployments",
+                                  "recordId": "@triggerBody()?['dyna_almdeploymentid']",
+                                  "item/dyna_begindatetime": "@utcNow()",
+                                  "item/statuscode": 538000002
+                                },
+                                "host": {
+                                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                                  "operationId": "UpdateRecord",
+                                  "connectionName": "shared_commondataserviceforapps"
+                                }
+                              },
+                              "runAfter": {
+                                "Condition_Power_Pages": [
+                                  "Succeeded"
+                                ]
+                              }
+                            },
+                            "Update_ALM_Status_Reason_2": {
+                              "type": "OpenApiConnection",
+                              "inputs": {
+                                "parameters": {
+                                  "entityName": "dyna_almdeployments",
+                                  "recordId": "@triggerBody()?['dyna_almdeploymentid']",
+                                  "item/statuscode": 538000003
+                                },
+                                "host": {
+                                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                                  "operationId": "UpdateRecord",
+                                  "connectionName": "shared_commondataserviceforapps"
+                                }
+                              },
+                              "runAfter": {
+                                "Launch_deployment_": [
+                                  "Succeeded"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "case": 538000000
+                    },
+                    "Prod": {
+                      "actions": {
+                        "For_each_2": {
+                          "type": "Foreach",
+                          "foreach": "@outputs('List_Solutions_to_deploy')?['body/value']",
+                          "actions": {
+                            "Get_Solution_Name_1": {
+                              "type": "OpenApiConnection",
+                              "inputs": {
+                                "parameters": {
+                                  "entityName": "dyna_solutions",
+                                  "recordId": "@item()?['_dyna_solution_value']"
+                                },
+                                "host": {
+                                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                                  "operationId": "GetItem",
+                                  "connectionName": "shared_commondataserviceforapps"
+                                }
+                              }
+                            },
+                            "Condition_Power_Pages_1": {
+                              "type": "If",
+                              "expression": {
+                                "and": [
+                                  {
+                                    "not": {
+                                      "equals": [
+                                        "@item()?['_dyna_powerpages_value']",
+                                        "@null"
+                                      ]
+                                    }
+                                  }
+                                ]
+                              },
+                              "actions": {
+                                "Get_Power_Pages_1": {
+                                  "type": "OpenApiConnection",
+                                  "inputs": {
+                                    "parameters": {
+                                      "entityName": "dyna_powerpageses",
+                                      "recordId": "@item()?['_dyna_powerpages_value']"
+                                    },
+                                    "host": {
+                                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                                      "operationId": "GetItem",
+                                      "connectionName": "shared_commondataserviceforapps"
+                                    }
+                                  }
+                                },
+                                "Set_Power_Pages_2": {
+                                  "type": "SetVariable",
+                                  "inputs": {
+                                    "name": "PowerPages",
+                                    "value": "@body('Get_Power_Pages_1')?['dyna_name']"
+                                  },
+                                  "runAfter": {
+                                    "Get_Power_Pages_1": [
+                                      "Succeeded"
+                                    ]
+                                  }
+                                }
+                              },
+                              "else": {
+                                "actions": {}
+                              },
+                              "runAfter": {
+                                "Get_Solution_Name_1": [
+                                  "Succeeded"
+                                ]
+                              }
+                            },
+                            "Launch_deployment__1": {
+                              "type": "Workflow",
+                              "inputs": {
+                                "host": {
+                                  "workflowReferenceName": "f4215e8b-8251-ee11-be6e-000d3aba3dad"
+                                },
+                                "body": {
+                                  "text": "@body('Get_Solution_Name_1')?['dyna_name']",
+                                  "text_1": "@triggerBody()?['dyna_almdeploymentid']",
+                                  "text_2": "@item()?['dyna_almsolutionid']"
+                                },
+                                "retryPolicy": {
+                                  "type": "none"
+                                }
+                              },
+                              "runAfter": {
+                                "Update_ALM_Status_Reason_1": [
+                                  "Succeeded"
+                                ]
+                              }
+                            },
+                            "Update_ALM_Status_Reason_1": {
+                              "type": "OpenApiConnection",
+                              "inputs": {
+                                "parameters": {
+                                  "entityName": "dyna_almdeployments",
+                                  "recordId": "@triggerBody()?['dyna_almdeploymentid']",
+                                  "item/dyna_begindatetime": "@utcNow()",
+                                  "item/statuscode": 538000002
+                                },
+                                "host": {
+                                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                                  "operationId": "UpdateRecord",
+                                  "connectionName": "shared_commondataserviceforapps"
+                                }
+                              },
+                              "runAfter": {
+                                "Condition_Power_Pages_1": [
+                                  "Succeeded"
+                                ]
+                              }
+                            },
+                            "Update_ALM_Status_Reason_3": {
+                              "type": "OpenApiConnection",
+                              "inputs": {
+                                "parameters": {
+                                  "entityName": "dyna_almdeployments",
+                                  "recordId": "@triggerBody()?['dyna_almdeploymentid']",
+                                  "item/statuscode": 538000003
+                                },
+                                "host": {
+                                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                                  "operationId": "UpdateRecord",
+                                  "connectionName": "shared_commondataserviceforapps"
+                                }
+                              },
+                              "runAfter": {
+                                "Launch_deployment__1": [
+                                  "Succeeded"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "case": 538000001
+                    }
+                  },
+                  "runAfter": {
+                    "List_Solutions_to_deploy": [
+                      "Succeeded"
+                    ]
+                  }
+                }
+              },
+              "runAfter": {
+                "Switch_on_the_Type": [
+                  "Succeeded"
+                ]
+              }
+            }
+          },
+          "else": {
+            "actions": {}
+          },
+          "runAfter": {
+            "Initialize_PowerPages": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "02b0ff92-93e5-404f-a6b4-bc0295d21128"
+          }
+        },
+        "Initialize_PowerPages": {
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "PowerPages",
+                "type": "string",
+                "value": "NA"
+              }
+            ]
+          },
+          "runAfter": {}
+        }
+      }
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}

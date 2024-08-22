@@ -1,0 +1,987 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_commondataserviceforapps": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "dyna_sharedcommondataserviceforapps_c708f"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        }
+      },
+      "triggers": {
+        "Recurrence": {
+          "recurrence": {
+            "frequency": "Week",
+            "interval": 1,
+            "startTime": "2024-08-01T08:00:00Z",
+            "schedule": {
+              "weekDays": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday"
+              ],
+              "hours": [
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10",
+                "11",
+                "12",
+                "13",
+                "14",
+                "15",
+                "16",
+                "17",
+                "18",
+                "19",
+                "20",
+                "21",
+                "23",
+                "22"
+              ],
+              "minutes": [
+                0,
+                30
+              ]
+            }
+          },
+          "metadata": {
+            "operationMetadataId": "6e399d45-445f-48dd-bc1e-d14ead8859bc"
+          },
+          "type": "Recurrence"
+        }
+      },
+      "actions": {
+        "List_Deployments_in_Scheduling_only": {
+          "runAfter": {
+            "utcNow": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "eff41fcd-4ab6-42df-b0f6-0a59603c8fed"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "entityName": "dyna_almdeployments",
+              "$filter": "dyna_type eq 538000002 and statuscode ne 1"
+            },
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "ListRecords",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "For_each": {
+          "foreach": "@outputs('List_Deployments_in_Scheduling_only')?['body/value']",
+          "actions": {
+            "Check_if_there_is_deployment_to_be_launched_or_not": {
+              "actions": {
+                "First_time_or_not": {
+                  "actions": {
+                    "Switch": {
+                      "runAfter": {
+                        "ForSwitch": [
+                          "Succeeded"
+                        ]
+                      },
+                      "cases": {
+                        "Hour": {
+                          "case": "H",
+                          "actions": {
+                            "Set_variable": {
+                              "runAfter": {},
+                              "metadata": {
+                                "operationMetadataId": "9f68ae0b-d48d-4379-980a-a4feb1c5cabb"
+                              },
+                              "type": "SetVariable",
+                              "inputs": {
+                                "name": "FinalDateTime",
+                                "value": "@addHours(variables('compareDateTime'),int(outputs('Duration')))"
+                              }
+                            }
+                          }
+                        },
+                        "Day": {
+                          "case": "D",
+                          "actions": {
+                            "Set_variable_2": {
+                              "runAfter": {},
+                              "metadata": {
+                                "operationMetadataId": "47643895-0e84-41a5-83db-c57ba4e1917c"
+                              },
+                              "type": "SetVariable",
+                              "inputs": {
+                                "name": "FinalDateTime",
+                                "value": "@addDays(variables('compareDateTime'),int(outputs('Duration')))"
+                              }
+                            }
+                          }
+                        },
+                        "Week": {
+                          "case": "W",
+                          "actions": {
+                            "Set_variable_3": {
+                              "runAfter": {},
+                              "metadata": {
+                                "operationMetadataId": "f961b083-0792-4ada-be5e-cd61d9167bf5"
+                              },
+                              "type": "SetVariable",
+                              "inputs": {
+                                "name": "FinalDateTime",
+                                "value": "@addDays(variables('compareDateTime'),mul(7,int(outputs('Duration'))))"
+                              }
+                            }
+                          }
+                        },
+                        "Minutes": {
+                          "case": "M",
+                          "actions": {
+                            "Set_variable_4": {
+                              "runAfter": {},
+                              "metadata": {
+                                "operationMetadataId": "367b2eca-a14d-4668-ae3d-28138d36b398"
+                              },
+                              "type": "SetVariable",
+                              "inputs": {
+                                "name": "FinalDateTime",
+                                "value": "@addMinutes(variables('compareDateTime'),int(outputs('Duration')))"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "default": {
+                        "actions": {}
+                      },
+                      "expression": "@outputs('ForSwitch')",
+                      "metadata": {
+                        "operationMetadataId": "9cfceb7e-4703-482a-aa04-596f89942869"
+                      },
+                      "type": "Switch"
+                    },
+                    "FormatScheduler": {
+                      "runAfter": {},
+                      "metadata": {
+                        "operationMetadataId": "41a02f56-6202-44ee-aaa2-3eeb95bb2f7f"
+                      },
+                      "type": "Compose",
+                      "inputs": "@item()?['dyna_formatscheduler']"
+                    },
+                    "ForSwitch": {
+                      "runAfter": {
+                        "Duration": [
+                          "Succeeded"
+                        ]
+                      },
+                      "metadata": {
+                        "operationMetadataId": "be48803e-21d4-4439-842e-fdb0844fb5a6"
+                      },
+                      "type": "Compose",
+                      "inputs": "@substring(outputs('FormatScheduler'),sub(outputs('LengthFormatScheduler'),1),1)"
+                    },
+                    "LengthFormatScheduler": {
+                      "runAfter": {
+                        "FormatScheduler": [
+                          "Succeeded"
+                        ]
+                      },
+                      "metadata": {
+                        "operationMetadataId": "47a3e29a-b401-4eab-bc2a-7cc6a993944b"
+                      },
+                      "type": "Compose",
+                      "inputs": "@length(outputs('FormatScheduler'))"
+                    },
+                    "Duration": {
+                      "runAfter": {
+                        "LengthFormatScheduler": [
+                          "Succeeded"
+                        ]
+                      },
+                      "metadata": {
+                        "operationMetadataId": "b14868bf-e376-40e1-b71a-ac33301bc710"
+                      },
+                      "type": "Compose",
+                      "inputs": "@substring(outputs('FormatScheduler'),2,sub(outputs('LengthFormatScheduler'),3))"
+                    },
+                    "Condition_to_Verify_Deployment": {
+                      "actions": {
+                        "Set_LaunchDeployment": {
+                          "runAfter": {},
+                          "metadata": {
+                            "operationMetadataId": "e69cfe5e-1da2-4871-93b5-4d8f0ae502f6"
+                          },
+                          "type": "SetVariable",
+                          "inputs": {
+                            "name": "LaunchDeployment",
+                            "value": true
+                          }
+                        }
+                      },
+                      "runAfter": {
+                        "Switch": [
+                          "Succeeded"
+                        ]
+                      },
+                      "else": {
+                        "actions": {
+                          "Set_LaunchDeployment_2": {
+                            "runAfter": {},
+                            "metadata": {
+                              "operationMetadataId": "34a9f231-af76-4f71-b561-d0b9997a7af4"
+                            },
+                            "type": "SetVariable",
+                            "inputs": {
+                              "name": "LaunchDeployment",
+                              "value": false
+                            }
+                          }
+                        }
+                      },
+                      "expression": {
+                        "and": [
+                          {
+                            "greater": [
+                              "@variables('currentDateTime')",
+                              "@variables('FinalDateTime')"
+                            ]
+                          }
+                        ]
+                      },
+                      "metadata": {
+                        "operationMetadataId": "f3b0fc4c-19b0-4ede-b8be-933429513f08"
+                      },
+                      "type": "If"
+                    }
+                  },
+                  "runAfter": {},
+                  "else": {
+                    "actions": {
+                      "Delay_Until": {
+                        "runAfter": {
+                          "Update_a_row": [
+                            "Succeeded"
+                          ]
+                        },
+                        "metadata": {
+                          "operationMetadataId": "84d8154f-ccc9-4a81-bb50-68e9318a3dd3"
+                        },
+                        "type": "Wait",
+                        "inputs": {
+                          "until": {
+                            "timestamp": "@item()?['dyna_begindatetime']"
+                          }
+                        }
+                      },
+                      "Update_a_row": {
+                        "runAfter": {},
+                        "metadata": {
+                          "operationMetadataId": "869671e1-4476-4b8d-baaa-80eb20908979"
+                        },
+                        "type": "OpenApiConnection",
+                        "inputs": {
+                          "parameters": {
+                            "entityName": "dyna_almdeployments",
+                            "recordId": "@item()?['dyna_almdeploymentid']",
+                            "item/statuscode": 538000002
+                          },
+                          "host": {
+                            "connectionName": "shared_commondataserviceforapps",
+                            "operationId": "UpdateRecord",
+                            "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                          },
+                          "authentication": "@parameters('$authentication')"
+                        }
+                      },
+                      "Set_LaunchDeployment_3": {
+                        "runAfter": {
+                          "Set_utcNow_2": [
+                            "Succeeded"
+                          ]
+                        },
+                        "metadata": {
+                          "operationMetadataId": "d5a9835e-01e3-4568-9185-c5357a04c62b"
+                        },
+                        "type": "SetVariable",
+                        "inputs": {
+                          "name": "LaunchDeployment",
+                          "value": true
+                        }
+                      },
+                      "Set_utcNow_2": {
+                        "runAfter": {
+                          "Delay_Until": [
+                            "Succeeded"
+                          ]
+                        },
+                        "metadata": {
+                          "operationMetadataId": "215db0e2-fa32-4f62-a31f-b9b65e4c7d00"
+                        },
+                        "type": "SetVariable",
+                        "inputs": {
+                          "name": "utcNow",
+                          "value": "@utcNow()"
+                        }
+                      }
+                    }
+                  },
+                  "expression": {
+                    "and": [
+                      {
+                        "not": {
+                          "equals": [
+                            "@item()?['statuscode']",
+                            538000001
+                          ]
+                        }
+                      }
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "e05270bd-1e60-41d3-b7dc-47700ac93244"
+                  },
+                  "type": "If"
+                },
+                "Condition_to_Launch_Deployment": {
+                  "actions": {
+                    "Launch_Deployment": {
+                      "actions": {
+                        "List_Solutions_to_deploy": {
+                          "runAfter": {},
+                          "metadata": {
+                            "operationMetadataId": "83c01d30-4409-4b77-bbdd-b8e039de8b1f"
+                          },
+                          "type": "OpenApiConnection",
+                          "inputs": {
+                            "parameters": {
+                              "entityName": "dyna_almsolutions",
+                              "$filter": "_dyna_almdeployment_value eq @{variables('DeploymentId')}"
+                            },
+                            "host": {
+                              "connectionName": "shared_commondataserviceforapps",
+                              "operationId": "ListRecords",
+                              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                            },
+                            "authentication": "@parameters('$authentication')"
+                          }
+                        },
+                        "Switch_on_Delivery_Type": {
+                          "runAfter": {
+                            "List_Solutions_to_deploy": [
+                              "Succeeded"
+                            ]
+                          },
+                          "cases": {
+                            "Validation_Test": {
+                              "case": 538000000,
+                              "actions": {
+                                "For_each_2": {
+                                  "foreach": "@outputs('List_Solutions_to_deploy')?['body/value']",
+                                  "actions": {
+                                    "Get_Solution_Name": {
+                                      "runAfter": {},
+                                      "metadata": {
+                                        "operationMetadataId": "71af6085-0c74-4f54-86f0-2131439ceafe"
+                                      },
+                                      "type": "OpenApiConnection",
+                                      "inputs": {
+                                        "parameters": {
+                                          "entityName": "dyna_solutions",
+                                          "recordId": "@item()?['_dyna_solution_value']"
+                                        },
+                                        "host": {
+                                          "connectionName": "shared_commondataserviceforapps",
+                                          "operationId": "GetItem",
+                                          "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                                        },
+                                        "authentication": "@parameters('$authentication')"
+                                      }
+                                    },
+                                    "Condition_Power_Pages": {
+                                      "actions": {
+                                        "Get_Power_Pages": {
+                                          "runAfter": {},
+                                          "metadata": {
+                                            "operationMetadataId": "db26f234-9c9a-42d6-9ea4-08863a862ece"
+                                          },
+                                          "type": "OpenApiConnection",
+                                          "inputs": {
+                                            "parameters": {
+                                              "entityName": "dyna_powerpageses",
+                                              "recordId": "@item()?['_dyna_powerpages_value']"
+                                            },
+                                            "host": {
+                                              "connectionName": "shared_commondataserviceforapps",
+                                              "operationId": "GetItem",
+                                              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                                            },
+                                            "authentication": "@parameters('$authentication')"
+                                          }
+                                        },
+                                        "Set_Power_Pages": {
+                                          "runAfter": {
+                                            "Get_Power_Pages": [
+                                              "Succeeded"
+                                            ]
+                                          },
+                                          "metadata": {
+                                            "operationMetadataId": "31b13445-5bbf-4433-9664-1cc244dfe976"
+                                          },
+                                          "type": "SetVariable",
+                                          "inputs": {
+                                            "name": "PowerPages",
+                                            "value": "@body('Get_Power_Pages')?['dyna_name']"
+                                          }
+                                        }
+                                      },
+                                      "runAfter": {
+                                        "Get_Solution_Name": [
+                                          "Succeeded"
+                                        ]
+                                      },
+                                      "expression": {
+                                        "and": [
+                                          {
+                                            "not": {
+                                              "equals": [
+                                                "@item()?['_dyna_powerpages_value']",
+                                                "@null"
+                                              ]
+                                            }
+                                          }
+                                        ]
+                                      },
+                                      "metadata": {
+                                        "operationMetadataId": "b56d57c2-7ca7-437f-b9f5-f88150599e62"
+                                      },
+                                      "type": "If"
+                                    },
+                                    "Update_new_beginDateTime": {
+                                      "runAfter": {
+                                        "Condition_Power_Pages": [
+                                          "Succeeded"
+                                        ]
+                                      },
+                                      "metadata": {
+                                        "operationMetadataId": "869671e1-4476-4b8d-baaa-80eb20908979"
+                                      },
+                                      "type": "OpenApiConnection",
+                                      "inputs": {
+                                        "parameters": {
+                                          "entityName": "dyna_almdeployments",
+                                          "recordId": "@variables('DeploymentId')",
+                                          "item/dyna_begindatetime": "@variables('utcNow')"
+                                        },
+                                        "host": {
+                                          "connectionName": "shared_commondataserviceforapps",
+                                          "operationId": "UpdateRecord",
+                                          "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                                        },
+                                        "authentication": "@parameters('$authentication')"
+                                      }
+                                    },
+                                    "Run_a_Child_Deployment_Process": {
+                                      "runAfter": {
+                                        "Update_new_beginDateTime": [
+                                          "Succeeded"
+                                        ]
+                                      },
+                                      "metadata": {
+                                        "operationMetadataId": "0017728d-baf5-4ead-8532-e8cc11b0b007"
+                                      },
+                                      "type": "Workflow",
+                                      "inputs": {
+                                        "host": {
+                                          "workflowReferenceName": "1fa9984d-555a-ef11-a317-00224806bd16"
+                                        },
+                                        "body": {
+                                          "text": "QA",
+                                          "text_1": "@body('Get_Solution_Name')?['dyna_name']",
+                                          "text_2": "@variables('PowerPages')",
+                                          "text_3": "@string(item()?['dyna_commitscope'])",
+                                          "text_4": "@variables('DeploymentId')",
+                                          "text_5": "@item()?['dyna_almsolutionid']"
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "runAfter": {},
+                                  "metadata": {
+                                    "operationMetadataId": "4bfc9c16-37e4-4432-b689-b07d4594e1c8"
+                                  },
+                                  "type": "Foreach"
+                                }
+                              }
+                            },
+                            "Prod": {
+                              "case": 538000001,
+                              "actions": {
+                                "For_each_3": {
+                                  "foreach": "@outputs('List_Solutions_to_deploy')?['body/value']",
+                                  "actions": {
+                                    "Get_Solution_Name_1": {
+                                      "runAfter": {},
+                                      "metadata": {
+                                        "operationMetadataId": "f7450c4f-a243-4005-80ef-5fa26cf317c8"
+                                      },
+                                      "type": "OpenApiConnection",
+                                      "inputs": {
+                                        "parameters": {
+                                          "entityName": "dyna_solutions",
+                                          "recordId": "@item()?['_dyna_solution_value']"
+                                        },
+                                        "host": {
+                                          "connectionName": "shared_commondataserviceforapps",
+                                          "operationId": "GetItem",
+                                          "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                                        },
+                                        "authentication": "@parameters('$authentication')"
+                                      }
+                                    },
+                                    "Condition_Power_Pages_1": {
+                                      "actions": {
+                                        "Get_Power_Pages_1": {
+                                          "runAfter": {},
+                                          "metadata": {
+                                            "operationMetadataId": "36f88470-e748-4e43-9422-470f0e4029ce"
+                                          },
+                                          "type": "OpenApiConnection",
+                                          "inputs": {
+                                            "parameters": {
+                                              "entityName": "dyna_powerpageses",
+                                              "recordId": "@item()?['_dyna_powerpages_value']"
+                                            },
+                                            "host": {
+                                              "connectionName": "shared_commondataserviceforapps",
+                                              "operationId": "GetItem",
+                                              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                                            },
+                                            "authentication": "@parameters('$authentication')"
+                                          }
+                                        },
+                                        "Set_variable_Power_Pages_2": {
+                                          "runAfter": {
+                                            "Get_Power_Pages_1": [
+                                              "Succeeded"
+                                            ]
+                                          },
+                                          "metadata": {
+                                            "operationMetadataId": "4e3981a5-fd92-486f-9629-dfa117f6f4e0"
+                                          },
+                                          "type": "SetVariable",
+                                          "inputs": {
+                                            "name": "PowerPages",
+                                            "value": "@body('Get_Power_Pages_1')?['dyna_name']"
+                                          }
+                                        }
+                                      },
+                                      "runAfter": {
+                                        "Get_Solution_Name_1": [
+                                          "Succeeded"
+                                        ]
+                                      },
+                                      "expression": {
+                                        "and": [
+                                          {
+                                            "not": {
+                                              "equals": [
+                                                "@item()?['_dyna_powerpages_value']",
+                                                "@null"
+                                              ]
+                                            }
+                                          }
+                                        ]
+                                      },
+                                      "metadata": {
+                                        "operationMetadataId": "d1dfbe50-6471-4995-8661-43f0cc9d338e"
+                                      },
+                                      "type": "If"
+                                    },
+                                    "Update_new_beginDateTime_2": {
+                                      "runAfter": {
+                                        "Condition_Power_Pages_1": [
+                                          "Succeeded"
+                                        ]
+                                      },
+                                      "metadata": {
+                                        "operationMetadataId": "869671e1-4476-4b8d-baaa-80eb20908979"
+                                      },
+                                      "type": "OpenApiConnection",
+                                      "inputs": {
+                                        "parameters": {
+                                          "entityName": "dyna_almdeployments",
+                                          "recordId": "@variables('DeploymentId')",
+                                          "item/dyna_begindatetime": "@variables('utcNow')"
+                                        },
+                                        "host": {
+                                          "connectionName": "shared_commondataserviceforapps",
+                                          "operationId": "UpdateRecord",
+                                          "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                                        },
+                                        "authentication": "@parameters('$authentication')"
+                                      }
+                                    },
+                                    "Run_a_Deployment_Process_2": {
+                                      "runAfter": {
+                                        "Update_new_beginDateTime_2": [
+                                          "Succeeded"
+                                        ]
+                                      },
+                                      "metadata": {
+                                        "operationMetadataId": "45c2edf8-d4a5-4b03-93c3-cb5a980fbd2d"
+                                      },
+                                      "type": "Workflow",
+                                      "inputs": {
+                                        "host": {
+                                          "workflowReferenceName": "1fa9984d-555a-ef11-a317-00224806bd16"
+                                        },
+                                        "body": {
+                                          "text": "PROD",
+                                          "text_1": "@body('Get_Solution_Name_1')?['dyna_name']",
+                                          "text_2": "null",
+                                          "text_3": "null",
+                                          "text_4": "@variables('DeploymentId')",
+                                          "text_5": "@item()?['dyna_almsolutionid']"
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "runAfter": {},
+                                  "metadata": {
+                                    "operationMetadataId": "33352add-4369-41b2-8bad-344eb675e06b"
+                                  },
+                                  "type": "Foreach"
+                                }
+                              }
+                            }
+                          },
+                          "default": {
+                            "actions": {}
+                          },
+                          "expression": "@variables('DeliveryType')",
+                          "metadata": {
+                            "operationMetadataId": "35ceec3b-a08b-49a7-8777-781f23e704db"
+                          },
+                          "type": "Switch"
+                        }
+                      },
+                      "runAfter": {},
+                      "metadata": {
+                        "operationMetadataId": "17132bea-dd4f-4beb-8cad-055c100f11b3"
+                      },
+                      "type": "Scope"
+                    }
+                  },
+                  "runAfter": {
+                    "First_time_or_not": [
+                      "Succeeded"
+                    ]
+                  },
+                  "expression": {
+                    "and": [
+                      {
+                        "equals": [
+                          "@variables('LaunchDeployment')",
+                          true
+                        ]
+                      }
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "8b568979-ad2c-45fe-bde7-44d7549c8f18"
+                  },
+                  "type": "If"
+                }
+              },
+              "runAfter": {
+                "Set_DeliveryType": [
+                  "Succeeded"
+                ]
+              },
+              "expression": {
+                "and": [
+                  {
+                    "equals": [
+                      "@items('For_each')?['dyna_type']",
+                      538000002
+                    ]
+                  },
+                  {
+                    "equals": [
+                      "@item()?['statecode']",
+                      0
+                    ]
+                  },
+                  {
+                    "or": [
+                      {
+                        "equals": [
+                          "@item()?['statuscode']",
+                          538000001
+                        ]
+                      },
+                      {
+                        "equals": [
+                          "@item()?['statuscode']",
+                          538000002
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "20f0d43d-fb73-4ba4-a2e8-1c7e5cf6cd93"
+              },
+              "type": "If"
+            },
+            "Set_DeploymentId": {
+              "runAfter": {},
+              "metadata": {
+                "operationMetadataId": "cdd64a4c-fd56-4623-b210-8a1ddd3bd916"
+              },
+              "type": "SetVariable",
+              "inputs": {
+                "name": "DeploymentId",
+                "value": "@item()?['dyna_almdeploymentid']"
+              }
+            },
+            "Set_DeliveryType": {
+              "runAfter": {
+                "Set_DeploymentId": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "ea2361a3-76f7-4f70-87bf-f6bbc2982a99"
+              },
+              "type": "SetVariable",
+              "inputs": {
+                "name": "DeliveryType",
+                "value": "@item()?['dyna_deliverytype']"
+              }
+            }
+          },
+          "runAfter": {
+            "Initialize_Power_Pages": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "b8ff5699-9068-4ad7-9ea4-9bdda800090a"
+          },
+          "type": "Foreach"
+        },
+        "Initialize_currentDateTime": {
+          "runAfter": {
+            "List_Deployments_in_Scheduling_only": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "1306efca-2ab0-4f72-83a8-5c34ba3c22fb"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "currentDateTime",
+                "type": "string",
+                "value": "@addMinutes(utcNow(),1)"
+              }
+            ]
+          }
+        },
+        "Initialize_FinalDateTime": {
+          "runAfter": {
+            "For_each_1": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "32e7a73e-8248-4a2f-ac50-71390e0cbbc8"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "FinalDateTime",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "Initialize_compareDateTime": {
+          "runAfter": {
+            "Initialize_currentDateTime": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "826d7496-6fb3-4753-9f76-33dd34588ef8"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "compareDateTime",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "For_each_1": {
+          "foreach": "@outputs('List_Deployments_in_Scheduling_only')?['body/value']",
+          "actions": {
+            "Set_compareDateTime_1": {
+              "runAfter": {},
+              "metadata": {
+                "operationMetadataId": "625c869c-343f-4e8a-b55e-6d05b3eddb91"
+              },
+              "type": "SetVariable",
+              "inputs": {
+                "name": "compareDateTime",
+                "value": "@items('For_each_1')?['dyna_begindatetime']"
+              }
+            }
+          },
+          "runAfter": {
+            "Initialize_compareDateTime": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "48c79bdd-b3da-4952-9e83-81a4f4685bf7"
+          },
+          "type": "Foreach"
+        },
+        "Initialize_LaunchDeployment": {
+          "runAfter": {
+            "Initialize_FinalDateTime": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "82c414ab-ebaf-4b69-a24c-3ccdb22601a4"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "LaunchDeployment",
+                "type": "boolean",
+                "value": false
+              }
+            ]
+          }
+        },
+        "Initialize_DeploymentId": {
+          "runAfter": {
+            "Initialize_LaunchDeployment": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "02ebaf72-08ec-4f9f-bdd4-ae72241b700b"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "DeploymentId",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "Initialize_DeliveryType": {
+          "runAfter": {
+            "Initialize_DeploymentId": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "a26ceb16-9e4a-4461-b473-ae88a83e6aa5"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "DeliveryType",
+                "type": "integer"
+              }
+            ]
+          }
+        },
+        "Initialize_Power_Pages": {
+          "runAfter": {
+            "Initialize_DeliveryType": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "ec65d8e6-bae8-4f08-b5f7-cb91792d93a0"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "PowerPages",
+                "type": "string",
+                "value": "NA"
+              }
+            ]
+          }
+        },
+        "utcNow": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "9834a54b-8ed1-4f5c-97ab-f5b88d011ff4"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "utcNow",
+                "type": "string",
+                "value": "@utcNow()"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "templateName": ""
+  },
+  "schemaVersion": "1.0.0.0"
+}

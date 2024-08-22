@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImportExportXml version="9.2.24071.208" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SolutionManifest>
+    <UniqueName>AutomaticALM</UniqueName>
+    <LocalizedNames>
+      <LocalizedName description="Automate ALM Accelerator" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions />
+    <Version>0.0.0.0</Version>
+    <Managed>2</Managed>
+    <Publisher>
+      <UniqueName>Dynagile</UniqueName>
+      <LocalizedNames>
+        <LocalizedName description="Dynagile Consulting" languagecode="1033" />
+      </LocalizedNames>
+      <Descriptions />
+      <EMailAddress>aurelien.clere@dynagile.fr</EMailAddress>
+      <SupportingWebsiteUrl>https://powerazure365.com</SupportingWebsiteUrl>
+      <CustomizationPrefix>dyna</CustomizationPrefix>
+      <CustomizationOptionValuePrefix>53800</CustomizationOptionValuePrefix>
+      <Addresses>
+        <Address>
+          <AddressNumber>1</AddressNumber>
+          <AddressTypeCode>1</AddressTypeCode>
+          <City xsi:nil="true"></City>
+          <County xsi:nil="true"></County>
+          <Country xsi:nil="true"></Country>
+          <Fax xsi:nil="true"></Fax>
+          <FreightTermsCode xsi:nil="true"></FreightTermsCode>
+          <ImportSequenceNumber xsi:nil="true"></ImportSequenceNumber>
+          <Latitude xsi:nil="true"></Latitude>
+          <Line1 xsi:nil="true"></Line1>
+          <Line2 xsi:nil="true"></Line2>
+          <Line3 xsi:nil="true"></Line3>
+          <Longitude xsi:nil="true"></Longitude>
+          <Name xsi:nil="true"></Name>
+          <PostalCode xsi:nil="true"></PostalCode>
+          <PostOfficeBox xsi:nil="true"></PostOfficeBox>
+          <PrimaryContactName xsi:nil="true"></PrimaryContactName>
+          <ShippingMethodCode>1</ShippingMethodCode>
+          <StateOrProvince xsi:nil="true"></StateOrProvince>
+          <Telephone1 xsi:nil="true"></Telephone1>
+          <Telephone2 xsi:nil="true"></Telephone2>
+          <Telephone3 xsi:nil="true"></Telephone3>
+          <TimeZoneRuleVersionNumber xsi:nil="true"></TimeZoneRuleVersionNumber>
+          <UPSZone xsi:nil="true"></UPSZone>
+          <UTCOffset xsi:nil="true"></UTCOffset>
+          <UTCConversionTimeZoneCode xsi:nil="true"></UTCConversionTimeZoneCode>
+        </Address>
+        <Address>
+          <AddressNumber>2</AddressNumber>
+          <AddressTypeCode>1</AddressTypeCode>
+          <City xsi:nil="true"></City>
+          <County xsi:nil="true"></County>
+          <Country xsi:nil="true"></Country>
+          <Fax xsi:nil="true"></Fax>
+          <FreightTermsCode xsi:nil="true"></FreightTermsCode>
+          <ImportSequenceNumber xsi:nil="true"></ImportSequenceNumber>
+          <Latitude xsi:nil="true"></Latitude>
+          <Line1 xsi:nil="true"></Line1>
+          <Line2 xsi:nil="true"></Line2>
+          <Line3 xsi:nil="true"></Line3>
+          <Longitude xsi:nil="true"></Longitude>
+          <Name xsi:nil="true"></Name>
+          <PostalCode xsi:nil="true"></PostalCode>
+          <PostOfficeBox xsi:nil="true"></PostOfficeBox>
+          <PrimaryContactName xsi:nil="true"></PrimaryContactName>
+          <ShippingMethodCode>1</ShippingMethodCode>
+          <StateOrProvince xsi:nil="true"></StateOrProvince>
+          <Telephone1 xsi:nil="true"></Telephone1>
+          <Telephone2 xsi:nil="true"></Telephone2>
+          <Telephone3 xsi:nil="true"></Telephone3>
+          <TimeZoneRuleVersionNumber xsi:nil="true"></TimeZoneRuleVersionNumber>
+          <UPSZone xsi:nil="true"></UPSZone>
+          <UTCOffset xsi:nil="true"></UTCOffset>
+          <UTCConversionTimeZoneCode xsi:nil="true"></UTCConversionTimeZoneCode>
+        </Address>
+      </Addresses>
+    </Publisher>
+    <RootComponents>
+      <RootComponent type="1" schemaName="cat_deploymentprofile" behavior="1" />
+      <RootComponent type="1" schemaName="dyna_almdeployment" behavior="0" />
+      <RootComponent type="1" schemaName="dyna_almdevenvironment" behavior="0" />
+      <RootComponent type="1" schemaName="dyna_almsolution" behavior="0" />
+      <RootComponent type="1" schemaName="dyna_almtrackinghistory" behavior="0" />
+      <RootComponent type="1" schemaName="dyna_powerpages" behavior="0" />
+      <RootComponent type="1" schemaName="dyna_solution" behavior="0" />
+      <RootComponent type="1" schemaName="environmentvariablevalue" behavior="0" />
+      <RootComponent type="29" id="{0a48ec58-b854-ef11-a317-000d3a307e6b}" behavior="0" />
+      <RootComponent type="29" id="{0a7b440d-e345-ee11-be6e-000d3ab88280}" behavior="0" />
+      <RootComponent type="29" id="{1fa9984d-555a-ef11-a317-00224806bd16}" behavior="0" />
+      <RootComponent type="29" id="{219cb947-e445-ee11-be6e-000d3aba3dad}" behavior="0" />
+      <RootComponent type="29" id="{30e14cf9-c04d-ee11-be6e-000d3aba3dad}" behavior="0" />
+      <RootComponent type="29" id="{30f5c98e-c458-ef11-a316-000d3a5c97af}" behavior="0" />
+      <RootComponent type="29" id="{5d14b3f8-d454-ef11-a317-00224806bd16}" behavior="0" />
+      <RootComponent type="29" id="{672f50ec-9958-ef11-a317-00224806bd16}" behavior="0" />
+      <RootComponent type="29" id="{6e9c4a6f-5d46-ee11-be6e-000d3aba3dad}" behavior="0" />
+      <RootComponent type="29" id="{6ea8a9eb-c458-ef11-a316-000d3a5c97af}" behavior="0" />
+      <RootComponent type="29" id="{736ee3ec-f945-ee11-be6e-000d3aba3dad}" behavior="0" />
+      <RootComponent type="29" id="{81e835a8-8151-ee11-be6e-000d3a65936e}" behavior="0" />
+      <RootComponent type="29" id="{8c00b58a-9858-ef11-a317-00224806bd16}" behavior="0" />
+      <RootComponent type="29" id="{9b00f5fb-e745-ee11-be6e-000d3aba3dad}" behavior="0" />
+      <RootComponent type="29" id="{9edadfd3-e445-ee11-be6e-000d3aba3dad}" behavior="0" />
+      <RootComponent type="29" id="{aae5cf8b-e845-ee11-be6e-000d3aba3dad}" behavior="0" />
+      <RootComponent type="29" id="{b8a8d226-c558-ef11-a317-000d3a307e6b}" behavior="0" />
+      <RootComponent type="29" id="{bbbea948-1652-ee11-be6e-000d3ab9cef5}" behavior="0" />
+      <RootComponent type="29" id="{dcf348a4-e545-ee11-be6e-000d3a65936e}" behavior="0" />
+      <RootComponent type="29" id="{e8b7ffda-965c-ef11-bfe3-00224806bd16}" behavior="0" />
+      <RootComponent type="29" id="{f4215e8b-8251-ee11-be6e-000d3aba3dad}" behavior="0" />
+      <RootComponent type="300" schemaName="dyna_automationalmdefaultcommandlibrary_409c3" behavior="0" />
+      <RootComponent type="61" schemaName="dyna_almsolution" behavior="0" />
+      <RootComponent type="61" schemaName="dyna_article" behavior="0" />
+      <RootComponent type="61" schemaName="dyna_cicd_svg" behavior="0" />
+      <RootComponent type="61" schemaName="dyna_dev" behavior="0" />
+      <RootComponent type="61" schemaName="dyna_github" behavior="0" />
+      <RootComponent type="61" schemaName="dyna_log" behavior="0" />
+      <RootComponent type="61" schemaName="dyna_logo" behavior="0" />
+      <RootComponent type="61" schemaName="dyna_powerpagesicon" behavior="0" />
+      <RootComponent type="61" schemaName="dyna_solutionicon" behavior="0" />
+      <RootComponent type="61" schemaName="dyna_utils" behavior="0" />
+      <RootComponent type="61" schemaName="dyna_variable" behavior="0" />
+      <RootComponent type="61" schemaName="dyna_youtube" behavior="0" />
+      <RootComponent type="62" schemaName="dyna_AutomationALM" behavior="0" />
+      <RootComponent type="80" schemaName="dyna_AutomationALM" behavior="0" />
+      <RootComponent type="9" schemaName="dyna_commitscope" behavior="0" />
+      <RootComponent type="9" schemaName="dyna_deliverytype" behavior="0" />
+      <RootComponent type="9" schemaName="dyna_deploymenttype" behavior="0" />
+    </RootComponents>
+    <MissingDependencies>
+      <MissingDependency>
+        <Required type="1" schemaName="cat_deploymentenvironment" displayName="Deployment Environment" solution="CenterofExcellenceALMAccelerator (1.0.20240305.1)" />
+        <Dependent type="29" displayName="99 - Helper - Get Prod Environment" id="{6e9c4a6f-5d46-ee11-be6e-000d3aba3dad}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="cat_deploymentenvironment" displayName="Deployment Environment" solution="CenterofExcellenceALMAccelerator (1.0.20240305.1)" />
+        <Dependent type="29" displayName="99 - Helper - Get Test Environment" id="{736ee3ec-f945-ee11-be6e-000d3aba3dad}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="cat_deploymentenvironment" displayName="Deployment Environment" solution="CenterofExcellenceALMAccelerator (1.0.20240305.1)" />
+        <Dependent type="29" displayName="99 - Helper - Get Validation Environment" id="{9b00f5fb-e745-ee11-be6e-000d3aba3dad}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="cat_deploymentprofile" displayName="Deployment Profile" solution="CenterofExcellenceALMAccelerator (1.0.20240305.1)" />
+        <Dependent type="1" schemaName="cat_deploymentprofile" displayName="Deployment Profile" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="cat_deploymentstep" displayName="Deployment Step" solution="CenterofExcellenceALMAccelerator (1.0.20240305.1)" />
+        <Dependent type="29" displayName="99 - Helper - Get Prod Environment" id="{6e9c4a6f-5d46-ee11-be6e-000d3aba3dad}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="cat_deploymentstep" displayName="Deployment Step" solution="CenterofExcellenceALMAccelerator (1.0.20240305.1)" />
+        <Dependent type="29" displayName="99 - Helper - Get Test Environment" id="{736ee3ec-f945-ee11-be6e-000d3aba3dad}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="cat_deploymentstep" displayName="Deployment Step" solution="CenterofExcellenceALMAccelerator (1.0.20240305.1)" />
+        <Dependent type="29" displayName="99 - Helper - Get Validation Environment" id="{9b00f5fb-e745-ee11-be6e-000d3aba3dad}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="cat_usersetting" displayName="User Setting" solution="CenterofExcellenceALMAccelerator (1.0.20240305.1)" />
+        <Dependent type="29" displayName="40 - Child - Get Data deployment settings" id="{aae5cf8b-e845-ee11-be6e-000d3aba3dad}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="environmentvariablevalue" displayName="Environment Variable Value" solution="EnvironmentVariables (1.0.2406.4)" />
+        <Dependent type="1" schemaName="environmentvariablevalue" displayName="Environment Variable Value" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="environmentvariablevalue" displayName="Environment Variable Value" solution="EnvironmentVariables (1.0.2406.4)" />
+        <Dependent type="2" schemaName="createdby" displayName="Created By" parentSchemaName="environmentvariablevalue" parentDisplayName="Environment Variable Value" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="environmentvariablevalue" displayName="Environment Variable Value" solution="EnvironmentVariables (1.0.2406.4)" />
+        <Dependent type="2" schemaName="createdonbehalfby" displayName="Created By (Delegate)" parentSchemaName="environmentvariablevalue" parentDisplayName="Environment Variable Value" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="environmentvariablevalue" displayName="Environment Variable Value" solution="EnvironmentVariables (1.0.2406.4)" />
+        <Dependent type="2" schemaName="modifiedby" displayName="Modified By" parentSchemaName="environmentvariablevalue" parentDisplayName="Environment Variable Value" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="environmentvariablevalue" displayName="Environment Variable Value" solution="EnvironmentVariables (1.0.2406.4)" />
+        <Dependent type="2" schemaName="modifiedonbehalfby" displayName="Modified By (Delegate)" parentSchemaName="environmentvariablevalue" parentDisplayName="Environment Variable Value" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="environmentvariablevalue" displayName="Environment Variable Value" solution="EnvironmentVariables (1.0.2406.4)" />
+        <Dependent type="2" schemaName="ownerid" displayName="Owner" parentSchemaName="environmentvariablevalue" parentDisplayName="Environment Variable Value" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="environmentvariablevalue" displayName="Environment Variable Value" solution="EnvironmentVariables (1.0.2406.4)" />
+        <Dependent type="2" schemaName="owningbusinessunit" displayName="Owning Business Unit" parentSchemaName="environmentvariablevalue" parentDisplayName="Environment Variable Value" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="environmentvariablevalue" displayName="Environment Variable Value" solution="EnvironmentVariables (1.0.2406.4)" />
+        <Dependent type="2" schemaName="owningteam" displayName="Owning Team" parentSchemaName="environmentvariablevalue" parentDisplayName="Environment Variable Value" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="environmentvariablevalue" displayName="Environment Variable Value" solution="EnvironmentVariables (1.0.2406.4)" />
+        <Dependent type="2" schemaName="owninguser" displayName="Owning User" parentSchemaName="environmentvariablevalue" parentDisplayName="Environment Variable Value" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="environmentvariablevalue" displayName="Environment Variable Value" solution="EnvironmentVariables (1.0.2406.4)" />
+        <Dependent type="2" schemaName="versionnumber" displayName="Version Number" parentSchemaName="environmentvariablevalue" parentDisplayName="Environment Variable Value" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="environmentvariablevalue" displayName="Environment Variable Value" solution="EnvironmentVariables (1.0.2406.4)" />
+        <Dependent type="62" schemaName="dyna_AutomationALM" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="environmentvariablevalue" displayName="Environment Variable Value" solution="EnvironmentVariables (1.0.2406.4)" />
+        <Dependent type="80" schemaName="dyna_AutomationALM" displayName="Automation ALM" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="cat_name" displayName="Name" parentSchemaName="cat_deploymentprofile" parentDisplayName="Deployment Profile" solution="CenterofExcellenceALMAccelerator (1.0.20240305.1)" />
+        <Dependent type="10" schemaName="dyna_almdeployment_ALMDeploymentProfile_cat_deploymentprofile" displayName="dyna_almdeployment_ALMDeploymentProfile_cat_deploymentprofile" parentSchemaName="cat_deploymentprofile" parentDisplayName="Deployment Profile" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="SettingDefinition" displayName="AppChannel" solution="msdyn_AppFrameworkInfraExtensions (1.0.0.11)" id.uniquename="AppChannel" />
+        <Dependent type="AppSetting" displayName="parentappmoduleid.uniquename=dyna_AutomationALM,settingdefinitionid.uniquename=AppChannel" id.parentappmoduleid.uniquename="dyna_AutomationALM" id.settingdefinitionid.uniquename="AppChannel" />
+      </MissingDependency>
+    </MissingDependencies>
+  </SolutionManifest>
+</ImportExportXml>

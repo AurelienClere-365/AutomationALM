@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <systemform>
+    <formid>{48199c91-4b0e-4b11-b632-96f1705ad756}</formid>
+    <IntroducedVersion>1.0.0.2</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form headerdensity="HighWithControls">
+      <tabs>
+        <tab verticallayout="true" id="{97859c90-1b80-4080-9bef-bbc0c69e1c0f}" IsUserDefined="1">
+          <labels>
+            <label description="General" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section showlabel="false" showbar="false" IsUserDefined="0" id="{60978b97-4fa0-4bbc-9b77-e0cb4c7eb594}">
+                  <labels>
+                    <label description="General" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{b73c73cc-f805-4198-9cdd-e3415d4f1795}">
+                        <labels>
+                          <label description="Name" languagecode="1033" />
+                        </labels>
+                        <control id="dyna_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="dyna_name" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{66dc8ce4-f0f3-48cd-a2c8-0180a382054c}" locklevel="0" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="URL" languagecode="1033" />
+                        </labels>
+                        <control id="dyna_url" classid="{71716B6C-711E-476C-8AB8-5D11542BFB47}" datafieldname="dyna_url" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{5a3f0377-4ef9-46e0-80b4-3959adda6a81}">
+                        <labels>
+                          <label description="Owner" languagecode="1033" />
+                        </labels>
+                        <control id="ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <header id="{88276616-64ed-4f0f-a38f-ecda21cad6fb}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+        <rows>
+          <row>
+            <cell id="{3500532b-e44a-47d1-b359-3d5cb8f604de}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{09e7c314-f701-42dd-8470-f05fe20a7cb9}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{79d7c8a0-127e-4a01-82c3-0c5698609753}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </header>
+      <footer id="{fb5e6020-d4c3-4082-913d-c942e8d67a97}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+        <rows>
+          <row>
+            <cell id="{7baf6fd6-a20b-4095-9a01-b2f99e7824f2}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{ea4f58ac-98b5-4755-b147-21de0b05ab1d}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{fe0f9394-6e33-40a2-b651-aeac28dfc29f}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </footer>
+      <DisplayConditions Order="0" FallbackForm="true">
+        <Everyone />
+      </DisplayConditions>
+      <formLibraries>
+        <Library name="dyna_utils" libraryUniqueId="{8cbcf643-3d02-4d8d-935e-e223dc4e83e1}" />
+      </formLibraries>
+      <events>
+        <event name="onchange" application="false" active="false" attribute="dyna_url">
+          <Handlers>
+            <Handler functionName="verifyDevUrl" libraryName="dyna_utils" handlerUniqueId="{623b6ab5-b676-4b18-8a5c-40482dce2f54}" enabled="true" parameters="" passExecutionContext="false" />
+          </Handlers>
+        </event>
+      </events>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Information" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="A form for this entity." languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>

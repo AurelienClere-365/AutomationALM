@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{bbb87618-f55a-4aa5-bc37-b4372595d135}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="dyna_name" select="1" icon="1" preview="1">
+        <row name="result" id="dyna_almdeploymentid">
+          <cell name="dyna_name" width="248" />
+          <cell name="dyna_deliverytype" width="237" />
+          <cell name="dyna_type" width="178" />
+          <cell name="dyna_begindatetime" width="168" />
+          <cell name="statecode" width="100" />
+          <cell name="statuscode" width="119" />
+          <cell name="createdon" width="125" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="dyna_almdeployment">
+          <attribute name="dyna_almdeploymentid" />
+          <attribute name="dyna_name" />
+          <attribute name="createdon" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+          </filter>
+          <attribute name="dyna_type" />
+          <attribute name="dyna_deliverytype" />
+          <attribute name="statuscode" />
+          <attribute name="statecode" />
+          <attribute name="dyna_begindatetime" />
+          <order attribute="dyna_begindatetime" descending="true" />
+          <order attribute="dyna_name" descending="false" />
+          <order attribute="dyna_deliverytype" descending="false" />
+          <order attribute="statuscode" descending="false" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Active ALM Deployments" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

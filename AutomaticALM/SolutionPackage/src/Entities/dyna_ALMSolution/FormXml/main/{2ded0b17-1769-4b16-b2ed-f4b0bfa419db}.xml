@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <systemform>
+    <formid>{2ded0b17-1769-4b16-b2ed-f4b0bfa419db}</formid>
+    <IntroducedVersion>1.0</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form headerdensity="HighWithControls">
+      <tabs>
+        <tab verticallayout="true" id="{bece15da-659d-4c2e-8abb-c0da95503666}" IsUserDefined="1">
+          <labels>
+            <label description="General" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section showlabel="false" showbar="false" IsUserDefined="0" id="{473d50d6-9748-43a2-b85b-ac7a7e78a144}">
+                  <labels>
+                    <label description="General" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{4fa2d654-5ae4-4918-9c32-6a976426258b}" locklevel="0" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="ALM Deployment" languagecode="1033" />
+                        </labels>
+                        <control id="dyna_almdeployment" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="dyna_almdeployment" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{37baa50f-0fa9-4e6f-abd0-a066f4bb14b7}" locklevel="0" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Step" languagecode="1033" />
+                        </labels>
+                        <control id="dyna_step" classid="{C6D124CA-7EDA-4A60-AEA9-7FB8D318B68F}" datafieldname="dyna_step" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{27c1c82c-bb13-449d-afca-02c65152f660}" locklevel="0" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Solution" languagecode="1033" />
+                        </labels>
+                        <control id="dyna_solution" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="dyna_solution" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{c52e4f42-e36c-4b5c-b45c-354751642152}" locklevel="0" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Power Pages" languagecode="1033" />
+                        </labels>
+                        <control id="dyna_powerpages" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="dyna_powerpages" disabled="false">
+                          <parameters>
+                            <useMainFormDialogForCreate>true</useMainFormDialogForCreate>
+                            <useMainFormDialogForEdit>true</useMainFormDialogForEdit>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{e9faf9ef-ea1e-4756-a9ac-50aac6e4510a}" locklevel="0" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Commit Scope" languagecode="1033" />
+                        </labels>
+                        <control id="dyna_commitscope" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="dyna_commitscope" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{12730f5b-60b6-434a-904c-5558d7a5e547}" visible="false" locklevel="1">
+                        <labels>
+                          <label description="Name" languagecode="1033" />
+                        </labels>
+                        <control id="dyna_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="dyna_name" disabled="true" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{832ade65-fc14-4d70-8513-69fbbd9e3989}">
+                        <labels>
+                          <label description="Owner" languagecode="1033" />
+                        </labels>
+                        <control id="ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{a8088906-2dc7-4149-b7cf-7c3e9c153a19}" locklevel="1" colspan="1" rowspan="1" visible="false">
+                        <labels>
+                          <label description="Created On" languagecode="1033" />
+                        </labels>
+                        <control id="createdon" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="createdon" disabled="true" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <header id="{dac086b6-5c32-48f5-a4d8-243af19258da}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+        <rows>
+          <row>
+            <cell id="{6b9ff7f4-23ef-43ed-92f0-997c742a6a41}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{801ffb33-723a-432e-9a59-2d2cf0de3a78}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{80102f17-4e28-47e8-90f1-fcf973db4fb0}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </header>
+      <footer id="{7493c6be-603a-4809-8e39-3af9d832e851}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+        <rows>
+          <row>
+            <cell id="{1d110870-1709-4e28-a850-487100059a2c}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{eb3026c8-ae28-4313-af3c-a51a7303946c}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{022e3236-4e0d-48ab-8eab-b13946f31457}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </footer>
+      <DisplayConditions Order="0" FallbackForm="true">
+        <Everyone />
+      </DisplayConditions>
+      <formLibraries>
+        <Library name="dyna_utils" libraryUniqueId="{9e598cea-03d9-4703-8f55-68e170853f8d}" />
+      </formLibraries>
+      <events>
+        <event name="onchange" application="false" active="false" attribute="dyna_step">
+          <Handlers>
+            <Handler functionName="solutionChangeStep" libraryName="dyna_utils" handlerUniqueId="{a660900d-77d7-4614-b031-aeb9524d565f}" enabled="true" parameters="" passExecutionContext="true" />
+          </Handlers>
+        </event>
+        <event name="onchange" application="false" active="false" attribute="dyna_solution">
+          <Handlers>
+            <Handler functionName="solutionChange" libraryName="dyna_utils" handlerUniqueId="{405f25ff-fec6-40b4-84ed-9f9a4f82735e}" enabled="true" parameters="" passExecutionContext="true" />
+          </Handlers>
+        </event>
+        <event name="onchange" application="false" active="false" attribute="dyna_almdeployment">
+          <Handlers>
+            <Handler functionName="solutionDeploymentChange" libraryName="dyna_utils" handlerUniqueId="{f12c0a05-f3b6-477a-9828-fa36524eba99}" enabled="true" parameters="" passExecutionContext="true" />
+          </Handlers>
+        </event>
+        <event name="onload" application="false" active="false">
+          <Handlers>
+            <Handler functionName="solutionLoad" libraryName="dyna_utils" handlerUniqueId="{194a98f6-80fa-492b-8056-904826d900c9}" enabled="true" parameters="" passExecutionContext="true" />
+          </Handlers>
+        </event>
+        <event name="onchange" application="false" active="false" attribute="dyna_powerpages">
+          <Handlers>
+            <Handler functionName="changePowerPages" libraryName="dyna_utils" handlerUniqueId="{ed356489-d972-49de-86e7-f0c50c9f0a7a}" enabled="true" parameters="" passExecutionContext="true" />
+          </Handlers>
+        </event>
+        <event name="onchange" application="false" active="false" attribute="dyna_commitscope">
+          <Handlers>
+            <Handler functionName="changeCommitScope" libraryName="dyna_utils" handlerUniqueId="{bf7b7747-8f9c-4184-86dd-ea4b71c5777e}" enabled="true" parameters="" passExecutionContext="true" />
+          </Handlers>
+        </event>
+      </events>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Information" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="A form for this entity." languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>

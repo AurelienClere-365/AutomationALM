@@ -1,0 +1,189 @@
+[
+  {
+    "CdsFCBContext": "{\"FileType\":true,\"ImageExternalStorage\":true}",
+    "EntitySetName": "dyna_almdeployments",
+    "IsHidden": false,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "LogicalName": "dyna_almdeployment",
+    "MaxGetRowsCount": 500,
+    "Name": "ALM Deployments",
+    "NativeCDSDataSourceInfoNameMapping": {
+      "_ownerid_value": "Owner",
+      "createdby": "Created By",
+      "createdon": "Created On",
+      "createdonbehalfby": "Created By (Delegate)",
+      "dyna_ALMDeployment_ALMSolution": "ALM Solutions",
+      "dyna_ALMDeployment_ALMTrackingHistory": "ALM Tracking Histories",
+      "dyna_almdeployment_AsyncOperations": "System Jobs",
+      "dyna_almdeployment_BulkDeleteFailures": "Bulk Delete Failures",
+      "dyna_almdeployment_DuplicateBaseRecord": "Duplicate Records (dyna_almdeployment_DuplicateBaseRecord)",
+      "dyna_almdeployment_DuplicateMatchingRecord": "Duplicate Records (dyna_almdeployment_DuplicateMatchingRecord)",
+      "dyna_almdeployment_MailboxTrackingFolders": "Mailbox Auto Tracking Folders",
+      "dyna_almdeployment_PrincipalObjectAttributeAccesses": "Field Sharing",
+      "dyna_almdeployment_ProcessSession": "Process Sessions",
+      "dyna_almdeployment_SyncErrors": "Sync Errors",
+      "dyna_almdeploymentid": "ALM Deployment",
+      "dyna_deliverytype": "Delivery Type",
+      "dyna_duplicate": "Duplicate",
+      "dyna_formatscheduler": "Format Scheduler",
+      "dyna_launch": "Launch",
+      "dyna_name": "Name",
+      "dyna_startdatetime": "Start DateTime",
+      "dyna_type": "Type",
+      "importsequencenumber": "Import Sequence Number",
+      "modifiedby": "Modified By",
+      "modifiedon": "Modified On",
+      "modifiedonbehalfby": "Modified By (Delegate)",
+      "overriddencreatedon": "Record Created On",
+      "owningbusinessunit": "Owning Business Unit",
+      "owningteam": "Owning Team",
+      "owninguser": "Owning User",
+      "statecode": "Status",
+      "statuscode": "Status Reason",
+      "timezoneruleversionnumber": "Time Zone Rule Version Number",
+      "utcconversiontimezonecode": "UTC Conversion Time Zone Code",
+      "versionnumber": "Version Number"
+    },
+    "PreferredName": "ALM Deployments",
+    "Type": "NativeCDSDataSourceInfo"
+  },
+  {
+    "DisplayName": "ALM Deployments (Views)",
+    "Name": "_dyna_almdeployment_views",
+    "RelatedEntityName": "ALM Deployments",
+    "TrimmedViewName": true,
+    "Type": "ViewInfo",
+    "ViewInfoNameMapping": {
+      "12c113da-52ac-45df-b62c-72fd4af89d9d": "ALM Deployment Associated View",
+      "3647d7c9-d432-459f-b81c-1453b9f77148": "ALM Deployment Advanced Find View",
+      "a880e006-0637-47e4-8e78-6af56e323c74": "Inactive ALM Deployments",
+      "bbb87618-f55a-4aa5-bc37-b4372595d135": "Active ALM Deployments",
+      "ffb42547-cccf-462f-96f0-d852429db989": "ALM Deployment Lookup View"
+    }
+  },
+  {
+    "DisplayName": "Duplicate (ALM Deployments)",
+    "Name": "dyna_almdeployment_dyna_duplicate",
+    "OptionSetInfoNameMapping": {
+      "0": "No",
+      "1": "Yes"
+    },
+    "OptionSetIsBooleanValued": true,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "dyna_duplicate",
+        "OptionSetReferenceEntityName": "ALM Deployments"
+      }
+    },
+    "OptionSetTypeKey": "BooleanType",
+    "RelatedColumnInvariantName": "dyna_duplicate",
+    "RelatedEntityName": "ALM Deployments",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Launch (ALM Deployments)",
+    "Name": "dyna_almdeployment_dyna_launch",
+    "OptionSetInfoNameMapping": {
+      "0": "No",
+      "1": "Yes"
+    },
+    "OptionSetIsBooleanValued": true,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "dyna_launch",
+        "OptionSetReferenceEntityName": "ALM Deployments"
+      }
+    },
+    "OptionSetTypeKey": "BooleanType",
+    "RelatedColumnInvariantName": "dyna_launch",
+    "RelatedEntityName": "ALM Deployments",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Status (ALM Deployments)",
+    "Name": "dyna_almdeployment_statecode",
+    "OptionSetInfoNameMapping": {
+      "0": "Active",
+      "1": "Inactive"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statecode",
+        "OptionSetReferenceEntityName": "ALM Deployments"
+      }
+    },
+    "OptionSetTypeKey": "StateType",
+    "RelatedColumnInvariantName": "statecode",
+    "RelatedEntityName": "ALM Deployments",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Status Reason (ALM Deployments)",
+    "Name": "dyna_almdeployment_statuscode",
+    "OptionSetInfoNameMapping": {
+      "1": "Draft",
+      "2": "Deactivated",
+      "538000001": "Waiting",
+      "538000002": "In Progress",
+      "538000003": "Ended"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statuscode",
+        "OptionSetReferenceEntityName": "ALM Deployments"
+      }
+    },
+    "OptionSetTypeKey": "StatusType",
+    "RelatedColumnInvariantName": "statuscode",
+    "RelatedEntityName": "ALM Deployments",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Delivery Type",
+    "Name": "dyna_deliverytype",
+    "OptionSetInfoNameMapping": {
+      "538000000": "Validation and/or Test",
+      "538000001": "Production"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": true,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "dyna_deliverytype",
+        "OptionSetReferenceEntityName": "ALM Deployments"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "dyna_deliverytype",
+    "RelatedEntityName": "ALM Deployments",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Deployment Type",
+    "Name": "dyna_deploymenttype",
+    "OptionSetInfoNameMapping": {
+      "538000000": "Right away",
+      "538000001": "On-demand",
+      "538000002": "Scheduling"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": true,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "dyna_type",
+        "OptionSetReferenceEntityName": "ALM Deployments"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "dyna_type",
+    "RelatedEntityName": "ALM Deployments",
+    "Type": "OptionSetInfo"
+  }
+]

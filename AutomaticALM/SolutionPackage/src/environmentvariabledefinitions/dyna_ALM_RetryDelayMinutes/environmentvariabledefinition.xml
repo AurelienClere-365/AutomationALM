@@ -1,0 +1,14 @@
+<environmentvariabledefinition schemaname="dyna_ALM_RetryDelayMinutes">
+  <defaultvalue>12</defaultvalue>
+  <description default="Number of minutes in delay between each retry">
+    <label description="Number of minutes in delay between each retry" languagecode="1033" />
+  </description>
+  <displayname default="ALM_RetryDelayMinutes">
+    <label description="ALM_RetryDelayMinutes" languagecode="1033" />
+  </displayname>
+  <introducedversion>1.0.0.2</introducedversion>
+  <iscustomizable>1</iscustomizable>
+  <isrequired>0</isrequired>
+  <secretstore>0</secretstore>
+  <type>100000001</type>
+</environmentvariabledefinition>

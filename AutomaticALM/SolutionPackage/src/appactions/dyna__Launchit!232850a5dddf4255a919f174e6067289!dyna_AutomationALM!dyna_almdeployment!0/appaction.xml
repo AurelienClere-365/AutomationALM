@@ -1,0 +1,37 @@
+<appaction uniquename="dyna__Launchit!232850a5dddf4255a919f174e6067289!dyna_AutomationALM!dyna_almdeployment!0">
+  <appmoduleid>
+    <uniquename>dyna_AutomationALM</uniquename>
+  </appmoduleid>
+  <buttonlabeltext default="Launch it !">
+    <label description="Launch it !" languagecode="1033" />
+  </buttonlabeltext>
+  <context>1</context>
+  <contextentity>
+    <logicalname>dyna_almdeployment</logicalname>
+  </contextentity>
+  <contextvalue>dyna_almdeployment</contextvalue>
+  <fonticon>CloudUpload</fonticon>
+  <hidden>0</hidden>
+  <iscustomizable>1</iscustomizable>
+  <isdisabled>0</isdisabled>
+  <isgrouptitlehidden>0</isgrouptitlehidden>
+  <location>0</location>
+  <name>Launchit!232850a5dddf4255a919f174e6067289</name>
+  <onclickeventformulacomponentlibraryid>
+    <name>dyna_automationalmdefaultcommandlibrary_409c3</name>
+  </onclickeventformulacomponentlibraryid>
+  <onclickeventformulacomponentname>dcce71e496844d228c2582da76d2fe30</onclickeventformulacomponentname>
+  <onclickeventformulafunctionname>OnSelect</onclickeventformulafunctionname>
+  <onclickeventtype>1</onclickeventtype>
+  <origin>0</origin>
+  <sequence>100100067.5000000000</sequence>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+  <type>0</type>
+  <visibilityformulacomponentlibraryid>
+    <name>dyna_automationalmdefaultcommandlibrary_409c3</name>
+  </visibilityformulacomponentlibraryid>
+  <visibilityformulacomponentname>dcce71e496844d228c2582da76d2fe30</visibilityformulacomponentname>
+  <visibilityformulafunctionname>Visible</visibilityformulafunctionname>
+  <visibilitytype>1</visibilitytype>
+</appaction>

@@ -1,0 +1,13 @@
+<environmentvariabledefinition schemaname="dyna_almdevopsprojectname">
+  <description default="Name of the DevOps Project link to ALM">
+    <label description="Name of the DevOps Project link to ALM" languagecode="1033" />
+  </description>
+  <displayname default="ALM_DevOps_ProjectName">
+    <label description="ALM_DevOps_ProjectName" languagecode="1033" />
+  </displayname>
+  <introducedversion>1.0.0.1</introducedversion>
+  <iscustomizable>1</iscustomizable>
+  <isrequired>0</isrequired>
+  <secretstore>0</secretstore>
+  <type>100000000</type>
+</environmentvariabledefinition>

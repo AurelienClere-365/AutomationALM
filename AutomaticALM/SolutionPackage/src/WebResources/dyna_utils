@@ -1,0 +1,370 @@
+function DisplayNotification(_message,_type,_id,_time) {
+    var message = _message;
+    var type = _type; //INFO, WARNING, ERROR
+    var id = _id; //Notification Id
+    var time = _time; //Display time in milliseconds
+
+    //Display the notification
+    Xrm.Page.ui.setFormNotification(message, type, id);
+
+    //Wait the designated time and then remove
+    setTimeout(
+        function () {
+            Xrm.Page.ui.clearFormNotification(id);
+        },
+        time
+    );
+
+}
+
+function CheckDateSave(executionContext){
+
+    var formContext = executionContext.getFormContext();
+    var saveEvent = executionContext.getEventArgs();
+	
+	var currentType = Xrm.Page.getAttribute("dyna_type").getValue();
+	var isDirty = Xrm.Page.getAttribute("dyna_begindatetime").getIsDirty();
+
+	if(currentType != 538000000 && isDirty)
+	{
+		
+		var dateTimeFieldValue  = Xrm.Page.getAttribute("dyna_begindatetime").getValue();
+		var utcDate = new Date(dateTimeFieldValue.getUTCFullYear() , dateTimeFieldValue.getUTCMonth() , dateTimeFieldValue.getUTCDate(), dateTimeFieldValue.getUTCHours(), dateTimeFieldValue.getUTCMinutes(), dateTimeFieldValue.getUTCSeconds() ,dateTimeFieldValue.getUTCMilliseconds());
+		var correctFieldDateTimeValue = new Date(utcDate.setMinutes(utcDate.getMinutes() + Xrm.Utility.getGlobalContext().userSettings.getTimeZoneOffsetMinutes()));
+		
+		let d = new Date();
+		let currentDateTime = d;
+		
+		if(correctFieldDateTimeValue < currentDateTime)
+		{
+			Xrm.Utility.alertDialog("Begin DateTime must be greater than today's date/time. Prevent Saving." );
+			saveEvent.preventDefault();
+		}
+		
+		
+		var newDate = new Date();
+		newDate.setDate(newDate.getDate() + 30);
+
+		if(correctFieldDateTimeValue > newDate)
+		{
+			Xrm.Utility.alertDialog("Begin DateTime cannot be more than 30 days max. Prevent Saving." );
+			saveEvent.preventDefault();
+		}
+	
+	}
+
+}
+
+function CheckDateChange(){
+		
+	var currentType = Xrm.Page.getAttribute("dyna_type").getValue();
+	
+	if(currentType != 538000000)
+	{
+		
+		var dateTimeFieldValue  = Xrm.Page.getAttribute("dyna_begindatetime").getValue();
+		var utcDate = new Date(dateTimeFieldValue.getUTCFullYear() , dateTimeFieldValue.getUTCMonth() , dateTimeFieldValue.getUTCDate(), dateTimeFieldValue.getUTCHours(), dateTimeFieldValue.getUTCMinutes(), dateTimeFieldValue.getUTCSeconds() ,dateTimeFieldValue.getUTCMilliseconds());
+		var correctFieldDateTimeValue = new Date(utcDate.setMinutes(utcDate.getMinutes() + Xrm.Utility.getGlobalContext().userSettings.getTimeZoneOffsetMinutes()));
+		
+		let d = new Date();
+		let currentDateTime = d;
+		
+		if(correctFieldDateTimeValue < currentDateTime)
+		{
+			DisplayNotification("Begin DateTime must be greater than today's date/time","ERROR","Date1",5000);
+		}
+		
+		var newDate = new Date();
+		newDate.setDate(newDate.getDate() + 30);
+
+		if(correctFieldDateTimeValue > newDate)
+		{
+			DisplayNotification("Begin DateTime cannot be more than 30 days max","ERROR","Date2",5000);
+
+		}
+		
+	}
+	
+}
+
+function checkFormatSchedulerChange()
+{
+	
+	var currentType = Xrm.Page.getAttribute("dyna_type").getValue();
+	var format = Xrm.Page.getAttribute("dyna_formatscheduler").getValue();
+
+	if(currentType == 538000002)
+	{
+
+		var re = new RegExp(/^(PT[0-9]+[DHWM])$/);
+		
+		if(re.test(format))
+		{
+			//All good
+		}
+		else
+		{
+			DisplayNotification("The format scheduler does not comply with the ISO 8601 nomenclature","ERROR","Format1",5000);
+		}
+ 
+	}
+	
+
+}
+
+function checkFormatSchedulerSave(executionContext)
+{
+	var formContext = executionContext.getFormContext();
+    var saveEvent = executionContext.getEventArgs();
+
+	var currentType = Xrm.Page.getAttribute("dyna_type").getValue();
+	var format = Xrm.Page.getAttribute("dyna_formatscheduler").getValue();
+	var isDirty = Xrm.Page.getAttribute("dyna_formatscheduler").getIsDirty();
+	
+	if(currentType == 538000002 && isDirty)
+	{
+
+		var re = new RegExp(/^(PT[0-9]+[DHWM])$/);
+		
+		if(re.test(format))
+		{
+			//All good
+		}
+		else
+		{
+			Xrm.Utility.alertDialog("The format scheduler does not comply with the ISO 8601 nomenclature. Prevent Saving." );
+			saveEvent.preventDefault();
+		}
+ 
+	}
+
+}
+
+function putDefaultDateOnLoad()
+{
+	var dateTimeFieldValue  = Xrm.Page.getAttribute("dyna_begindatetime").getValue();
+	
+	if(dateTimeFieldValue === null)
+	{
+		var newDate = new Date();
+		newDate.setMinutes(newDate.getMinutes() + 2);
+		Xrm.Page.getAttribute("dyna_begindatetime").setValue(newDate);
+	}
+	
+	var createdOn = Xrm.Page.getAttribute("createdon").getValue();
+
+	if(createdOn === null)
+	{
+		//Get Dev Environment
+		Xrm.WebApi.retrieveMultipleRecords("dyna_almdevenvironment").then(
+			function success(result) {
+				var i = result.entities.length; 
+
+				if(i==1)
+				{					
+					  var lookupVal = new Array();
+					  lookupVal[0] = new Object();
+					  lookupVal[0].id = result.entities[0].dyna_almdevenvironmentid;
+					  lookupVal[0].name = result.entities[0].dyna_name;
+					  lookupVal[0].entityType = "dyna_almdevenvironment";
+	
+					Xrm.Page.getAttribute("dyna_devenvironment").setValue(lookupVal);
+				}
+				
+				
+			},
+			function (error) {
+				console.log(error.message);
+			}
+		);
+		
+		
+		//Get ALM Profile
+		Xrm.WebApi.retrieveMultipleRecords("cat_deploymentprofile").then(
+			function success(result2) {
+				var j = result2.entities.length; 
+
+				if(j==1)
+				{					
+					  var lookupVal2 = new Array();
+					  lookupVal2[0] = new Object();
+					  lookupVal2[0].id = result2.entities[0].cat_deploymentprofileid;
+					  lookupVal2[0].name = result2.entities[0].cat_name;
+					  lookupVal2[0].entityType = "cat_deploymentprofile";
+	
+					Xrm.Page.getAttribute("dyna_almdeploymentprofile").setValue(lookupVal2);
+				}
+				
+				
+			},
+			function (error) {
+				console.log(error.message);
+			}
+		);
+	}
+
+}
+
+function blockHistory(executionContext)
+{
+	var formContext = executionContext.getFormContext();
+    var saveEvent = executionContext.getEventArgs();
+	var createdOn = Xrm.Page.getAttribute("createdon").getValue();
+	
+	if(createdOn === null)
+	{
+		Xrm.Utility.alertDialog("You cannot create history log manually. Prevent Saving." );
+		saveEvent.preventDefault();
+	}
+	
+}
+
+
+function solutionLoad(executionContext)
+{
+	var formContext = executionContext.getFormContext();
+    var step = 1;	
+	if(Xrm.Page.data.entity.attributes.get("dyna_almdeployment").getValue() != null && Xrm.Page.getAttribute("dyna_step").getValue() == null)
+	{
+		var deploymentId = Xrm.Page.data.entity.attributes.get("dyna_almdeployment").getValue()[0].id;
+		
+		Xrm.WebApi.retrieveMultipleRecords("dyna_almsolution", "?$select=dyna_step,_dyna_almdeployment_value&$top=1&$orderby=dyna_step desc&$filter=_dyna_almdeployment_value eq "+deploymentId).then(
+			function success(result) {
+				for (var i = 0; i < result.entities.length; i++) {
+					var lastStep = result.entities[i].dyna_step;
+
+					step = lastStep +1;			
+				}  
+				Xrm.Page.getAttribute("dyna_step").setValue(step);				
+			},
+			function (error) {
+				console.log(error.message);
+			}
+		);
+	}		
+	
+}
+
+
+function solutionChangeStep(executionContext)
+{
+	var formContext = executionContext.getFormContext();
+	var isDirty = Xrm.Page.getAttribute("dyna_step").getIsDirty();
+	var createdOn = Xrm.Page.getAttribute("createdon").getValue();
+	var step = 1;
+	
+	if(Xrm.Page.data.entity.attributes.get("dyna_almdeployment").getValue() != null && isDirty && createdOn === null)
+	{
+		var currentStep = Xrm.Page.getAttribute("dyna_step").getValue();
+		var deploymentId = Xrm.Page.data.entity.attributes.get("dyna_almdeployment").getValue()[0].id;
+		
+		Xrm.WebApi.retrieveMultipleRecords("dyna_almsolution", "?$select=dyna_step,_dyna_almdeployment_value&$top=1&$orderby=dyna_step desc&$filter=_dyna_almdeployment_value eq "+deploymentId).then(
+			function success(result) {
+				for (var i = 0; i < result.entities.length; i++) {
+					var lastStep = result.entities[i].dyna_step;
+
+					step = lastStep +1;			
+				}  
+				
+				if(currentStep != step)
+				{
+					DisplayNotification("The step was not good. Instead we have calculated it for you and reverted to the good one.","WARNING","Step1",5000);
+					Xrm.Page.getAttribute("dyna_step").setValue(step);
+				}
+								
+			},
+			function (error) {
+				console.log(error.message);
+			}
+		);
+	
+	}
+}
+
+function solutionChange(executionContext)
+{
+	var formContext = executionContext.getFormContext();
+	var isDirty = Xrm.Page.getAttribute("dyna_solution").getIsDirty();
+	if(Xrm.Page.data.entity.attributes.get("dyna_solution").getValue() != null && isDirty)
+	{
+		var solutionName = Xrm.Page.data.entity.attributes.get("dyna_solution").getValue()[0].name;
+		Xrm.Page.getAttribute("dyna_name").setValue(solutionName);
+	}
+
+}
+
+function solutionDeploymentChange(executionContext)
+{
+	var formContext = executionContext.getFormContext();
+	var isDirty = Xrm.Page.getAttribute("dyna_almdeployment").getIsDirty();
+	var step = 1;
+	if(Xrm.Page.data.entity.attributes.get("dyna_almdeployment").getValue() != null && isDirty)
+	{
+		var deploymentId = Xrm.Page.data.entity.attributes.get("dyna_almdeployment").getValue()[0].id;
+		
+		Xrm.WebApi.retrieveMultipleRecords("dyna_almsolution", "?$select=dyna_step,_dyna_almdeployment_value&$top=1&$orderby=dyna_step desc&$filter=_dyna_almdeployment_value eq "+deploymentId).then(
+			function success(result) {
+				for (var i = 0; i < result.entities.length; i++) {
+					var lastStep = result.entities[i].dyna_step;
+
+					step = lastStep +1;			
+				}  
+				Xrm.Page.getAttribute("dyna_step").setValue(step);				
+			},
+			function (error) {
+				console.log(error.message);
+			}
+		);
+	
+	}
+}
+
+function verifyDevUrl()
+{
+	var url = Xrm.Page.getAttribute("dyna_url").getValue();
+
+	if(url != null)
+	{
+
+		let res = url.charAt(url.length - 1);
+		
+		if(res == "/")
+		{
+			//All good
+		}
+		else
+		{
+			DisplayNotification("Remember that the URL must finish with a '/' at the end. Like this : https://mydevcrm.crm.dynamics.com/","WARNING","URL1",5000);
+		}
+ 
+	}
+}
+
+
+function notifyPowerPages()
+{
+	DisplayNotification("Remember that you can configure here only your Power Pages that have been created in standard model. For enhanced model and ALM purpose, you can just add it directly to any normal Dataverse solution","INFO","PowerPages",10000);
+}
+
+
+function changePowerPages(executionContext)
+{
+	var formContext = executionContext.getFormContext();
+	var isDirty = Xrm.Page.getAttribute("dyna_powerpages").getIsDirty();
+	var PowerPages = Xrm.Page.getAttribute("dyna_powerpages").getValue();
+	if(isDirty && PowerPages !== null)
+	{
+		DisplayNotification("Remember that you can configure here only your Power Pages that have been created in standard model. For enhanced model and ALM purpose, you can just add it directly to any normal Dataverse solution","INFO","PowerPages3",10000);
+	}
+}
+
+function changeCommitScope(executionContext)
+{
+	var formContext = executionContext.getFormContext();
+	var isDirty = Xrm.Page.getAttribute("dyna_commitscope").getIsDirty();
+	var commitScope = Xrm.Page.getAttribute("dyna_commitscope").getValue();
+	if(isDirty && commitScope == 4)
+	{
+		DisplayNotification("Remember that you can configure here only your Power Pages that have been created in standard model. For enhanced model and ALM purpose, you can just add it directly to any normal Dataverse solution","INFO","PowerPages2",10000);
+	}
+}

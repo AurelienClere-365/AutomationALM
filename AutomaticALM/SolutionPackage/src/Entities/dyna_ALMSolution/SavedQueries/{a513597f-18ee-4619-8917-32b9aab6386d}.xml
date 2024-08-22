@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{a513597f-18ee-4619-8917-32b9aab6386d}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="dyna_name" select="1" icon="1" preview="1">
+        <row name="result" id="dyna_almsolutionid">
+          <cell name="dyna_step" width="100" />
+          <cell name="dyna_almdeployment" width="144" />
+          <cell name="dyna_commitscope" width="247" />
+          <cell name="dyna_solution" width="291" />
+          <cell name="dyna_powerpages" width="291" />
+          <cell name="createdon" width="105" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="dyna_almsolution">
+          <attribute name="dyna_almsolutionid" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+          </filter>
+          <attribute name="dyna_almdeployment" />
+          <attribute name="dyna_commitscope" />
+          <attribute name="dyna_solution" />
+          <attribute name="dyna_powerpages" />
+          <attribute name="dyna_step" />
+          <attribute name="createdon" />
+          <order attribute="dyna_almdeployment" descending="false" />
+          <order attribute="dyna_step" descending="false" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Active ALM Solutions" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

@@ -1,0 +1,404 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_commondataserviceforapps_1": {
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        },
+        "connection": {
+          "connectionReferenceLogicalName": "dyna_sharedcommondataserviceforapps_c708f"
+        },
+        "runtimeSource": "embedded"
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "ALM_ALMAccelerator_Url (dyna_almcoeurl)": {
+          "defaultValue": "https://aurelienclere-dev1.crm.dynamics.com/",
+          "type": "String",
+          "metadata": {
+            "schemaName": "dyna_almcoeurl",
+            "description": "Url of the ALM Accelerator Dataverse"
+          }
+        }
+      },
+      "triggers": {
+        "manual": {
+          "type": "Request",
+          "kind": "Button",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "title": "SolutionName",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Please enter your input",
+                  "x-ms-content-hint": "TEXT"
+                },
+                "text_1": {
+                  "description": "Please enter your input",
+                  "title": "ALMDeploymentId",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                }
+              },
+              "required": [
+                "text",
+                "text_1"
+              ]
+            }
+          },
+          "metadata": {
+            "operationMetadataId": "f5271f6a-daa1-475b-9cd7-b2a79f873464"
+          }
+        }
+      },
+      "actions": {
+        "Respond_to_a_PowerApp_or_flow": {
+          "type": "Response",
+          "kind": "PowerApp",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "title": "DATA",
+                  "x-ms-dynamically-added": true,
+                  "type": "string"
+                }
+              },
+              "additionalProperties": {}
+            },
+            "statusCode": 200,
+            "body": {
+              "data": "@{outputs('Debug_check_the_dynamic_data_final_value')}"
+            }
+          },
+          "runAfter": {
+            "Debug_check_the_dynamic_data_final_value": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "deca909e-bff5-4f71-b9fb-bd1d8fa912c7"
+          }
+        },
+        "Automatic_Dynamic_part": {
+          "type": "Scope",
+          "actions": {
+            "Power_CAT_User_Settings_-_REC": {
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "entityName": "cat_usersettings",
+                  "$select": "cat_name,cat_data",
+                  "$filter": "contains(cat_name,'@{triggerBody()['text']}') and contains(cat_name,'@{body('Get_Test_Environment')?['urltest']}')",
+                  "$top": 1
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                  "operationId": "ListRecords",
+                  "connectionName": "shared_commondataserviceforapps_1"
+                }
+              },
+              "metadata": {
+                "operationMetadataId": "ac7d2fcd-a193-4c77-8017-6d867d1e7f56"
+              }
+            },
+            "Apply_to_each": {
+              "type": "Foreach",
+              "foreach": "@outputs('Power_CAT_User_Settings_-_REC')?['body/value']",
+              "actions": {
+                "Compose_REC_initial_data": {
+                  "type": "Compose",
+                  "inputs": "@items('Apply_to_each')?['cat_data']",
+                  "metadata": {
+                    "operationMetadataId": "48c4b63c-ef95-4110-b7c6-ff2cefcf932c"
+                  }
+                },
+                "Compose_REC_final_data": {
+                  "type": "Compose",
+                  "inputs": "@replace(replace(replace(outputs('Compose_REC_initial_data'),'\\n',''),'\\',''),' ','')",
+                  "runAfter": {
+                    "Compose_REC_initial_data": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "fc154e19-f8ed-41bf-9b86-49a343d7c4af"
+                  }
+                },
+                "Append_to_string_variable_for_REC": {
+                  "type": "AppendToStringVariable",
+                  "inputs": {
+                    "name": "dynamicdata",
+                    "value": "[{\"ApprovalType\":809060000,\"BuildName\":\"deploy-test-@{triggerBody()['text']}\",\"BuildTemplate\":null,\"DeploymentEnvironmentName\":\"Test\",\"DeploymentEnvironmentUrl\":\"@{body('Get_Test_Environment')?['urltest']}\",\"EnvironmentUrl\":\"@{parameters('ALM_ALMAccelerator_Url (dyna_almcoeurl)')}\",\"ServiceConnectionName\":null,\"StepType\":809060001,\"UserSettings\":@{outputs('Compose_REC_final_data')},\"VariableGroup\":null},"
+                  },
+                  "runAfter": {
+                    "Compose_REC_final_data": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "12c58611-de07-449a-817b-642f516bbead"
+                  }
+                }
+              },
+              "runAfter": {
+                "Power_CAT_User_Settings_-_REC": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "2ee15bbb-b22d-460b-8a00-c3c929acbd7d"
+              }
+            },
+            "Power_CAT_User_Settings_-_VALIDATION": {
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "entityName": "cat_usersettings",
+                  "$select": "cat_name,cat_data",
+                  "$filter": "contains(cat_name,'@{triggerBody()['text']}') and contains(cat_name,'@{body('Get_Validation_Environment')?['urlvalidation']}')",
+                  "$top": 1
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                  "operationId": "ListRecords",
+                  "connectionName": "shared_commondataserviceforapps_1"
+                }
+              },
+              "runAfter": {
+                "Apply_to_each": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "ac7d2fcd-a193-4c77-8017-6d867d1e7f56"
+              }
+            },
+            "Apply_to_each_2": {
+              "type": "Foreach",
+              "foreach": "@outputs('Power_CAT_User_Settings_-_VALIDATION')?['body/value']",
+              "actions": {
+                "Compose_VALIDATION_initial_data": {
+                  "type": "Compose",
+                  "inputs": "@items('Apply_to_each_2')?['cat_data']",
+                  "metadata": {
+                    "operationMetadataId": "237c7ad2-8e13-42dd-a309-3fd19b4b5560"
+                  }
+                },
+                "Compose_VALIDATION_final_data": {
+                  "type": "Compose",
+                  "inputs": "@replace(replace(replace(outputs('Compose_VALIDATION_initial_data'),'\\n',''),'\\',''),' ','')",
+                  "runAfter": {
+                    "Compose_VALIDATION_initial_data": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "e6739c00-ac7b-4f23-aa47-7ff39a74f8db"
+                  }
+                },
+                "Append_to_string_variable_for_VALIDATION": {
+                  "type": "AppendToStringVariable",
+                  "inputs": {
+                    "name": "dynamicdata",
+                    "value": "{\"ApprovalType\":809060000,\"BuildName\":\"deploy-validation-@{triggerBody()['text']}\",\"BuildTemplate\":null,\"DeploymentEnvironmentName\":\"Validation\",\"DeploymentEnvironmentUrl\":\"@{body('Get_Validation_Environment')?['urlvalidation']}\",\"EnvironmentUrl\":\"@{parameters('ALM_ALMAccelerator_Url (dyna_almcoeurl)')}\",\"ServiceConnectionName\":null,\"StepType\":809060001,\"UserSettings\":@{outputs('Compose_VALIDATION_final_data')},\"VariableGroup\":null},"
+                  },
+                  "runAfter": {
+                    "Compose_VALIDATION_final_data": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "94ed45b2-e027-4528-9917-6a835473ceaa"
+                  }
+                }
+              },
+              "runAfter": {
+                "Power_CAT_User_Settings_-_VALIDATION": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "8ad37d97-7872-4203-845a-3d18d9e86b60"
+              }
+            },
+            "Power_CAT_User_Settings_-_PROD": {
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "entityName": "cat_usersettings",
+                  "$select": "cat_name,cat_data",
+                  "$filter": "contains(cat_name,'@{triggerBody()['text']}') and contains(cat_name,'@{body('Get_Prod_Environment')?['urlprod']}')",
+                  "$top": 1
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+                  "operationId": "ListRecords",
+                  "connectionName": "shared_commondataserviceforapps_1"
+                }
+              },
+              "runAfter": {
+                "Apply_to_each_2": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "ac7d2fcd-a193-4c77-8017-6d867d1e7f56"
+              }
+            },
+            "Apply_to_each_3": {
+              "type": "Foreach",
+              "foreach": "@outputs('Power_CAT_User_Settings_-_PROD')?['body/value']",
+              "actions": {
+                "Compose_PROD_initial_data": {
+                  "type": "Compose",
+                  "inputs": "@items('Apply_to_each_3')?['cat_data']",
+                  "metadata": {
+                    "operationMetadataId": "d76017c1-5616-4c3e-9913-2faea43a7ca9"
+                  }
+                },
+                "Compose_PROD_final_data": {
+                  "type": "Compose",
+                  "inputs": "@replace(replace(replace(outputs('Compose_PROD_initial_data'),'\\n',''),'\\',''),' ','')",
+                  "runAfter": {
+                    "Compose_PROD_initial_data": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "c1dc8445-b776-4fd1-a4b9-4b941de9fbd5"
+                  }
+                },
+                "Append_to_string_variable_for_PROD": {
+                  "type": "AppendToStringVariable",
+                  "inputs": {
+                    "name": "dynamicdata",
+                    "value": "{\"ApprovalType\":809060000,\"BuildName\":\"deploy-prod-@{triggerBody()['text']}\",\"BuildTemplate\":\"/Pipelines/build-deploy-prod-SampleSolution.yml\",\"DeploymentEnvironmentName\":\"Prod\",\"DeploymentEnvironmentUrl\":\"@{body('Get_Prod_Environment')?['urlprod']}\",\"EnvironmentUrl\":\"@{parameters('ALM_ALMAccelerator_Url (dyna_almcoeurl)')}\",\"ServiceConnectionName\":null,\"StepType\":809060001,\"UserSettings\":@{outputs('Compose_PROD_final_data')},\"VariableGroup\":null}]"
+                  },
+                  "runAfter": {
+                    "Compose_PROD_final_data": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "977ce02b-1c6e-4421-a722-f9fa97abb967"
+                  }
+                }
+              },
+              "runAfter": {
+                "Power_CAT_User_Settings_-_PROD": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "233903dc-6ed9-48b9-92fe-180dd27acb1c"
+              }
+            }
+          },
+          "runAfter": {
+            "Get_Prod_Environment": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "fbc6d5df-fef1-46db-a451-600f6a194a79"
+          }
+        },
+        "Dynamic_Data_variable": {
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "dynamicdata",
+                "type": "string"
+              }
+            ]
+          },
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "fffd8acc-f34a-42f8-b2a6-063dfe4f6fad"
+          }
+        },
+        "Debug_check_the_dynamic_data_final_value": {
+          "type": "Compose",
+          "inputs": "@replace(replace(replace(variables('dynamicdata'),'\\n',''),'\\',''),' ','')",
+          "runAfter": {
+            "Automatic_Dynamic_part": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "037f9b76-0806-4948-b463-c6f2f506d3bc"
+          }
+        },
+        "Get_Validation_Environment": {
+          "type": "Workflow",
+          "inputs": {
+            "host": {
+              "workflowReferenceName": "9b00f5fb-e745-ee11-be6e-000d3aba3dad"
+            },
+            "body": {
+              "text": "@triggerBody()?['text_1']"
+            }
+          },
+          "runAfter": {
+            "Dynamic_Data_variable": [
+              "Succeeded"
+            ]
+          }
+        },
+        "Get_Test_Environment": {
+          "type": "Workflow",
+          "inputs": {
+            "host": {
+              "workflowReferenceName": "736ee3ec-f945-ee11-be6e-000d3aba3dad"
+            },
+            "body": {
+              "text": "@triggerBody()?['text_1']"
+            }
+          },
+          "runAfter": {
+            "Get_Validation_Environment": [
+              "Succeeded"
+            ]
+          }
+        },
+        "Get_Prod_Environment": {
+          "type": "Workflow",
+          "inputs": {
+            "host": {
+              "workflowReferenceName": "6e9c4a6f-5d46-ee11-be6e-000d3aba3dad"
+            },
+            "body": {
+              "text": "@triggerBody()?['text_1']"
+            }
+          },
+          "runAfter": {
+            "Get_Test_Environment": [
+              "Succeeded"
+            ]
+          }
+        }
+      },
+      "description": "ChildFow - Get Data deployment settings for DevOps"
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}

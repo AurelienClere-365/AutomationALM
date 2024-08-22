@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AppModuleSiteMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SiteMapUniqueName>dyna_AutomationALM</SiteMapUniqueName>
+  <EnableCollapsibleGroups>False</EnableCollapsibleGroups>
+  <ShowHome>False</ShowHome>
+  <ShowPinned>False</ShowPinned>
+  <ShowRecents>False</ShowRecents>
+  <SiteMap IntroducedVersion="7.0.0.0">
+    <Area Id="area_92116473" ResourceId="SitemapDesigner.NewTitle" DescriptionResourceId="SitemapDesigner.NewTitle" ShowGroups="true" IntroducedVersion="7.0.0.0">
+      <Titles>
+        <Title LCID="1033" Title="Area1" />
+      </Titles>
+      <Group Id="group_general" ResourceId="SitemapDesigner.NewGroup" DescriptionResourceId="SitemapDesigner.NewGroup" IntroducedVersion="7.0.0.0" IsProfile="false" ToolTipResourseId="SitemapDesigner.Unknown">
+        <Titles>
+          <Title LCID="1033" Title="General" />
+        </Titles>
+        <SubArea Id="subarea_6cf1d523" VectorIcon="/WebResources/dyna_cicd_svg" Icon="/WebResources/dyna_cicd_svg" Entity="dyna_almdeployment" Client="All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web" AvailableOffline="true" PassParams="false" Sku="All,OnPremise,Live,SPLA" />
+        <SubArea Id="subarea_0d37e28b" VectorIcon="/WebResources/dyna_almsolution" Icon="/WebResources/dyna_almsolution" Entity="dyna_almsolution" Client="All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web" AvailableOffline="true" PassParams="false" Sku="All,OnPremise,Live,SPLA" />
+        <SubArea Id="subarea_a68de72a" VectorIcon="/WebResources/dyna_log" Icon="/WebResources/dyna_log" Entity="dyna_almtrackinghistory" Client="All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web" AvailableOffline="true" PassParams="false" Sku="All,OnPremise,Live,SPLA" />
+      </Group>
+      <Group Id="group_settings" ResourceId="SitemapDesigner.NewGroup" DescriptionResourceId="SitemapDesigner.NewGroup" IntroducedVersion="7.0.0.0" IsProfile="false" ToolTipResourseId="SitemapDesigner.Unknown">
+        <Titles>
+          <Title LCID="1033" Title="Settings" />
+        </Titles>
+        <SubArea Id="subarea_c75a0aac" VectorIcon="/WebResources/dyna_dev" Icon="/WebResources/dyna_dev" Entity="dyna_almdevenvironment" Client="All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web" AvailableOffline="true" PassParams="false" Sku="All,OnPremise,Live,SPLA" />
+        <SubArea Id="subarea_2c6211f4" VectorIcon="/WebResources/dyna_solutionicon" Icon="/WebResources/dyna_solutionicon" Entity="dyna_solution" Client="All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web" AvailableOffline="true" PassParams="false" Sku="All,OnPremise,Live,SPLA" />
+        <SubArea Id="subarea_1c6fb634" VectorIcon="/WebResources/dyna_powerpagesicon" Icon="/WebResources/dyna_powerpagesicon" Entity="dyna_powerpages" Client="All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web" AvailableOffline="true" PassParams="false" Sku="All,OnPremise,Live,SPLA" />
+        <SubArea Id="subarea_e21281b3" VectorIcon="/WebResources/dyna_variable" Icon="/WebResources/dyna_variable" Entity="environmentvariablevalue" Client="All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web" AvailableOffline="true" PassParams="false" Sku="All,OnPremise,Live,SPLA" />
+      </Group>
+      <Group Id="group_doc" ResourceId="SitemapDesigner.NewGroup" DescriptionResourceId="SitemapDesigner.NewGroup" IntroducedVersion="7.0.0.0" IsProfile="false" ToolTipResourseId="SitemapDesigner.Unknown">
+        <Titles>
+          <Title LCID="1033" Title="Documentations" />
+        </Titles>
+        <SubArea Id="subarea_9e091012" ResourceId="SitemapDesigner.NewSubArea" VectorIcon="/WebResources/dyna_article" Icon="/WebResources/dyna_article" Url="https://www.powerazure365.com/blog-1/automation-alm-power-platform" Client="All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web" AvailableOffline="true" PassParams="false" Sku="All,OnPremise,Live,SPLA">
+          <Titles>
+            <Title LCID="1033" Title="Article" />
+          </Titles>
+        </SubArea>
+        <SubArea Id="subarea_abc4e4f4" ResourceId="SitemapDesigner.NewSubArea" VectorIcon="/WebResources/dyna_youtube" Icon="/WebResources/dyna_youtube" Url="https://youtu.be/YO7h5M0k7Yk" Client="All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web" AvailableOffline="true" PassParams="false" Sku="All,OnPremise,Live,SPLA">
+          <Titles>
+            <Title LCID="1033" Title="YouTube Demo" />
+          </Titles>
+        </SubArea>
+        <SubArea Id="subarea_0d64168b" ResourceId="SitemapDesigner.NewSubArea" VectorIcon="/WebResources/dyna_github" Icon="/WebResources/dyna_github" Url="https://github.com/AurelienClere-365/AutomationALM" Client="All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web" AvailableOffline="true" PassParams="false" Sku="All,OnPremise,Live,SPLA">
+          <Titles>
+            <Title LCID="1033" Title="GitHub" />
+          </Titles>
+        </SubArea>
+      </Group>
+    </Area>
+  </SiteMap>
+  <LocalizedNames>
+    <LocalizedName description="Automation ALM" languagecode="1033" />
+  </LocalizedNames>
+</AppModuleSiteMap>

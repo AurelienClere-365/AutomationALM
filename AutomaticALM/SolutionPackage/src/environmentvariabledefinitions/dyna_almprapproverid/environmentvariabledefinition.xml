@@ -1,0 +1,13 @@
+<environmentvariabledefinition schemaname="dyna_almprapproverid">
+  <description default="ID of Approver User in DevOps. You can setup after with the Flow 0 SetupConfig">
+    <label description="ID of Approver User in DevOps. You can setup after with the Flow 0 SetupConfig" languagecode="1033" />
+  </description>
+  <displayname default="ALM_PR_Approver_ID">
+    <label description="ALM_PR_Approver_ID" languagecode="1033" />
+  </displayname>
+  <introducedversion>1.0.0.1</introducedversion>
+  <iscustomizable>1</iscustomizable>
+  <isrequired>0</isrequired>
+  <secretstore>0</secretstore>
+  <type>100000000</type>
+</environmentvariabledefinition>

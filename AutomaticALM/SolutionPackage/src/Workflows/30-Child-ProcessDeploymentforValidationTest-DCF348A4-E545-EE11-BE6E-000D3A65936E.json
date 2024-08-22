@@ -1,0 +1,177 @@
+{
+  "properties": {
+    "connectionReferences": {},
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        }
+      },
+      "triggers": {
+        "manual": {
+          "type": "Request",
+          "kind": "Button",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "title": "SolutionName",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "DYN_XXXXX",
+                  "x-ms-content-hint": "TEXT"
+                },
+                "text_1": {
+                  "description": "NA",
+                  "title": "PowerPagesSiteName",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                },
+                "text_2": {
+                  "description": "1",
+                  "title": "CommitScope",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                },
+                "text_3": {
+                  "description": "Please enter your input",
+                  "title": "ALMDeploymentId",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                },
+                "text_4": {
+                  "description": "Please enter your input",
+                  "title": "ALMSolutionId",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                }
+              },
+              "required": [
+                "text",
+                "text_1",
+                "text_2",
+                "text_3",
+                "text_4"
+              ]
+            }
+          },
+          "metadata": {
+            "operationMetadataId": "7ce65134-23ba-4aed-accb-c038f4230f10"
+          }
+        }
+      },
+      "actions": {
+        "Launch_the_whole_deployment_for_solution_end2end": {
+          "type": "Workflow",
+          "inputs": {
+            "host": {
+              "workflowReferenceName": "9edadfd3-e445-ee11-be6e-000d3aba3dad"
+            },
+            "body": {
+              "text": "@triggerBody()['text']",
+              "text_1": "@body('Get_Data_Deployment_settings')?['data']",
+              "text_2": "@triggerBody()?['text_1']",
+              "text_3": "@triggerBody()?['text_2']",
+              "text_4": "@body('Get_Dev_Environment_URL')?['urldevenvironment']"
+            }
+          },
+          "runAfter": {
+            "Get_Dev_Environment_URL": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "f4ddd224-ea51-40bc-aac5-97f3698a0ef4"
+          }
+        },
+        "Get_Data_Deployment_settings": {
+          "type": "Workflow",
+          "inputs": {
+            "host": {
+              "workflowReferenceName": "aae5cf8b-e845-ee11-be6e-000d3aba3dad"
+            },
+            "body": {
+              "text": "@triggerBody()['text']",
+              "text_1": "@triggerBody()?['text_3']"
+            }
+          },
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "00a6503e-aa20-484c-9c30-15049769579f"
+          }
+        },
+        "Check_Progress": {
+          "type": "Workflow",
+          "inputs": {
+            "host": {
+              "workflowReferenceName": "5d14b3f8-d454-ef11-a317-00224806bd16"
+            },
+            "body": {
+              "text": "@body('Launch_the_whole_deployment_for_solution_end2end')?['buildId']",
+              "text_1": "@triggerBody()?['text']",
+              "text_2": "QA",
+              "text_3": "@triggerBody()?['text_3']",
+              "text_4": "@triggerBody()?['text_4']"
+            },
+            "retryPolicy": {
+              "type": "none"
+            }
+          },
+          "runAfter": {
+            "Launch_the_whole_deployment_for_solution_end2end": [
+              "Succeeded"
+            ]
+          }
+        },
+        "Respond_to_a_Power_App_or_flow": {
+          "type": "Response",
+          "kind": "PowerApp",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": {}
+            },
+            "statusCode": 200
+          },
+          "runAfter": {
+            "Check_Progress": [
+              "Succeeded"
+            ]
+          }
+        },
+        "Get_Dev_Environment_URL": {
+          "type": "Workflow",
+          "inputs": {
+            "host": {
+              "workflowReferenceName": "bbbea948-1652-ee11-be6e-000d3ab9cef5"
+            },
+            "body": {
+              "text": "@triggerBody()?['text_3']"
+            }
+          },
+          "runAfter": {
+            "Get_Data_Deployment_settings": [
+              "Succeeded"
+            ]
+          }
+        }
+      },
+      "description": "ChildFlow - Process deployment for Validation and/or Test"
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}

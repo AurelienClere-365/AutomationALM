@@ -1,0 +1,512 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_visualstudioteamservices": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "dyna_sharedvisualstudioteamservices_0874f"
+        },
+        "api": {
+          "name": "shared_visualstudioteamservices"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "ALM_DevOps_ProjectName (dyna_almdevopsprojectname)": {
+          "defaultValue": "Automate ALM Accelerator",
+          "type": "String",
+          "metadata": {
+            "schemaName": "dyna_almdevopsprojectname",
+            "description": "Name of the DevOps Project link to ALM"
+          }
+        },
+        "ALM_DevOps_OrganizationName (dyna_almdevopsorganizationname)": {
+          "defaultValue": "aurelienclere",
+          "type": "String",
+          "metadata": {
+            "schemaName": "dyna_almdevopsorganizationname",
+            "description": "Name of DevOps Organization"
+          }
+        },
+        "ALM_DevOps_RepositoryID (dyna_almdevopsrepositoryid)": {
+          "defaultValue": "f7b491b9-5c31-40b1-8741-c3b7c5f08507",
+          "type": "String",
+          "metadata": {
+            "schemaName": "dyna_almdevopsrepositoryid",
+            "description": "Id of the DevOps Repo"
+          }
+        },
+        "ALM_PR_Approver_ID (dyna_almprapproverid)": {
+          "defaultValue": "77ed4dc5-ca90-6b55-adb3-170eb0d135c6",
+          "type": "String",
+          "metadata": {
+            "schemaName": "dyna_almprapproverid",
+            "description": "ID of Approver User"
+          }
+        }
+      },
+      "triggers": {
+        "manual": {
+          "metadata": {
+            "operationMetadataId": "5ea6fe86-6163-49af-bafc-a6253840cb2a"
+          },
+          "type": "Request",
+          "kind": "Button",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "title": "SolutionName",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Please enter your input",
+                  "x-ms-content-hint": "TEXT"
+                }
+              },
+              "required": [
+                "text"
+              ]
+            }
+          }
+        }
+      },
+      "actions": {
+        "todayDate": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "04410569-e552-4b83-b6ce-24d253a993d9"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "todayDate",
+                "type": "string",
+                "value": "@{utcNow()}"
+              }
+            ]
+          }
+        },
+        "formatDate": {
+          "runAfter": {
+            "repo": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "178dc248-0f65-4d53-9f74-ab098ec8384d"
+          },
+          "type": "Compose",
+          "inputs": "@formatDateTime(variables('todayDate'),'ddMMyy')"
+        },
+        "repo": {
+          "runAfter": {
+            "todayDate": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "fec21ee7-a355-436c-b8cb-d0276a6cedd5"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "repo",
+                "type": "string",
+                "value": "@parameters('ALM_DevOps_RepositoryID (dyna_almdevopsrepositoryid)')"
+              }
+            ]
+          },
+          "description": "TODO : Add Environment variable"
+        },
+        "PR": {
+          "runAfter": {
+            "formatDate": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "5600bdc2-f53d-41ec-a71f-9a927ecd615e"
+          },
+          "type": "Compose",
+          "inputs": {
+            "sourceRefName": "refs/heads/@{triggerBody()['text']}",
+            "targetRefName": "refs/heads/main",
+            "title": "PR Deploy PRODUCTION @{triggerBody()['text']} @{variables('todayDate')}",
+            "description": "Auto complete and done via ALM Accelerator and Power Automate",
+            "completionOptions": {
+              "bypassPolicy": true,
+              "deleteSourceBranch": false,
+              "mergeStrategy": "noFastForward"
+            }
+          }
+        },
+        "Create_PR": {
+          "runAfter": {
+            "PR": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "36c22991-f225-45a7-ad73-80f41d0738bf"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "account": "@parameters('ALM_DevOps_OrganizationName (dyna_almdevopsorganizationname)')",
+              "parameters/Method": "POST",
+              "parameters/Uri": "@{parameters('ALM_DevOps_ProjectName (dyna_almdevopsprojectname)')}/_apis/git/repositories/@{variables('repo')}/pullrequests?api-version=7.0",
+              "parameters/Body": "@outputs('PR')"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_visualstudioteamservices",
+              "connectionName": "shared_visualstudioteamservices",
+              "operationId": "HttpRequest"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "Parse_JSON": {
+          "runAfter": {
+            "Create_PR": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "6bab8213-ab71-4803-9a5b-da4ec553a5a0"
+          },
+          "type": "ParseJson",
+          "inputs": {
+            "content": "@body('Create_PR')",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "repository": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "project": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "url": {
+                          "type": "string"
+                        },
+                        "state": {
+                          "type": "string"
+                        },
+                        "revision": {
+                          "type": "integer"
+                        },
+                        "visibility": {
+                          "type": "string"
+                        },
+                        "lastUpdateTime": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "size": {
+                      "type": "integer"
+                    },
+                    "remoteUrl": {
+                      "type": "string"
+                    },
+                    "sshUrl": {
+                      "type": "string"
+                    },
+                    "webUrl": {
+                      "type": "string"
+                    },
+                    "isDisabled": {
+                      "type": "boolean"
+                    },
+                    "isInMaintenance": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "pullRequestId": {
+                  "type": "integer"
+                },
+                "codeReviewId": {
+                  "type": "integer"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "createdBy": {
+                  "type": "object",
+                  "properties": {
+                    "displayName": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "_links": {
+                      "type": "object",
+                      "properties": {
+                        "avatar": {
+                          "type": "object",
+                          "properties": {
+                            "href": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "uniqueName": {
+                      "type": "string"
+                    },
+                    "imageUrl": {
+                      "type": "string"
+                    },
+                    "descriptor": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "creationDate": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "sourceRefName": {
+                  "type": "string"
+                },
+                "targetRefName": {
+                  "type": "string"
+                },
+                "mergeStatus": {
+                  "type": "string"
+                },
+                "isDraft": {
+                  "type": "boolean"
+                },
+                "mergeId": {
+                  "type": "string"
+                },
+                "lastMergeSourceCommit": {
+                  "type": "object",
+                  "properties": {
+                    "commitId": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "lastMergeTargetCommit": {
+                  "type": "object",
+                  "properties": {
+                    "commitId": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "reviewers": {
+                  "type": "array"
+                },
+                "labels": {
+                  "type": "array"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "_links": {
+                  "type": "object",
+                  "properties": {
+                    "self": {
+                      "type": "object",
+                      "properties": {
+                        "href": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "repository": {
+                      "type": "object",
+                      "properties": {
+                        "href": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "workItems": {
+                      "type": "object",
+                      "properties": {
+                        "href": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "sourceBranch": {
+                      "type": "object",
+                      "properties": {
+                        "href": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "targetBranch": {
+                      "type": "object",
+                      "properties": {
+                        "href": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "statuses": {
+                      "type": "object",
+                      "properties": {
+                        "href": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "sourceCommit": {
+                      "type": "object",
+                      "properties": {
+                        "href": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "targetCommit": {
+                      "type": "object",
+                      "properties": {
+                        "href": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "createdBy": {
+                      "type": "object",
+                      "properties": {
+                        "href": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "iterations": {
+                      "type": "object",
+                      "properties": {
+                        "href": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "supportsIterations": {
+                  "type": "boolean"
+                },
+                "artifactId": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "Update_PR_to_auto_complete": {
+          "runAfter": {
+            "Parse_JSON": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "8e155a89-f08b-4b99-8fea-1c3286a6038d"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "account": "@parameters('ALM_DevOps_OrganizationName (dyna_almdevopsorganizationname)')",
+              "parameters/Method": "PATCH",
+              "parameters/Uri": "@{parameters('ALM_DevOps_ProjectName (dyna_almdevopsprojectname)')}/_apis/git/repositories/@{variables('repo')}/pullrequests/@{body('Parse_JSON')?['pullRequestId']}?api-version=7.0",
+              "parameters/Body": "{\"autoCompleteSetBy\": {\n                    \"id\": \"@{parameters('ALM_PR_Approver_ID (dyna_almprapproverid)')}\"\n                },\n  \"completionOptions\": {\n    \"deleteSourceBranch\": false\n  }\n}"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_visualstudioteamservices",
+              "connectionName": "shared_visualstudioteamservices",
+              "operationId": "HttpRequest"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "Respond_to_a_PowerApp_or_flow": {
+          "runAfter": {
+            "Update_PR_to_auto_complete": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "b343d5b9-c7c5-4ed6-896e-b50a64dcd7d6"
+          },
+          "type": "Response",
+          "kind": "PowerApp",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "PR": {
+                  "title": "PR",
+                  "x-ms-dynamically-added": true,
+                  "type": "string"
+                }
+              },
+              "additionalProperties": {}
+            },
+            "statusCode": 200,
+            "body": {
+              "PR": "@{body('Parse_JSON')?['pullRequestId']}"
+            }
+          }
+        }
+      }
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}

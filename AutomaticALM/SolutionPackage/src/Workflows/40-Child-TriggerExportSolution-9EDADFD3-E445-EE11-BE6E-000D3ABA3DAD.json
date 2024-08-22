@@ -1,0 +1,857 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_visualstudioteamservices": {
+        "api": {
+          "name": "shared_visualstudioteamservices"
+        },
+        "connection": {
+          "connectionReferenceLogicalName": "dyna_sharedvisualstudioteamservices_0874f"
+        },
+        "runtimeSource": "embedded"
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "ALM_DevOps_ProjectName (dyna_almdevopsprojectname)": {
+          "defaultValue": "Automate ALM Accelerator",
+          "type": "String",
+          "metadata": {
+            "schemaName": "dyna_almdevopsprojectname",
+            "description": "Name of the DevOps Project link to ALM"
+          }
+        },
+        "ALM_DevOps_OrganizationName (dyna_almdevopsorganizationname)": {
+          "defaultValue": "aurelienclere",
+          "type": "String",
+          "metadata": {
+            "schemaName": "dyna_almdevopsorganizationname",
+            "description": "Name of DevOps Organization"
+          }
+        },
+        "ALM_DeliveryUserEmail (dyna_almdeliveryuseremail)": {
+          "defaultValue": "mvp@aurelienclere.com",
+          "type": "String",
+          "metadata": {
+            "schemaName": "dyna_almdeliveryuseremail",
+            "description": "Email of the deployment user"
+          }
+        },
+        "ALM_DeliveryUserName (dyna_almdeliveryusername)": {
+          "defaultValue": "Aurelien CLERE",
+          "type": "String",
+          "metadata": {
+            "schemaName": "dyna_almdeliveryusername",
+            "description": "Name of the delivery user"
+          }
+        },
+        "ALM_BuildId_ExportGit (dyna_almbuildidexportgit)": {
+          "defaultValue": "4",
+          "type": "String",
+          "metadata": {
+            "schemaName": "dyna_almbuildidexportgit",
+            "description": "Pipeline Id of DevOps to Export Solution."
+          }
+        },
+        "ALM_DevOps_RepositoryID (dyna_almdevopsrepositoryid)": {
+          "defaultValue": "f7b491b9-5c31-40b1-8741-c3b7c5f08507",
+          "type": "String",
+          "metadata": {
+            "schemaName": "dyna_almdevopsrepositoryid",
+            "description": "Id (GIT) of the DevOps Repo - You can setup after with the Flow 0 SetupConfig"
+          }
+        }
+      },
+      "triggers": {
+        "manual": {
+          "type": "Request",
+          "kind": "Button",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "title": "Solution",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Please enter your input",
+                  "x-ms-content-hint": "TEXT"
+                },
+                "text_1": {
+                  "title": "DATA",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Please enter your input",
+                  "x-ms-content-hint": "TEXT"
+                },
+                "text_2": {
+                  "description": "Please enter your input",
+                  "title": "PowerPagesSiteName",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                },
+                "text_3": {
+                  "description": "Please enter your input",
+                  "title": "CommitScope",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                },
+                "text_4": {
+                  "description": "Please enter your input",
+                  "title": "URLDevEnvironment",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                }
+              },
+              "required": [
+                "text",
+                "text_1",
+                "text_2",
+                "text_3",
+                "text_4"
+              ]
+            }
+          },
+          "metadata": {
+            "operationMetadataId": "014078d5-6102-4ff0-9d8c-571f3910f89e"
+          }
+        }
+      },
+      "actions": {
+        "todayDate": {
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "todayDate",
+                "type": "string",
+                "value": "@{utcNow()}"
+              }
+            ]
+          },
+          "runAfter": {
+            "DATA": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "ce636454-8943-41b5-8d4b-84b4ca7614a6"
+          }
+        },
+        "formatDate": {
+          "type": "Compose",
+          "inputs": "@formatDateTime(variables('todayDate'),'ddMMyy')",
+          "runAfter": {
+            "todayDate": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "a826a22c-d740-4abb-b1ca-2351e69ffbcb"
+          }
+        },
+        "GlobalJSON_params": {
+          "type": "Compose",
+          "inputs": {
+            "definition": {
+              "id": "@{parameters('ALM_BuildId_ExportGit (dyna_almbuildidexportgit)')}"
+            },
+            "sourceBranch": "main",
+            "templateParameters": {
+              "Branch": "@{variables('sourceBranchName')}",
+              "BranchToCreate": "@{triggerBody()['text']}_@{outputs('formatDate')}",
+              "BuildDefinitionId": "NA",
+              "CommitMessage": "@{triggerBody()['text']}_@{outputs('formatDate')}",
+              "CommitScope": "@{triggerBody()?['text_3']}",
+              "DATA": "@{outputs('DATA')}",
+              "Email": "@{parameters('ALM_DeliveryUserEmail (dyna_almdeliveryuseremail)')}",
+              "EnvironmentName": "NA",
+              "ImportUnmanaged": "NA",
+              "PipelineId": "@{parameters('ALM_BuildId_ExportGit (dyna_almbuildidexportgit)')}",
+              "PortalSiteName": "@{triggerBody()?['text_2']}",
+              "Project": "@{parameters('ALM_DevOps_ProjectName (dyna_almdevopsprojectname)')}",
+              "PublishCustomizations": "true",
+              "Repo": "@{parameters('ALM_DevOps_ProjectName (dyna_almdevopsprojectname)')}",
+              "ServiceConnectionName": "@{triggerBody()?['text_4']}",
+              "ServiceConnectionUrl": "@{triggerBody()?['text_4']}",
+              "SolutionName": "@{triggerBody()['text']}",
+              "UserName": "@{parameters('ALM_DeliveryUserName (dyna_almdeliveryusername)')}",
+              "AgentPool": "Azure Pipelines",
+              "VMImage": "windows-latest"
+            },
+            "variables": {}
+          },
+          "runAfter": {
+            "Check_if_sourceBranch_exist_already_or_not_for_first_init": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "59873c5c-9243-47c9-9012-d09436a7e78b"
+          }
+        },
+        "Queue_Export_VS_Template_GIT": {
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "account": "@parameters('ALM_DevOps_OrganizationName (dyna_almdevopsorganizationname)')",
+              "parameters/Method": "POST",
+              "parameters/Uri": "@{parameters('ALM_DevOps_ProjectName (dyna_almdevopsprojectname)')}/_apis/build/builds?api-version=7.0",
+              "parameters/Body": "@outputs('GlobalJSON_params')"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_visualstudioteamservices",
+              "operationId": "HttpRequest",
+              "connectionName": "shared_visualstudioteamservices"
+            }
+          },
+          "runAfter": {
+            "GlobalJSON_params": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "2707a310-75c5-47f7-b6a7-23fa82850478"
+          }
+        },
+        "Respond_to_a_PowerApp_or_flow": {
+          "type": "Response",
+          "kind": "PowerApp",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "buildId": {
+                  "title": "buildId",
+                  "x-ms-dynamically-added": true,
+                  "type": "string"
+                }
+              },
+              "additionalProperties": {}
+            },
+            "statusCode": 200,
+            "body": {
+              "buildId": "@{outputs('buildId')}"
+            }
+          },
+          "runAfter": {
+            "buildId": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "abbf4fbf-db76-4292-8b26-f1d82a575fc3"
+          }
+        },
+        "DATA": {
+          "type": "Compose",
+          "inputs": "@replace(replace(replace(triggerBody()['text_1'],'\\n',''),'\\',''),' ','')",
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "616f8049-f1a6-49ed-a81a-943cf8b2d9f1"
+          }
+        },
+        "Parse_JSON": {
+          "type": "ParseJson",
+          "inputs": {
+            "content": "@body('Queue_Export_VS_Template_GIT')",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_links": {
+                  "type": "object",
+                  "properties": {
+                    "self": {
+                      "type": "object",
+                      "properties": {
+                        "href": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "web": {
+                      "type": "object",
+                      "properties": {
+                        "href": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "sourceVersionDisplayUri": {
+                      "type": "object",
+                      "properties": {
+                        "href": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "timeline": {
+                      "type": "object",
+                      "properties": {
+                        "href": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "badge": {
+                      "type": "object",
+                      "properties": {
+                        "href": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "properties": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "tags": {
+                  "type": "array"
+                },
+                "validationResults": {
+                  "type": "array"
+                },
+                "plans": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "planId": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "planId"
+                    ]
+                  }
+                },
+                "templateParameters": {
+                  "type": "object",
+                  "properties": {
+                    "Branch": {
+                      "type": "string"
+                    },
+                    "BranchToCreate": {
+                      "type": "string"
+                    },
+                    "BuildDefinitionId": {
+                      "type": "string"
+                    },
+                    "CommitMessage": {
+                      "type": "string"
+                    },
+                    "CommitScope": {
+                      "type": "string"
+                    },
+                    "DATA": {
+                      "type": "string"
+                    },
+                    "Email": {
+                      "type": "string"
+                    },
+                    "EnvironmentName": {
+                      "type": "string"
+                    },
+                    "ImportUnmanaged": {
+                      "type": "string"
+                    },
+                    "PipelineId": {
+                      "type": "string"
+                    },
+                    "PortalSiteName": {
+                      "type": "string"
+                    },
+                    "Project": {
+                      "type": "string"
+                    },
+                    "PublishCustomizations": {
+                      "type": "string"
+                    },
+                    "Repo": {
+                      "type": "string"
+                    },
+                    "ServiceConnectionName": {
+                      "type": "string"
+                    },
+                    "ServiceConnectionUrl": {
+                      "type": "string"
+                    },
+                    "SolutionName": {
+                      "type": "string"
+                    },
+                    "UserName": {
+                      "type": "string"
+                    },
+                    "ArtifactUrl": {
+                      "type": "string"
+                    },
+                    "PipelinesServiceConnectionName": {
+                      "type": "string"
+                    },
+                    "PipelinesServiceConnectionUrl": {
+                      "type": "string"
+                    },
+                    "PipelinesStageRunId": {
+                      "type": "string"
+                    },
+                    "AgentPool": {
+                      "type": "string"
+                    },
+                    "VMImage": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "triggerInfo": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "id": {
+                  "type": "integer"
+                },
+                "buildNumber": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "queueTime": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "definition": {
+                  "type": "object",
+                  "properties": {
+                    "drafts": {
+                      "type": "array"
+                    },
+                    "id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "uri": {
+                      "type": "string"
+                    },
+                    "path": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "queueStatus": {
+                      "type": "string"
+                    },
+                    "revision": {
+                      "type": "integer"
+                    },
+                    "project": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "url": {
+                          "type": "string"
+                        },
+                        "state": {
+                          "type": "string"
+                        },
+                        "revision": {
+                          "type": "integer"
+                        },
+                        "visibility": {
+                          "type": "string"
+                        },
+                        "lastUpdateTime": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "project": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "state": {
+                      "type": "string"
+                    },
+                    "revision": {
+                      "type": "integer"
+                    },
+                    "visibility": {
+                      "type": "string"
+                    },
+                    "lastUpdateTime": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "uri": {
+                  "type": "string"
+                },
+                "sourceBranch": {
+                  "type": "string"
+                },
+                "sourceVersion": {
+                  "type": "string"
+                },
+                "queue": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "pool": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "isHosted": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                },
+                "priority": {
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string"
+                },
+                "requestedFor": {
+                  "type": "object",
+                  "properties": {
+                    "displayName": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "_links": {
+                      "type": "object",
+                      "properties": {
+                        "avatar": {
+                          "type": "object",
+                          "properties": {
+                            "href": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "uniqueName": {
+                      "type": "string"
+                    },
+                    "imageUrl": {
+                      "type": "string"
+                    },
+                    "descriptor": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "requestedBy": {
+                  "type": "object",
+                  "properties": {
+                    "displayName": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "_links": {
+                      "type": "object",
+                      "properties": {
+                        "avatar": {
+                          "type": "object",
+                          "properties": {
+                            "href": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "uniqueName": {
+                      "type": "string"
+                    },
+                    "imageUrl": {
+                      "type": "string"
+                    },
+                    "descriptor": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "lastChangedDate": {
+                  "type": "string"
+                },
+                "lastChangedBy": {
+                  "type": "object",
+                  "properties": {
+                    "displayName": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "_links": {
+                      "type": "object",
+                      "properties": {
+                        "avatar": {
+                          "type": "object",
+                          "properties": {
+                            "href": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "uniqueName": {
+                      "type": "string"
+                    },
+                    "imageUrl": {
+                      "type": "string"
+                    },
+                    "descriptor": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "orchestrationPlan": {
+                  "type": "object",
+                  "properties": {
+                    "planId": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "logs": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "repository": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "clean": {},
+                    "checkoutSubmodules": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "retainedByRelease": {
+                  "type": "boolean"
+                },
+                "appendCommitMessageToRunName": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "runAfter": {
+            "Queue_Export_VS_Template_GIT": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "66b97be9-be61-4c69-98f2-52b03dfdb8ed"
+          }
+        },
+        "buildId": {
+          "type": "Compose",
+          "inputs": "@body('Parse_JSON')?['id']",
+          "runAfter": {
+            "Parse_JSON": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "217ca1e2-c643-49bf-8340-3655fb272eda"
+          }
+        },
+        "Check_if_sourceBranch_exist_already_or_not_for_first_init": {
+          "type": "Scope",
+          "actions": {
+            "Check_Git_Branch_exist": {
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "account": "@parameters('ALM_DevOps_OrganizationName (dyna_almdevopsorganizationname)')",
+                  "parameters/Method": "GET",
+                  "parameters/Uri": "@{parameters('ALM_DevOps_ProjectName (dyna_almdevopsprojectname)')}/_apis/git/repositories/@{parameters('ALM_DevOps_RepositoryID (dyna_almdevopsrepositoryid)')}/refs?filterContains=@{triggerBody()?['text']}"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_visualstudioteamservices",
+                  "operationId": "HttpRequest",
+                  "connectionName": "shared_visualstudioteamservices"
+                }
+              }
+            },
+            "Compose": {
+              "type": "Compose",
+              "inputs": "@join(skip(createArray(body('Check_Git_Branch_exist')),0),'count')",
+              "runAfter": {
+                "Check_Git_Branch_exist": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Compose_1": {
+              "type": "Compose",
+              "inputs": "@substring(outputs('Compose'),sub(length(outputs('Compose')),2),1)",
+              "runAfter": {
+                "Compose": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Condition_if_branch_exist_or_not": {
+              "type": "If",
+              "expression": {
+                "and": [
+                  {
+                    "equals": [
+                      "@int(outputs('Compose_1'))",
+                      0
+                    ]
+                  }
+                ]
+              },
+              "actions": {
+                "Set_variable": {
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "sourceBranchName",
+                    "value": "main"
+                  }
+                }
+              },
+              "else": {
+                "actions": {
+                  "Set_variable_1": {
+                    "type": "SetVariable",
+                    "inputs": {
+                      "name": "sourceBranchName",
+                      "value": "@triggerBody()?['text']"
+                    }
+                  }
+                }
+              },
+              "runAfter": {
+                "Compose_1": [
+                  "Succeeded"
+                ]
+              }
+            }
+          },
+          "runAfter": {
+            "Initialize_sourceBranchName": [
+              "Succeeded"
+            ]
+          }
+        },
+        "Initialize_sourceBranchName": {
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "sourceBranchName",
+                "type": "string",
+                "value": "@triggerBody()?['text']"
+              }
+            ]
+          },
+          "runAfter": {
+            "formatDate": [
+              "Succeeded"
+            ]
+          }
+        }
+      },
+      "description": "Trigger Export from DEV into DevOps / GIT"
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}

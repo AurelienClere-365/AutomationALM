@@ -1,0 +1,129 @@
+{
+  "NamedValues": [
+    {
+      "Kind": "Page",
+      "Name": "Administration home page",
+      "Value": "custompage:msdyn_administrationhomepage_f0186"
+    },
+    {
+      "Kind": "Page",
+      "Name": "DiagnosticsPage",
+      "Value": "custompage:diagnosticspage_e6b9d"
+    },
+    {
+      "Kind": "Page",
+      "Name": "XPnACubeCreatePage",
+      "Value": "custompage:xpnacubecreatepage_e4f39"
+    },
+    {
+      "Kind": "Page",
+      "Name": "XPnADimensionCreatePage",
+      "Value": "custompage:xpnadimensioncreatepage_b9661"
+    },
+    {
+      "Kind": "Page",
+      "Name": "XPnADimensionGroupDetailPage",
+      "Value": "custompage:xpnadimensiongroupdetailpage_85734"
+    },
+    {
+      "Kind": "Page",
+      "Name": "XPnALinkedColumnPage",
+      "Value": "custompage:xpnalinkedcolumnpage_41809"
+    },
+    {
+      "Kind": "Page",
+      "Name": "XPnAUserPage",
+      "Value": "custompage:xpnauserpage_23c82"
+    },
+    {
+      "Kind": "Page",
+      "Name": "XPnACubePage",
+      "Value": "custompage:xpnacubepage_d5c85"
+    },
+    {
+      "Kind": "Page",
+      "Name": "Administration home",
+      "Value": "custompage:msdyn_administrationhome_2f5af"
+    },
+    {
+      "Kind": "Page",
+      "Name": "XPnAUserDataSecurityPage",
+      "Value": "custompage:xpnauserdatasecuritypage_82e8a"
+    },
+    {
+      "Kind": "Page",
+      "Name": "API Playground",
+      "Value": "custompage:cat_apiplayground_62f25"
+    },
+    {
+      "Kind": "Page",
+      "Name": "Fabric unlink popup",
+      "Value": "custompage:fabricunlinkpopup_c6617"
+    },
+    {
+      "Kind": "Page",
+      "Name": "XPnADimensionPage",
+      "Value": "custompage:xpnadimensionpage_cdeb7"
+    },
+    {
+      "Kind": "Page",
+      "Name": "XPnACubeLoadPage",
+      "Value": "custompage:xpnacubeloadpage_4ac85"
+    },
+    {
+      "Kind": "Page",
+      "Name": "Dataverse Actions Page",
+      "Value": "custompage:cat_dataverseactiondetailspage_eec36"
+    },
+    {
+      "Kind": "Page",
+      "Name": "XPnAHomePage",
+      "Value": "custompage:xpnahomepage_f1028"
+    },
+    {
+      "Kind": "Page",
+      "Name": "Connect with MS fabric dialog",
+      "Value": "custompage:connectwithmsfabricdialog_bc2c9"
+    },
+    {
+      "Kind": "Page",
+      "Name": "Plugin Monitor",
+      "Value": "custompage:cat_plugintracelog_d12af"
+    },
+    {
+      "Kind": "Page",
+      "Name": "Fabric shortcut status",
+      "Value": "custompage:fabricshortcutstatus_ed528"
+    },
+    {
+      "Kind": "Page",
+      "Name": "Link fabric page",
+      "Value": "custompage:msdyn_linkfabricpage_123d9"
+    },
+    {
+      "Kind": "Page",
+      "Name": "Overview",
+      "Value": "custompage:cat_overview_3dbf5"
+    },
+    {
+      "Kind": "Page",
+      "Name": "XPnADimensionGroupCreatePage",
+      "Value": "custompage:xpnadimensiongroupcreatepage_b9662"
+    },
+    {
+      "Kind": "Page",
+      "Name": "XPnADimensionGroupPage",
+      "Value": "custompage:xpnadimensiongrouppage_7fdf1"
+    },
+    {
+      "Kind": "Page",
+      "Name": "Report Page",
+      "Value": "custompage:msdyn_reportpage"
+    },
+    {
+      "Kind": "Page",
+      "Name": "Azure DevOps Projects",
+      "Value": "custompage:cat_azuredevopsprojects_80ae5"
+    }
+  ]
+}

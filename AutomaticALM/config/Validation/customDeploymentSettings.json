@@ -1,0 +1,329 @@
+{
+    "ActivateFlowConfiguration":  [
+                                      {
+                                          "solutionComponentName":  "10-Main-Launcher",
+                                          "solutionComponentUniqueName":  "6ea8a9eb-c458-ef11-a316-000d3a5c97af",
+                                          "sortOrder":  "#{activateflow.order.10-Main-Launcher.6ea8a9eb-c458-ef11-a316-000d3a5c97af}#",
+                                          "activate":  "#{activateflow.activate.10-Main-Launcher.6ea8a9eb-c458-ef11-a316-000d3a5c97af}#"
+                                      },
+                                      {
+                                          "solutionComponentName":  "10-Main-Scheduler",
+                                          "solutionComponentUniqueName":  "b8a8d226-c558-ef11-a317-000d3a307e6b",
+                                          "sortOrder":  "#{activateflow.order.10-Main-Scheduler.b8a8d226-c558-ef11-a317-000d3a307e6b}#",
+                                          "activate":  "#{activateflow.activate.10-Main-Scheduler.b8a8d226-c558-ef11-a317-000d3a307e6b}#"
+                                      },
+                                      {
+                                          "solutionComponentName":  "20-Automation-Buildcompleted",
+                                          "solutionComponentUniqueName":  "0a7b440d-e345-ee11-be6e-000d3ab88280",
+                                          "sortOrder":  "#{activateflow.order.20-Automation-Buildcompleted.0a7b440d-e345-ee11-be6e-000d3ab88280}#",
+                                          "activate":  "#{activateflow.activate.20-Automation-Buildcompleted.0a7b440d-e345-ee11-be6e-000d3ab88280}#"
+                                      },
+                                      {
+                                          "solutionComponentName":  "20-Automation-CleanupDevOps",
+                                          "solutionComponentUniqueName":  "30e14cf9-c04d-ee11-be6e-000d3aba3dad",
+                                          "sortOrder":  "#{activateflow.order.20-Automation-CleanupDevOps.30e14cf9-c04d-ee11-be6e-000d3aba3dad}#",
+                                          "activate":  "#{activateflow.activate.20-Automation-CleanupDevOps.30e14cf9-c04d-ee11-be6e-000d3aba3dad}#"
+                                      },
+                                      {
+                                          "solutionComponentName":  "30-Child-ProcessDeploymentforProduction",
+                                          "solutionComponentUniqueName":  "f4215e8b-8251-ee11-be6e-000d3aba3dad",
+                                          "sortOrder":  "#{activateflow.order.30-Child-ProcessDeploymentforProduction.f4215e8b-8251-ee11-be6e-000d3aba3dad}#",
+                                          "activate":  "#{activateflow.activate.30-Child-ProcessDeploymentforProduction.f4215e8b-8251-ee11-be6e-000d3aba3dad}#"
+                                      },
+                                      {
+                                          "solutionComponentName":  "30-Child-ProcessDeploymentforValidationTest",
+                                          "solutionComponentUniqueName":  "dcf348a4-e545-ee11-be6e-000d3a65936e",
+                                          "sortOrder":  "#{activateflow.order.30-Child-ProcessDeploymentforValidationTest.dcf348a4-e545-ee11-be6e-000d3a65936e}#",
+                                          "activate":  "#{activateflow.activate.30-Child-ProcessDeploymentforValidationTest.dcf348a4-e545-ee11-be6e-000d3a65936e}#"
+                                      },
+                                      {
+                                          "solutionComponentName":  "40-Child-GetDatadeploymentsettings",
+                                          "solutionComponentUniqueName":  "aae5cf8b-e845-ee11-be6e-000d3aba3dad",
+                                          "sortOrder":  "#{activateflow.order.40-Child-GetDatadeploymentsettings.aae5cf8b-e845-ee11-be6e-000d3aba3dad}#",
+                                          "activate":  "#{activateflow.activate.40-Child-GetDatadeploymentsettings.aae5cf8b-e845-ee11-be6e-000d3aba3dad}#"
+                                      },
+                                      {
+                                          "solutionComponentName":  "40-Child-PullRequestforProduction",
+                                          "solutionComponentUniqueName":  "81e835a8-8151-ee11-be6e-000d3a65936e",
+                                          "sortOrder":  "#{activateflow.order.40-Child-PullRequestforProduction.81e835a8-8151-ee11-be6e-000d3a65936e}#",
+                                          "activate":  "#{activateflow.activate.40-Child-PullRequestforProduction.81e835a8-8151-ee11-be6e-000d3a65936e}#"
+                                      },
+                                      {
+                                          "solutionComponentName":  "40-Child-PullRequestforValidationTest",
+                                          "solutionComponentUniqueName":  "219cb947-e445-ee11-be6e-000d3aba3dad",
+                                          "sortOrder":  "#{activateflow.order.40-Child-PullRequestforValidationTest.219cb947-e445-ee11-be6e-000d3aba3dad}#",
+                                          "activate":  "#{activateflow.activate.40-Child-PullRequestforValidationTest.219cb947-e445-ee11-be6e-000d3aba3dad}#"
+                                      },
+                                      {
+                                          "solutionComponentName":  "40-Child-TriggerExportSolution",
+                                          "solutionComponentUniqueName":  "9edadfd3-e445-ee11-be6e-000d3aba3dad",
+                                          "sortOrder":  "#{activateflow.order.40-Child-TriggerExportSolution.9edadfd3-e445-ee11-be6e-000d3aba3dad}#",
+                                          "activate":  "#{activateflow.activate.40-Child-TriggerExportSolution.9edadfd3-e445-ee11-be6e-000d3aba3dad}#"
+                                      },
+                                      {
+                                          "solutionComponentName":  "0-Setup-GetDevOpsConfig",
+                                          "solutionComponentUniqueName":  "0a48ec58-b854-ef11-a317-000d3a307e6b",
+                                          "sortOrder":  "#{activateflow.order.0-Setup-GetDevOpsConfig.0a48ec58-b854-ef11-a317-000d3a307e6b}#",
+                                          "activate":  "#{activateflow.activate.0-Setup-GetDevOpsConfig.0a48ec58-b854-ef11-a317-000d3a307e6b}#"
+                                      },
+                                      {
+                                          "solutionComponentName":  "99-Helper-Clonedeployment",
+                                          "solutionComponentUniqueName":  "30f5c98e-c458-ef11-a316-000d3a5c97af",
+                                          "sortOrder":  "#{activateflow.order.99-Helper-Clonedeployment.30f5c98e-c458-ef11-a316-000d3a5c97af}#",
+                                          "activate":  "#{activateflow.activate.99-Helper-Clonedeployment.30f5c98e-c458-ef11-a316-000d3a5c97af}#"
+                                      },
+                                      {
+                                          "solutionComponentName":  "99-Helper-CheckProgress",
+                                          "solutionComponentUniqueName":  "5d14b3f8-d454-ef11-a317-00224806bd16",
+                                          "sortOrder":  "#{activateflow.order.99-Helper-CheckProgress.5d14b3f8-d454-ef11-a317-00224806bd16}#",
+                                          "activate":  "#{activateflow.activate.99-Helper-CheckProgress.5d14b3f8-d454-ef11-a317-00224806bd16}#"
+                                      },
+                                      {
+                                          "solutionComponentName":  "99-Helper-GetDevEnvironment",
+                                          "solutionComponentUniqueName":  "bbbea948-1652-ee11-be6e-000d3ab9cef5",
+                                          "sortOrder":  "#{activateflow.order.99-Helper-GetDevEnvironment.bbbea948-1652-ee11-be6e-000d3ab9cef5}#",
+                                          "activate":  "#{activateflow.activate.99-Helper-GetDevEnvironment.bbbea948-1652-ee11-be6e-000d3ab9cef5}#"
+                                      },
+                                      {
+                                          "solutionComponentName":  "99-Helper-GetProdEnvironment",
+                                          "solutionComponentUniqueName":  "6e9c4a6f-5d46-ee11-be6e-000d3aba3dad",
+                                          "sortOrder":  "#{activateflow.order.99-Helper-GetProdEnvironment.6e9c4a6f-5d46-ee11-be6e-000d3aba3dad}#",
+                                          "activate":  "#{activateflow.activate.99-Helper-GetProdEnvironment.6e9c4a6f-5d46-ee11-be6e-000d3aba3dad}#"
+                                      },
+                                      {
+                                          "solutionComponentName":  "99-Helper-GetTestEnvironment",
+                                          "solutionComponentUniqueName":  "736ee3ec-f945-ee11-be6e-000d3aba3dad",
+                                          "sortOrder":  "#{activateflow.order.99-Helper-GetTestEnvironment.736ee3ec-f945-ee11-be6e-000d3aba3dad}#",
+                                          "activate":  "#{activateflow.activate.99-Helper-GetTestEnvironment.736ee3ec-f945-ee11-be6e-000d3aba3dad}#"
+                                      },
+                                      {
+                                          "solutionComponentName":  "40-Child-SchedulingProcessDeployment",
+                                          "solutionComponentUniqueName":  "1fa9984d-555a-ef11-a317-00224806bd16",
+                                          "sortOrder":  "#{activateflow.order.40-Child-SchedulingProcessDeployment.1fa9984d-555a-ef11-a317-00224806bd16}#",
+                                          "activate":  "#{activateflow.activate.40-Child-SchedulingProcessDeployment.1fa9984d-555a-ef11-a317-00224806bd16}#"
+                                      },
+                                      {
+                                          "solutionComponentName":  "99-Helper-GetValidationEnvironment",
+                                          "solutionComponentUniqueName":  "9b00f5fb-e745-ee11-be6e-000d3aba3dad",
+                                          "sortOrder":  "#{activateflow.order.99-Helper-GetValidationEnvironment.9b00f5fb-e745-ee11-be6e-000d3aba3dad}#",
+                                          "activate":  "#{activateflow.activate.99-Helper-GetValidationEnvironment.9b00f5fb-e745-ee11-be6e-000d3aba3dad}#"
+                                      }
+                                  ],
+    "ConnectorShareWithGroupTeamConfiguration":  [
+
+                                                 ],
+    "SolutionComponentOwnershipConfiguration":  [
+                                                    {
+                                                        "solutionComponentType":  29,
+                                                        "solutionComponentName":  "10-Main-Launcher",
+                                                        "solutionComponentUniqueName":  "6ea8a9eb-c458-ef11-a316-000d3a5c97af",
+                                                        "ownerEmail":  "#{owner.ownerEmail.10-Main-Launcher.6ea8a9eb-c458-ef11-a316-000d3a5c97af}#"
+                                                    },
+                                                    {
+                                                        "solutionComponentType":  29,
+                                                        "solutionComponentName":  "10-Main-Scheduler",
+                                                        "solutionComponentUniqueName":  "b8a8d226-c558-ef11-a317-000d3a307e6b",
+                                                        "ownerEmail":  "#{owner.ownerEmail.10-Main-Scheduler.b8a8d226-c558-ef11-a317-000d3a307e6b}#"
+                                                    },
+                                                    {
+                                                        "solutionComponentType":  29,
+                                                        "solutionComponentName":  "20-Automation-Buildcompleted",
+                                                        "solutionComponentUniqueName":  "0a7b440d-e345-ee11-be6e-000d3ab88280",
+                                                        "ownerEmail":  "#{owner.ownerEmail.20-Automation-Buildcompleted.0a7b440d-e345-ee11-be6e-000d3ab88280}#"
+                                                    },
+                                                    {
+                                                        "solutionComponentType":  29,
+                                                        "solutionComponentName":  "20-Automation-CleanupDevOps",
+                                                        "solutionComponentUniqueName":  "30e14cf9-c04d-ee11-be6e-000d3aba3dad",
+                                                        "ownerEmail":  "#{owner.ownerEmail.20-Automation-CleanupDevOps.30e14cf9-c04d-ee11-be6e-000d3aba3dad}#"
+                                                    },
+                                                    {
+                                                        "solutionComponentType":  29,
+                                                        "solutionComponentName":  "30-Child-ProcessDeploymentforProduction",
+                                                        "solutionComponentUniqueName":  "f4215e8b-8251-ee11-be6e-000d3aba3dad",
+                                                        "ownerEmail":  "#{owner.ownerEmail.30-Child-ProcessDeploymentforProduction.f4215e8b-8251-ee11-be6e-000d3aba3dad}#"
+                                                    },
+                                                    {
+                                                        "solutionComponentType":  29,
+                                                        "solutionComponentName":  "30-Child-ProcessDeploymentforValidationTest",
+                                                        "solutionComponentUniqueName":  "dcf348a4-e545-ee11-be6e-000d3a65936e",
+                                                        "ownerEmail":  "#{owner.ownerEmail.30-Child-ProcessDeploymentforValidationTest.dcf348a4-e545-ee11-be6e-000d3a65936e}#"
+                                                    },
+                                                    {
+                                                        "solutionComponentType":  29,
+                                                        "solutionComponentName":  "40-Child-GetDatadeploymentsettings",
+                                                        "solutionComponentUniqueName":  "aae5cf8b-e845-ee11-be6e-000d3aba3dad",
+                                                        "ownerEmail":  "#{owner.ownerEmail.40-Child-GetDatadeploymentsettings.aae5cf8b-e845-ee11-be6e-000d3aba3dad}#"
+                                                    },
+                                                    {
+                                                        "solutionComponentType":  29,
+                                                        "solutionComponentName":  "40-Child-PullRequestforProduction",
+                                                        "solutionComponentUniqueName":  "81e835a8-8151-ee11-be6e-000d3a65936e",
+                                                        "ownerEmail":  "#{owner.ownerEmail.40-Child-PullRequestforProduction.81e835a8-8151-ee11-be6e-000d3a65936e}#"
+                                                    },
+                                                    {
+                                                        "solutionComponentType":  29,
+                                                        "solutionComponentName":  "40-Child-PullRequestforValidationTest",
+                                                        "solutionComponentUniqueName":  "219cb947-e445-ee11-be6e-000d3aba3dad",
+                                                        "ownerEmail":  "#{owner.ownerEmail.40-Child-PullRequestforValidationTest.219cb947-e445-ee11-be6e-000d3aba3dad}#"
+                                                    },
+                                                    {
+                                                        "solutionComponentType":  29,
+                                                        "solutionComponentName":  "40-Child-TriggerExportSolution",
+                                                        "solutionComponentUniqueName":  "9edadfd3-e445-ee11-be6e-000d3aba3dad",
+                                                        "ownerEmail":  "#{owner.ownerEmail.40-Child-TriggerExportSolution.9edadfd3-e445-ee11-be6e-000d3aba3dad}#"
+                                                    },
+                                                    {
+                                                        "solutionComponentType":  29,
+                                                        "solutionComponentName":  "0-Setup-GetDevOpsConfig",
+                                                        "solutionComponentUniqueName":  "0a48ec58-b854-ef11-a317-000d3a307e6b",
+                                                        "ownerEmail":  "#{owner.ownerEmail.0-Setup-GetDevOpsConfig.0a48ec58-b854-ef11-a317-000d3a307e6b}#"
+                                                    },
+                                                    {
+                                                        "solutionComponentType":  29,
+                                                        "solutionComponentName":  "99-Helper-Clonedeployment",
+                                                        "solutionComponentUniqueName":  "30f5c98e-c458-ef11-a316-000d3a5c97af",
+                                                        "ownerEmail":  "#{owner.ownerEmail.99-Helper-Clonedeployment.30f5c98e-c458-ef11-a316-000d3a5c97af}#"
+                                                    },
+                                                    {
+                                                        "solutionComponentType":  29,
+                                                        "solutionComponentName":  "99-Helper-CheckProgress",
+                                                        "solutionComponentUniqueName":  "5d14b3f8-d454-ef11-a317-00224806bd16",
+                                                        "ownerEmail":  "#{owner.ownerEmail.99-Helper-CheckProgress.5d14b3f8-d454-ef11-a317-00224806bd16}#"
+                                                    },
+                                                    {
+                                                        "solutionComponentType":  29,
+                                                        "solutionComponentName":  "99-Helper-GetDevEnvironment",
+                                                        "solutionComponentUniqueName":  "bbbea948-1652-ee11-be6e-000d3ab9cef5",
+                                                        "ownerEmail":  "#{owner.ownerEmail.99-Helper-GetDevEnvironment.bbbea948-1652-ee11-be6e-000d3ab9cef5}#"
+                                                    },
+                                                    {
+                                                        "solutionComponentType":  29,
+                                                        "solutionComponentName":  "99-Helper-GetProdEnvironment",
+                                                        "solutionComponentUniqueName":  "6e9c4a6f-5d46-ee11-be6e-000d3aba3dad",
+                                                        "ownerEmail":  "#{owner.ownerEmail.99-Helper-GetProdEnvironment.6e9c4a6f-5d46-ee11-be6e-000d3aba3dad}#"
+                                                    },
+                                                    {
+                                                        "solutionComponentType":  29,
+                                                        "solutionComponentName":  "99-Helper-GetTestEnvironment",
+                                                        "solutionComponentUniqueName":  "736ee3ec-f945-ee11-be6e-000d3aba3dad",
+                                                        "ownerEmail":  "#{owner.ownerEmail.99-Helper-GetTestEnvironment.736ee3ec-f945-ee11-be6e-000d3aba3dad}#"
+                                                    },
+                                                    {
+                                                        "solutionComponentType":  29,
+                                                        "solutionComponentName":  "40-Child-SchedulingProcessDeployment",
+                                                        "solutionComponentUniqueName":  "1fa9984d-555a-ef11-a317-00224806bd16",
+                                                        "ownerEmail":  "#{owner.ownerEmail.40-Child-SchedulingProcessDeployment.1fa9984d-555a-ef11-a317-00224806bd16}#"
+                                                    },
+                                                    {
+                                                        "solutionComponentType":  29,
+                                                        "solutionComponentName":  "99-Helper-GetValidationEnvironment",
+                                                        "solutionComponentUniqueName":  "9b00f5fb-e745-ee11-be6e-000d3aba3dad",
+                                                        "ownerEmail":  "#{owner.ownerEmail.99-Helper-GetValidationEnvironment.9b00f5fb-e745-ee11-be6e-000d3aba3dad}#"
+                                                    }
+                                                ],
+    "FlowShareWithGroupTeamConfiguration":  [
+                                                {
+                                                    "solutionComponentName":  "10-Main-Launcher",
+                                                    "solutionComponentUniqueName":  "6ea8a9eb-c458-ef11-a316-000d3a5c97af",
+                                                    "aadGroupTeamName":  "#{flow.sharing.10-Main-Launcher.6ea8a9eb-c458-ef11-a316-000d3a5c97af}#"
+                                                },
+                                                {
+                                                    "solutionComponentName":  "10-Main-Scheduler",
+                                                    "solutionComponentUniqueName":  "b8a8d226-c558-ef11-a317-000d3a307e6b",
+                                                    "aadGroupTeamName":  "#{flow.sharing.10-Main-Scheduler.b8a8d226-c558-ef11-a317-000d3a307e6b}#"
+                                                },
+                                                {
+                                                    "solutionComponentName":  "20-Automation-Buildcompleted",
+                                                    "solutionComponentUniqueName":  "0a7b440d-e345-ee11-be6e-000d3ab88280",
+                                                    "aadGroupTeamName":  "#{flow.sharing.20-Automation-Buildcompleted.0a7b440d-e345-ee11-be6e-000d3ab88280}#"
+                                                },
+                                                {
+                                                    "solutionComponentName":  "20-Automation-CleanupDevOps",
+                                                    "solutionComponentUniqueName":  "30e14cf9-c04d-ee11-be6e-000d3aba3dad",
+                                                    "aadGroupTeamName":  "#{flow.sharing.20-Automation-CleanupDevOps.30e14cf9-c04d-ee11-be6e-000d3aba3dad}#"
+                                                },
+                                                {
+                                                    "solutionComponentName":  "30-Child-ProcessDeploymentforProduction",
+                                                    "solutionComponentUniqueName":  "f4215e8b-8251-ee11-be6e-000d3aba3dad",
+                                                    "aadGroupTeamName":  "#{flow.sharing.30-Child-ProcessDeploymentforProduction.f4215e8b-8251-ee11-be6e-000d3aba3dad}#"
+                                                },
+                                                {
+                                                    "solutionComponentName":  "30-Child-ProcessDeploymentforValidationTest",
+                                                    "solutionComponentUniqueName":  "dcf348a4-e545-ee11-be6e-000d3a65936e",
+                                                    "aadGroupTeamName":  "#{flow.sharing.30-Child-ProcessDeploymentforValidationTest.dcf348a4-e545-ee11-be6e-000d3a65936e}#"
+                                                },
+                                                {
+                                                    "solutionComponentName":  "40-Child-GetDatadeploymentsettings",
+                                                    "solutionComponentUniqueName":  "aae5cf8b-e845-ee11-be6e-000d3aba3dad",
+                                                    "aadGroupTeamName":  "#{flow.sharing.40-Child-GetDatadeploymentsettings.aae5cf8b-e845-ee11-be6e-000d3aba3dad}#"
+                                                },
+                                                {
+                                                    "solutionComponentName":  "40-Child-PullRequestforProduction",
+                                                    "solutionComponentUniqueName":  "81e835a8-8151-ee11-be6e-000d3a65936e",
+                                                    "aadGroupTeamName":  "#{flow.sharing.40-Child-PullRequestforProduction.81e835a8-8151-ee11-be6e-000d3a65936e}#"
+                                                },
+                                                {
+                                                    "solutionComponentName":  "40-Child-PullRequestforValidationTest",
+                                                    "solutionComponentUniqueName":  "219cb947-e445-ee11-be6e-000d3aba3dad",
+                                                    "aadGroupTeamName":  "#{flow.sharing.40-Child-PullRequestforValidationTest.219cb947-e445-ee11-be6e-000d3aba3dad}#"
+                                                },
+                                                {
+                                                    "solutionComponentName":  "40-Child-TriggerExportSolution",
+                                                    "solutionComponentUniqueName":  "9edadfd3-e445-ee11-be6e-000d3aba3dad",
+                                                    "aadGroupTeamName":  "#{flow.sharing.40-Child-TriggerExportSolution.9edadfd3-e445-ee11-be6e-000d3aba3dad}#"
+                                                },
+                                                {
+                                                    "solutionComponentName":  "0-Setup-GetDevOpsConfig",
+                                                    "solutionComponentUniqueName":  "0a48ec58-b854-ef11-a317-000d3a307e6b",
+                                                    "aadGroupTeamName":  "#{flow.sharing.0-Setup-GetDevOpsConfig.0a48ec58-b854-ef11-a317-000d3a307e6b}#"
+                                                },
+                                                {
+                                                    "solutionComponentName":  "99-Helper-Clonedeployment",
+                                                    "solutionComponentUniqueName":  "30f5c98e-c458-ef11-a316-000d3a5c97af",
+                                                    "aadGroupTeamName":  "#{flow.sharing.99-Helper-Clonedeployment.30f5c98e-c458-ef11-a316-000d3a5c97af}#"
+                                                },
+                                                {
+                                                    "solutionComponentName":  "99-Helper-CheckProgress",
+                                                    "solutionComponentUniqueName":  "5d14b3f8-d454-ef11-a317-00224806bd16",
+                                                    "aadGroupTeamName":  "#{flow.sharing.99-Helper-CheckProgress.5d14b3f8-d454-ef11-a317-00224806bd16}#"
+                                                },
+                                                {
+                                                    "solutionComponentName":  "99-Helper-GetDevEnvironment",
+                                                    "solutionComponentUniqueName":  "bbbea948-1652-ee11-be6e-000d3ab9cef5",
+                                                    "aadGroupTeamName":  "#{flow.sharing.99-Helper-GetDevEnvironment.bbbea948-1652-ee11-be6e-000d3ab9cef5}#"
+                                                },
+                                                {
+                                                    "solutionComponentName":  "99-Helper-GetProdEnvironment",
+                                                    "solutionComponentUniqueName":  "6e9c4a6f-5d46-ee11-be6e-000d3aba3dad",
+                                                    "aadGroupTeamName":  "#{flow.sharing.99-Helper-GetProdEnvironment.6e9c4a6f-5d46-ee11-be6e-000d3aba3dad}#"
+                                                },
+                                                {
+                                                    "solutionComponentName":  "99-Helper-GetTestEnvironment",
+                                                    "solutionComponentUniqueName":  "736ee3ec-f945-ee11-be6e-000d3aba3dad",
+                                                    "aadGroupTeamName":  "#{flow.sharing.99-Helper-GetTestEnvironment.736ee3ec-f945-ee11-be6e-000d3aba3dad}#"
+                                                },
+                                                {
+                                                    "solutionComponentName":  "40-Child-SchedulingProcessDeployment",
+                                                    "solutionComponentUniqueName":  "1fa9984d-555a-ef11-a317-00224806bd16",
+                                                    "aadGroupTeamName":  "#{flow.sharing.40-Child-SchedulingProcessDeployment.1fa9984d-555a-ef11-a317-00224806bd16}#"
+                                                },
+                                                {
+                                                    "solutionComponentName":  "99-Helper-GetValidationEnvironment",
+                                                    "solutionComponentUniqueName":  "9b00f5fb-e745-ee11-be6e-000d3aba3dad",
+                                                    "aadGroupTeamName":  "#{flow.sharing.99-Helper-GetValidationEnvironment.9b00f5fb-e745-ee11-be6e-000d3aba3dad}#"
+                                                }
+                                            ],
+    "AadGroupCanvasConfiguration":  [
+
+                                    ],
+    "AadGroupTeamConfiguration":  [
+
+                                  ],
+    "WebhookUrls":  [
+
+                    ],
+    "SDKMessages":  [
+
+                    ]
+}

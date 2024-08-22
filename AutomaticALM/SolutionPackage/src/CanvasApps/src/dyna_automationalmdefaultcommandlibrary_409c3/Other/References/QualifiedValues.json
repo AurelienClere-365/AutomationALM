@@ -1,0 +1,18 @@
+{
+  "QualifiedValues": [
+    {
+      "Kind": "default.cds_dyna_almdeployment_forms",
+      "Namespace": "ALM Deployments (Forms)",
+      "Values": {
+        "Information": "415e402e-39d0-46a1-b314-677bc6a9e137"
+      }
+    },
+    {
+      "Kind": "default.cds_dyna_almtrackinghistory_forms",
+      "Namespace": "ALM Tracking Histories (Forms)",
+      "Values": {
+        "Information": "1dcda172-dd16-45fa-abe2-e93c78d18d63"
+      }
+    }
+  ]
+}
