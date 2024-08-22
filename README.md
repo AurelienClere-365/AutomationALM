@@ -144,7 +144,8 @@ Don't forget that you can subscribe and get notifications on the repository for 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
 If you have a suggestion that would make this better, please open an issue with the tag "enhancement".
-While as of now, **I don't share the source code behind and give you only the managed solution of Power Platform**, if you want to contribute with me, go the [Discussion space](https://github.com/AurelienClere-365/AutomationALM/discussions)
+I have shared now the source code, if you want to contribute with me, go the [Discussion space](https://github.com/AurelienClere-365/AutomationALM/discussions)
+Please fork it, create your branch and a Pull Request
 
 Don't forget to give the project a star! Thanks again!
 
