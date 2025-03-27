@@ -70,6 +70,14 @@
             "schemaName": "dyna_almdevopsrepositoryid",
             "description": "Id (GIT) of the DevOps Repo - You can setup after with the Flow 0 SetupConfig"
           }
+        },
+        "ALM_DevOps_APIVersion (dyna_ALMDevOpsAPIVersion)": {
+          "defaultValue": "7.2-preview",
+          "type": "String",
+          "metadata": {
+            "schemaName": "dyna_ALMDevOpsAPIVersion",
+            "description": "Version of DevOps API (7.2-preview suggested)"
+          }
         }
       },
       "triggers": {
@@ -209,7 +217,7 @@
             "parameters": {
               "account": "@parameters('ALM_DevOps_OrganizationName (dyna_almdevopsorganizationname)')",
               "parameters/Method": "POST",
-              "parameters/Uri": "@{parameters('ALM_DevOps_ProjectName (dyna_almdevopsprojectname)')}/_apis/build/builds?api-version=7.0",
+              "parameters/Uri": "@{parameters('ALM_DevOps_ProjectName (dyna_almdevopsprojectname)')}/_apis/build/builds?api-version=@{parameters('ALM_DevOps_APIVersion (dyna_ALMDevOpsAPIVersion)')}",
               "parameters/Body": "@outputs('GlobalJSON_params')"
             },
             "host": {
@@ -766,6 +774,9 @@
                   "operationId": "HttpRequest",
                   "connectionName": "shared_visualstudioteamservices"
                 }
+              },
+              "metadata": {
+                "operationMetadataId": "e17065c8-dc98-4e99-b3e9-401bbf909499"
               }
             },
             "Compose": {
@@ -775,6 +786,9 @@
                 "Check_Git_Branch_exist": [
                   "Succeeded"
                 ]
+              },
+              "metadata": {
+                "operationMetadataId": "09478bf2-26b1-481e-9276-17a9381aabe3"
               }
             },
             "Compose_1": {
@@ -784,6 +798,9 @@
                 "Compose": [
                   "Succeeded"
                 ]
+              },
+              "metadata": {
+                "operationMetadataId": "064d0f13-432a-4ed5-ab21-9fa0e4fa1699"
               }
             },
             "Condition_if_branch_exist_or_not": {
@@ -804,6 +821,9 @@
                   "inputs": {
                     "name": "sourceBranchName",
                     "value": "main"
+                  },
+                  "metadata": {
+                    "operationMetadataId": "96e42caa-6119-457a-aefc-4026ddf3f88b"
                   }
                 }
               },
@@ -814,6 +834,9 @@
                     "inputs": {
                       "name": "sourceBranchName",
                       "value": "@triggerBody()?['text']"
+                    },
+                    "metadata": {
+                      "operationMetadataId": "bef94aa1-92f8-4980-bb57-ba493ab2067f"
                     }
                   }
                 }
@@ -822,6 +845,9 @@
                 "Compose_1": [
                   "Succeeded"
                 ]
+              },
+              "metadata": {
+                "operationMetadataId": "6bd3a4c1-069e-4062-980a-07d8872264f7"
               }
             }
           },
@@ -829,6 +855,9 @@
             "Initialize_sourceBranchName": [
               "Succeeded"
             ]
+          },
+          "metadata": {
+            "operationMetadataId": "8fd48ee0-a407-45c9-a8e6-5e4c71d209c6"
           }
         },
         "Initialize_sourceBranchName": {
@@ -846,6 +875,9 @@
             "formatDate": [
               "Succeeded"
             ]
+          },
+          "metadata": {
+            "operationMetadataId": "a9b196d4-6ef9-4f90-b593-193042b70158"
           }
         }
       },

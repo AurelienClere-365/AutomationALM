@@ -88,6 +88,14 @@
             "schemaName": "dyna_almdevopsrepositoryid",
             "description": "Id (GIT) of the DevOps Repo - You can setup after with the Flow 0 SetupConfig"
           }
+        },
+        "ALM_DevOps_APIVersion (dyna_ALMDevOpsAPIVersion)": {
+          "defaultValue": "7.2-preview",
+          "type": "String",
+          "metadata": {
+            "schemaName": "dyna_ALMDevOpsAPIVersion",
+            "description": "Version of DevOps API (7.2-preview suggested)"
+          }
         }
       },
       "triggers": {
@@ -936,7 +944,7 @@
                                             "parameters": {
                                               "account": "@parameters('ALM_DevOps_OrganizationName (dyna_almdevopsorganizationname)')",
                                               "parameters/Method": "PATCH",
-                                              "parameters/Uri": "@{parameters('ALM_DevOps_ProjectName (dyna_almdevopsprojectname)')}/_apis/build/builds/@{variables('buildId')}?retry=true&api-version=7.1-preview.7"
+                                              "parameters/Uri": "@{parameters('ALM_DevOps_ProjectName (dyna_almdevopsprojectname)')}/_apis/build/builds/@{variables('buildId')}?retry=true&api-version=@{parameters('ALM_DevOps_APIVersion (dyna_ALMDevOpsAPIVersion)')}"
                                             },
                                             "host": {
                                               "apiId": "/providers/Microsoft.PowerApps/apis/shared_visualstudioteamservices",
@@ -1349,9 +1357,9 @@
                       "expression": {
                         "and": [
                           {
-                            "contains": [
+                            "equals": [
                               "@item()?['name']",
-                              "deploy-validation-@{triggerBody()?['text_1']}"
+                              "@concat('deploy-validation-',triggerBody()?['text_1'])"
                             ]
                           }
                         ]
@@ -2703,7 +2711,7 @@
                                             "parameters": {
                                               "account": "@parameters('ALM_DevOps_OrganizationName (dyna_almdevopsorganizationname)')",
                                               "parameters/Method": "GET",
-                                              "parameters/Uri": "@{parameters('ALM_DevOps_ProjectName (dyna_almdevopsprojectname)')}/_apis/build/builds/@{variables('buildId')}?api-version=7.1-preview.7"
+                                              "parameters/Uri": "@{parameters('ALM_DevOps_ProjectName (dyna_almdevopsprojectname)')}/_apis/build/builds/@{variables('buildId')}?api-version=@{parameters('ALM_DevOps_APIVersion (dyna_ALMDevOpsAPIVersion)')}"
                                             },
                                             "host": {
                                               "apiId": "/providers/Microsoft.PowerApps/apis/shared_visualstudioteamservices",
@@ -3153,7 +3161,7 @@
                                             "parameters": {
                                               "account": "@parameters('ALM_DevOps_OrganizationName (dyna_almdevopsorganizationname)')",
                                               "parameters/Method": "GET",
-                                              "parameters/Uri": "@{parameters('ALM_DevOps_ProjectName (dyna_almdevopsprojectname)')}/_apis/policy/evaluations?artifactId=@{outputs('Compose_ArtificatId')}&top=1&api-version=7.2-preview.1"
+                                              "parameters/Uri": "@{parameters('ALM_DevOps_ProjectName (dyna_almdevopsprojectname)')}/_apis/policy/evaluations?artifactId=@{outputs('Compose_ArtificatId')}&top=1&api-version=@{parameters('ALM_DevOps_APIVersion (dyna_ALMDevOpsAPIVersion)')}"
                                             },
                                             "host": {
                                               "apiId": "/providers/Microsoft.PowerApps/apis/shared_visualstudioteamservices",
@@ -3415,7 +3423,7 @@
                                                 "parameters": {
                                                   "account": "@parameters('ALM_DevOps_OrganizationName (dyna_almdevopsorganizationname)')",
                                                   "parameters/Method": "PATCH",
-                                                  "parameters/Uri": "@{parameters('ALM_DevOps_ProjectName (dyna_almdevopsprojectname)')}/_apis/policy/evaluations/@{item()?['evaluationId']}?api-version=7.2-preview.1"
+                                                  "parameters/Uri": "@{parameters('ALM_DevOps_ProjectName (dyna_almdevopsprojectname)')}/_apis/policy/evaluations/@{item()?['evaluationId']}?api-version=@{parameters('ALM_DevOps_APIVersion (dyna_ALMDevOpsAPIVersion)')}"
                                                 },
                                                 "host": {
                                                   "apiId": "/providers/Microsoft.PowerApps/apis/shared_visualstudioteamservices",
@@ -3764,7 +3772,7 @@
                                               "parameters": {
                                                 "account": "@parameters('ALM_DevOps_OrganizationName (dyna_almdevopsorganizationname)')",
                                                 "parameters/Method": "GET",
-                                                "parameters/Uri": "@{parameters('ALM_DevOps_ProjectName (dyna_almdevopsprojectname)')}/_apis/build/builds/@{variables('buildId')}?api-version=7.1-preview.7"
+                                                "parameters/Uri": "@{parameters('ALM_DevOps_ProjectName (dyna_almdevopsprojectname)')}/_apis/build/builds/@{variables('buildId')}?api-version=@{parameters('ALM_DevOps_APIVersion (dyna_ALMDevOpsAPIVersion)')}"
                                               },
                                               "host": {
                                                 "apiId": "/providers/Microsoft.PowerApps/apis/shared_visualstudioteamservices",
@@ -4200,7 +4208,7 @@
                                               "parameters": {
                                                 "account": "@parameters('ALM_DevOps_OrganizationName (dyna_almdevopsorganizationname)')",
                                                 "parameters/Method": "PATCH",
-                                                "parameters/Uri": "@{parameters('ALM_DevOps_ProjectName (dyna_almdevopsprojectname)')}/_apis/git/repositories/@{parameters('ALM_DevOps_RepositoryID (dyna_almdevopsrepositoryid)')}/pullrequests/@{body('Parse_JSON_Get_DevOps_PR')?['triggerInfo']?['pr.number']}?api-version=7.2-preview.2",
+                                                "parameters/Uri": "@{parameters('ALM_DevOps_ProjectName (dyna_almdevopsprojectname)')}/_apis/git/repositories/@{parameters('ALM_DevOps_RepositoryID (dyna_almdevopsrepositoryid)')}/pullrequests/@{body('Parse_JSON_Get_DevOps_PR')?['triggerInfo']?['pr.number']}?api-version=@{parameters('ALM_DevOps_APIVersion (dyna_ALMDevOpsAPIVersion)')}",
                                                 "parameters/Body": "{\"status\":\"abandoned\",\n\"description\": \"Validation Errors even after multiple retry. Cancel automatically from Automation ALM\",\n  \"completionOptions\": {\n    \"deleteSourceBranch\": true\n  }\n}"
                                               },
                                               "host": {
@@ -4221,7 +4229,7 @@
                                               "parameters": {
                                                 "account": "@parameters('ALM_DevOps_OrganizationName (dyna_almdevopsorganizationname)')",
                                                 "parameters/Method": "POST",
-                                                "parameters/Uri": "@{parameters('ALM_DevOps_ProjectName (dyna_almdevopsprojectname)')}/_apis/git/repositories/@{parameters('ALM_DevOps_RepositoryID (dyna_almdevopsrepositoryid)')}/refs?api-version=7.0",
+                                                "parameters/Uri": "@{parameters('ALM_DevOps_ProjectName (dyna_almdevopsprojectname)')}/_apis/git/repositories/@{parameters('ALM_DevOps_RepositoryID (dyna_almdevopsrepositoryid)')}/refs?api-version=@{parameters('ALM_DevOps_APIVersion (dyna_ALMDevOpsAPIVersion)')}",
                                                 "parameters/Body": "[\n  {\n    \"name\": \"refs/heads/@{concat(triggerBody()?['text_1'],'_',formatDateTime(utcNow(),'ddMMyy'))}\",\n    \"oldObjectId\": \"0000000000000000000000000000000000000000\",\n    \"newObjectId\": \"0000000000000000000000000000000000000000\"\n  }\n]"
                                               },
                                               "host": {
@@ -4477,9 +4485,9 @@
                       "expression": {
                         "and": [
                           {
-                            "contains": [
+                            "equals": [
                               "@item()?['name']",
-                              "deploy-test-@{triggerBody()?['text_1']}"
+                              "@concat('deploy-test-',triggerBody()?['text_1'])"
                             ]
                           }
                         ]
@@ -6157,9 +6165,9 @@
                       "expression": {
                         "and": [
                           {
-                            "contains": [
+                            "equals": [
                               "@item()?['name']",
-                              "deploy-prod-@{triggerBody()?['text_1']}"
+                              "@concat('deploy-prod-',triggerBody()?['text_1'])"
                             ]
                           }
                         ]

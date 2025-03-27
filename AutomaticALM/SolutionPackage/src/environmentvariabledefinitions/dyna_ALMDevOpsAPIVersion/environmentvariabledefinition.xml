@@ -1,0 +1,14 @@
+<environmentvariabledefinition schemaname="dyna_ALMDevOpsAPIVersion">
+  <defaultvalue>7.2-preview</defaultvalue>
+  <description default="Version of DevOps API (7.2-preview suggested for now)">
+    <label description="Version of DevOps API (7.2-preview suggested for now)" languagecode="1033" />
+  </description>
+  <displayname default="ALM_DevOps_APIVersion">
+    <label description="ALM_DevOps_APIVersion" languagecode="1033" />
+  </displayname>
+  <introducedversion>1.0.0.2</introducedversion>
+  <iscustomizable>1</iscustomizable>
+  <isrequired>0</isrequired>
+  <secretstore>0</secretstore>
+  <type>100000000</type>
+</environmentvariabledefinition>

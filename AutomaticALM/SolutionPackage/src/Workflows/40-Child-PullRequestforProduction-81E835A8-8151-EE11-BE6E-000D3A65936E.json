@@ -2,13 +2,13 @@
   "properties": {
     "connectionReferences": {
       "shared_visualstudioteamservices": {
-        "runtimeSource": "embedded",
+        "api": {
+          "name": "shared_visualstudioteamservices"
+        },
         "connection": {
           "connectionReferenceLogicalName": "dyna_sharedvisualstudioteamservices_0874f"
         },
-        "api": {
-          "name": "shared_visualstudioteamservices"
-        }
+        "runtimeSource": "embedded"
       }
     },
     "definition": {
@@ -44,7 +44,7 @@
           "type": "String",
           "metadata": {
             "schemaName": "dyna_almdevopsrepositoryid",
-            "description": "Id of the DevOps Repo"
+            "description": "Id (GIT) of the DevOps Repo - You can setup after with the Flow 0 SetupConfig"
           }
         },
         "ALM_PR_Approver_ID (dyna_almprapproverid)": {
@@ -52,15 +52,20 @@
           "type": "String",
           "metadata": {
             "schemaName": "dyna_almprapproverid",
-            "description": "ID of Approver User"
+            "description": "ID of Approver User in DevOps. You can setup after with the Flow 0 SetupConfig"
+          }
+        },
+        "ALM_DevOps_APIVersion (dyna_ALMDevOpsAPIVersion)": {
+          "defaultValue": "7.2-preview",
+          "type": "String",
+          "metadata": {
+            "schemaName": "dyna_ALMDevOpsAPIVersion",
+            "description": "Version of DevOps API (7.2-preview suggested)"
           }
         }
       },
       "triggers": {
         "manual": {
-          "metadata": {
-            "operationMetadataId": "5ea6fe86-6163-49af-bafc-a6253840cb2a"
-          },
           "type": "Request",
           "kind": "Button",
           "inputs": {
@@ -79,15 +84,14 @@
                 "text"
               ]
             }
+          },
+          "metadata": {
+            "operationMetadataId": "5ea6fe86-6163-49af-bafc-a6253840cb2a"
           }
         }
       },
       "actions": {
         "todayDate": {
-          "runAfter": {},
-          "metadata": {
-            "operationMetadataId": "04410569-e552-4b83-b6ce-24d253a993d9"
-          },
           "type": "InitializeVariable",
           "inputs": {
             "variables": [
@@ -97,9 +101,15 @@
                 "value": "@{utcNow()}"
               }
             ]
+          },
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "04410569-e552-4b83-b6ce-24d253a993d9"
           }
         },
         "formatDate": {
+          "type": "Compose",
+          "inputs": "@formatDateTime(variables('todayDate'),'ddMMyy')",
           "runAfter": {
             "repo": [
               "Succeeded"
@@ -107,20 +117,11 @@
           },
           "metadata": {
             "operationMetadataId": "178dc248-0f65-4d53-9f74-ab098ec8384d"
-          },
-          "type": "Compose",
-          "inputs": "@formatDateTime(variables('todayDate'),'ddMMyy')"
+          }
         },
         "repo": {
-          "runAfter": {
-            "todayDate": [
-              "Succeeded"
-            ]
-          },
-          "metadata": {
-            "operationMetadataId": "fec21ee7-a355-436c-b8cb-d0276a6cedd5"
-          },
           "type": "InitializeVariable",
+          "description": "TODO : Add Environment variable",
           "inputs": {
             "variables": [
               {
@@ -130,17 +131,16 @@
               }
             ]
           },
-          "description": "TODO : Add Environment variable"
-        },
-        "PR": {
           "runAfter": {
-            "formatDate": [
+            "todayDate": [
               "Succeeded"
             ]
           },
           "metadata": {
-            "operationMetadataId": "5600bdc2-f53d-41ec-a71f-9a927ecd615e"
-          },
+            "operationMetadataId": "fec21ee7-a355-436c-b8cb-d0276a6cedd5"
+          }
+        },
+        "PR": {
           "type": "Compose",
           "inputs": {
             "sourceRefName": "refs/heads/@{triggerBody()['text']}",
@@ -152,9 +152,31 @@
               "deleteSourceBranch": false,
               "mergeStrategy": "noFastForward"
             }
+          },
+          "runAfter": {
+            "formatDate": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "5600bdc2-f53d-41ec-a71f-9a927ecd615e"
           }
         },
         "Create_PR": {
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "account": "@parameters('ALM_DevOps_OrganizationName (dyna_almdevopsorganizationname)')",
+              "parameters/Method": "POST",
+              "parameters/Uri": "@{parameters('ALM_DevOps_ProjectName (dyna_almdevopsprojectname)')}/_apis/git/repositories/@{variables('repo')}/pullrequests?api-version=@{parameters('ALM_DevOps_APIVersion (dyna_ALMDevOpsAPIVersion)')}",
+              "parameters/Body": "@outputs('PR')"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_visualstudioteamservices",
+              "operationId": "HttpRequest",
+              "connectionName": "shared_visualstudioteamservices"
+            }
+          },
           "runAfter": {
             "PR": [
               "Succeeded"
@@ -162,32 +184,9 @@
           },
           "metadata": {
             "operationMetadataId": "36c22991-f225-45a7-ad73-80f41d0738bf"
-          },
-          "type": "OpenApiConnection",
-          "inputs": {
-            "parameters": {
-              "account": "@parameters('ALM_DevOps_OrganizationName (dyna_almdevopsorganizationname)')",
-              "parameters/Method": "POST",
-              "parameters/Uri": "@{parameters('ALM_DevOps_ProjectName (dyna_almdevopsprojectname)')}/_apis/git/repositories/@{variables('repo')}/pullrequests?api-version=7.0",
-              "parameters/Body": "@outputs('PR')"
-            },
-            "host": {
-              "apiId": "/providers/Microsoft.PowerApps/apis/shared_visualstudioteamservices",
-              "connectionName": "shared_visualstudioteamservices",
-              "operationId": "HttpRequest"
-            },
-            "authentication": "@parameters('$authentication')"
           }
         },
         "Parse_JSON": {
-          "runAfter": {
-            "Create_PR": [
-              "Succeeded"
-            ]
-          },
-          "metadata": {
-            "operationMetadataId": "6bab8213-ab71-4803-9a5b-da4ec553a5a0"
-          },
           "type": "ParseJson",
           "inputs": {
             "content": "@body('Create_PR')",
@@ -448,9 +447,31 @@
                 }
               }
             }
+          },
+          "runAfter": {
+            "Create_PR": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "6bab8213-ab71-4803-9a5b-da4ec553a5a0"
           }
         },
         "Update_PR_to_auto_complete": {
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "account": "@parameters('ALM_DevOps_OrganizationName (dyna_almdevopsorganizationname)')",
+              "parameters/Method": "PATCH",
+              "parameters/Uri": "@{parameters('ALM_DevOps_ProjectName (dyna_almdevopsprojectname)')}/_apis/git/repositories/@{variables('repo')}/pullrequests/@{body('Parse_JSON')?['pullRequestId']}?api-version=@{parameters('ALM_DevOps_APIVersion (dyna_ALMDevOpsAPIVersion)')}",
+              "parameters/Body": "{\"autoCompleteSetBy\": {\n                    \"id\": \"@{parameters('ALM_PR_Approver_ID (dyna_almprapproverid)')}\"\n                },\n  \"completionOptions\": {\n    \"deleteSourceBranch\": false\n  }\n}"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_visualstudioteamservices",
+              "operationId": "HttpRequest",
+              "connectionName": "shared_visualstudioteamservices"
+            }
+          },
           "runAfter": {
             "Parse_JSON": [
               "Succeeded"
@@ -458,32 +479,9 @@
           },
           "metadata": {
             "operationMetadataId": "8e155a89-f08b-4b99-8fea-1c3286a6038d"
-          },
-          "type": "OpenApiConnection",
-          "inputs": {
-            "parameters": {
-              "account": "@parameters('ALM_DevOps_OrganizationName (dyna_almdevopsorganizationname)')",
-              "parameters/Method": "PATCH",
-              "parameters/Uri": "@{parameters('ALM_DevOps_ProjectName (dyna_almdevopsprojectname)')}/_apis/git/repositories/@{variables('repo')}/pullrequests/@{body('Parse_JSON')?['pullRequestId']}?api-version=7.0",
-              "parameters/Body": "{\"autoCompleteSetBy\": {\n                    \"id\": \"@{parameters('ALM_PR_Approver_ID (dyna_almprapproverid)')}\"\n                },\n  \"completionOptions\": {\n    \"deleteSourceBranch\": false\n  }\n}"
-            },
-            "host": {
-              "apiId": "/providers/Microsoft.PowerApps/apis/shared_visualstudioteamservices",
-              "connectionName": "shared_visualstudioteamservices",
-              "operationId": "HttpRequest"
-            },
-            "authentication": "@parameters('$authentication')"
           }
         },
         "Respond_to_a_PowerApp_or_flow": {
-          "runAfter": {
-            "Update_PR_to_auto_complete": [
-              "Succeeded"
-            ]
-          },
-          "metadata": {
-            "operationMetadataId": "b343d5b9-c7c5-4ed6-896e-b50a64dcd7d6"
-          },
           "type": "Response",
           "kind": "PowerApp",
           "inputs": {
@@ -502,9 +500,18 @@
             "body": {
               "PR": "@{body('Parse_JSON')?['pullRequestId']}"
             }
+          },
+          "runAfter": {
+            "Update_PR_to_auto_complete": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "b343d5b9-c7c5-4ed6-896e-b50a64dcd7d6"
           }
         }
-      }
+      },
+      "description": "Trigger the Pull Request to deploy in Production"
     },
     "templateName": null
   },
