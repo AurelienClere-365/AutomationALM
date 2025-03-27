@@ -12,7 +12,7 @@
     <Description description="" languagecode="1033" />
   </Descriptions>
   <options>
-    <option value="538000000" ExternalValue="">
+    <option value="538000000" ExternalValue="" IsHidden="0">
       <labels>
         <label description="Validation then Test" languagecode="1033" />
       </labels>
@@ -20,7 +20,7 @@
         <Description description="" languagecode="1033" />
       </Descriptions>
     </option>
-    <option value="538000001" ExternalValue="">
+    <option value="538000001" ExternalValue="" IsHidden="0">
       <labels>
         <label description="Production" languagecode="1033" />
       </labels>

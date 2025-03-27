@@ -6,7 +6,6 @@
   <EntityRelationship Name="business_unit_dyna_almtrackinghistory" />
   <EntityRelationship Name="business_unit_dyna_powerpages" />
   <EntityRelationship Name="business_unit_dyna_solution" />
-  <EntityRelationship Name="business_unit_environmentvariablevalue" />
   <EntityRelationship Name="dyna_almdeployment_ALMDeploymentProfile_cat_deploymentprofile" />
   <EntityRelationship Name="dyna_ALMDeployment_ALMSolution" />
   <EntityRelationship Name="dyna_ALMDeployment_ALMTrackingHistory" />
@@ -34,19 +33,16 @@
   <EntityRelationship Name="owner_dyna_almtrackinghistory" />
   <EntityRelationship Name="owner_dyna_powerpages" />
   <EntityRelationship Name="owner_dyna_solution" />
-  <EntityRelationship Name="owner_environmentvariablevalue" />
   <EntityRelationship Name="team_dyna_almdeployment" />
   <EntityRelationship Name="team_dyna_almdevenvironment" />
   <EntityRelationship Name="team_dyna_almsolution" />
   <EntityRelationship Name="team_dyna_almtrackinghistory" />
   <EntityRelationship Name="team_dyna_powerpages" />
   <EntityRelationship Name="team_dyna_solution" />
-  <EntityRelationship Name="team_environmentvariablevalue" />
   <EntityRelationship Name="user_dyna_almdeployment" />
   <EntityRelationship Name="user_dyna_almdevenvironment" />
   <EntityRelationship Name="user_dyna_almsolution" />
   <EntityRelationship Name="user_dyna_almtrackinghistory" />
   <EntityRelationship Name="user_dyna_powerpages" />
   <EntityRelationship Name="user_dyna_solution" />
-  <EntityRelationship Name="user_environmentvariablevalue" />
 </EntityRelationships>

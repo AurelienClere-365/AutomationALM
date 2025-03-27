@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ImportExportXml version="9.2.24071.208" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<ImportExportXml version="9.2.25023.200" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OrganizationVersion="9.2.25023.200" OrganizationSchemaType="Full" CRMServerServiceabilityVersion="9.2.25023.00200">
   <SolutionManifest>
     <UniqueName>AutomaticALM</UniqueName>
     <LocalizedNames>
@@ -160,59 +160,19 @@
         <Dependent type="29" displayName="40 - Child - Get Data deployment settings" id="{aae5cf8b-e845-ee11-be6e-000d3aba3dad}" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="1" schemaName="environmentvariablevalue" displayName="Environment Variable Value" solution="EnvironmentVariables (1.0.2406.4)" />
+        <Required type="1" schemaName="environmentvariablevalue" displayName="Environment Variable Value" solution="EnvironmentVariables (1.0.2406.4)">
+          <package appName="EnvironmentVariables" version="1.0.2406.4">EnvironmentVariablesSolutionAnchor (1.0.2406.4)</package>
+        </Required>
         <Dependent type="1" schemaName="environmentvariablevalue" displayName="Environment Variable Value" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="environmentvariablevalue" displayName="Environment Variable Value" solution="EnvironmentVariables (1.0.2406.4)" />
-        <Dependent type="2" schemaName="createdby" displayName="Created By" parentSchemaName="environmentvariablevalue" parentDisplayName="Environment Variable Value" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="environmentvariablevalue" displayName="Environment Variable Value" solution="EnvironmentVariables (1.0.2406.4)" />
-        <Dependent type="2" schemaName="createdonbehalfby" displayName="Created By (Delegate)" parentSchemaName="environmentvariablevalue" parentDisplayName="Environment Variable Value" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="environmentvariablevalue" displayName="Environment Variable Value" solution="EnvironmentVariables (1.0.2406.4)" />
-        <Dependent type="2" schemaName="modifiedby" displayName="Modified By" parentSchemaName="environmentvariablevalue" parentDisplayName="Environment Variable Value" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="environmentvariablevalue" displayName="Environment Variable Value" solution="EnvironmentVariables (1.0.2406.4)" />
-        <Dependent type="2" schemaName="modifiedonbehalfby" displayName="Modified By (Delegate)" parentSchemaName="environmentvariablevalue" parentDisplayName="Environment Variable Value" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="environmentvariablevalue" displayName="Environment Variable Value" solution="EnvironmentVariables (1.0.2406.4)" />
-        <Dependent type="2" schemaName="ownerid" displayName="Owner" parentSchemaName="environmentvariablevalue" parentDisplayName="Environment Variable Value" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="environmentvariablevalue" displayName="Environment Variable Value" solution="EnvironmentVariables (1.0.2406.4)" />
-        <Dependent type="2" schemaName="owningbusinessunit" displayName="Owning Business Unit" parentSchemaName="environmentvariablevalue" parentDisplayName="Environment Variable Value" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="environmentvariablevalue" displayName="Environment Variable Value" solution="EnvironmentVariables (1.0.2406.4)" />
-        <Dependent type="2" schemaName="owningteam" displayName="Owning Team" parentSchemaName="environmentvariablevalue" parentDisplayName="Environment Variable Value" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="environmentvariablevalue" displayName="Environment Variable Value" solution="EnvironmentVariables (1.0.2406.4)" />
-        <Dependent type="2" schemaName="owninguser" displayName="Owning User" parentSchemaName="environmentvariablevalue" parentDisplayName="Environment Variable Value" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="environmentvariablevalue" displayName="Environment Variable Value" solution="EnvironmentVariables (1.0.2406.4)" />
-        <Dependent type="2" schemaName="versionnumber" displayName="Version Number" parentSchemaName="environmentvariablevalue" parentDisplayName="Environment Variable Value" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="environmentvariablevalue" displayName="Environment Variable Value" solution="EnvironmentVariables (1.0.2406.4)" />
-        <Dependent type="62" schemaName="dyna_AutomationALM" />
-      </MissingDependency>
-      <MissingDependency>
-        <Required type="1" schemaName="environmentvariablevalue" displayName="Environment Variable Value" solution="EnvironmentVariables (1.0.2406.4)" />
-        <Dependent type="80" schemaName="dyna_AutomationALM" displayName="Automation ALM" />
       </MissingDependency>
       <MissingDependency>
         <Required type="2" schemaName="cat_name" displayName="Name" parentSchemaName="cat_deploymentprofile" parentDisplayName="Deployment Profile" solution="CenterofExcellenceALMAccelerator (1.0.20240305.1)" />
         <Dependent type="10" schemaName="dyna_almdeployment_ALMDeploymentProfile_cat_deploymentprofile" displayName="dyna_almdeployment_ALMDeploymentProfile_cat_deploymentprofile" parentSchemaName="cat_deploymentprofile" parentDisplayName="Deployment Profile" />
       </MissingDependency>
       <MissingDependency>
-        <Required type="SettingDefinition" displayName="AppChannel" solution="msdyn_AppFrameworkInfraExtensions (1.0.0.11)" id.uniquename="AppChannel" />
+        <Required type="SettingDefinition" displayName="AppChannel" solution="msdyn_AppFrameworkInfraExtensions (1.0.0.12)" id.uniquename="AppChannel">
+          <package appName="PowerAppsAppFramework Package" version="1.0.0.16">PowerAppsAppFramework_Anchor (1.0.0.16)</package>
+        </Required>
         <Dependent type="AppSetting" displayName="parentappmoduleid.uniquename=dyna_AutomationALM,settingdefinitionid.uniquename=AppChannel" id.parentappmoduleid.uniquename="dyna_AutomationALM" id.settingdefinitionid.uniquename="AppChannel" />
       </MissingDependency>
     </MissingDependencies>
