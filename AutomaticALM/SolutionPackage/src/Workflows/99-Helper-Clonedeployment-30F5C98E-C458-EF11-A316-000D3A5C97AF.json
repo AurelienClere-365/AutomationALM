@@ -112,6 +112,7 @@
                     "parameters": {
                       "entityName": "dyna_almsolutions",
                       "item/dyna_ALMDeployment@odata.bind": "dyna_almdeployments(@{body('Create_new_deployment')?['dyna_almdeploymentid']})",
+                      "item/dyna_almtype": "@items('For_each')?['dyna_almtype']",
                       "item/dyna_commitscope": "@items('For_each')?['dyna_commitscope']",
                       "item/dyna_name": "@item()?['dyna_name']",
                       "item/dyna_Solution@odata.bind": "dyna_solutions(@{item()?['_dyna_solution_value']})",
@@ -134,6 +135,7 @@
                       "parameters": {
                         "entityName": "dyna_almsolutions",
                         "item/dyna_ALMDeployment@odata.bind": "dyna_almdeployments(@{body('Create_new_deployment')?['dyna_almdeploymentid']})",
+                        "item/dyna_almtype": "@items('For_each')?['dyna_almtype']",
                         "item/dyna_commitscope": "@items('For_each')?['dyna_commitscope']",
                         "item/dyna_name": "@item()?['dyna_name']",
                         "item/dyna_Solution@odata.bind": "dyna_solutions(@{item()?['_dyna_solution_value']})",

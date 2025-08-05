@@ -76,7 +76,7 @@
           "type": "String",
           "metadata": {
             "schemaName": "dyna_ALMDevOpsAPIVersion",
-            "description": "Version of DevOps API (7.2-preview suggested)"
+            "description": "Version of DevOps API (7.2-preview suggested for now)"
           }
         }
       },
@@ -122,6 +122,20 @@
                   "type": "string",
                   "x-ms-content-hint": "TEXT",
                   "x-ms-dynamically-added": true
+                },
+                "text_5": {
+                  "description": "Please enter your input",
+                  "title": "Export_Only",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                },
+                "text_6": {
+                  "description": "Please enter your input",
+                  "title": "Deployment_Only",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
                 }
               },
               "required": [
@@ -129,7 +143,9 @@
                 "text_1",
                 "text_2",
                 "text_3",
-                "text_4"
+                "text_4",
+                "text_5",
+                "text_6"
               ]
             }
           },
@@ -182,7 +198,7 @@
               "Branch": "@{variables('sourceBranchName')}",
               "BranchToCreate": "@{triggerBody()['text']}_@{outputs('formatDate')}",
               "BuildDefinitionId": "NA",
-              "CommitMessage": "@{triggerBody()['text']}_@{outputs('formatDate')}",
+              "CommitMessage": "@{variables('CommitMessage')}",
               "CommitScope": "@{triggerBody()?['text_3']}",
               "DATA": "@{outputs('DATA')}",
               "Email": "@{parameters('ALM_DeliveryUserEmail (dyna_almdeliveryuseremail)')}",
@@ -203,7 +219,7 @@
             "variables": {}
           },
           "runAfter": {
-            "Check_if_sourceBranch_exist_already_or_not_for_first_init": [
+            "Condition_Export_Only": [
               "Succeeded"
             ]
           },
@@ -852,7 +868,7 @@
             }
           },
           "runAfter": {
-            "Initialize_sourceBranchName": [
+            "Initialize_CommitMessage": [
               "Succeeded"
             ]
           },
@@ -878,6 +894,60 @@
           },
           "metadata": {
             "operationMetadataId": "a9b196d4-6ef9-4f90-b593-193042b70158"
+          }
+        },
+        "Condition_Export_Only": {
+          "type": "If",
+          "expression": {
+            "and": [
+              {
+                "equals": [
+                  "@triggerBody()?['text_5']",
+                  "YES"
+                ]
+              }
+            ]
+          },
+          "actions": {
+            "Set_variable_2": {
+              "type": "SetVariable",
+              "inputs": {
+                "name": "CommitMessage",
+                "value": "export_only"
+              }
+            }
+          },
+          "else": {
+            "actions": {
+              "Set_variable_3": {
+                "type": "SetVariable",
+                "inputs": {
+                  "name": "CommitMessage",
+                  "value": "@{triggerBody()?['text']}_@{outputs('formatDate')}"
+                }
+              }
+            }
+          },
+          "runAfter": {
+            "Check_if_sourceBranch_exist_already_or_not_for_first_init": [
+              "Succeeded"
+            ]
+          }
+        },
+        "Initialize_CommitMessage": {
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "CommitMessage",
+                "type": "string"
+              }
+            ]
+          },
+          "runAfter": {
+            "Initialize_sourceBranchName": [
+              "Succeeded"
+            ]
           }
         }
       },

@@ -105,7 +105,7 @@
                 "parameters": {
                   "entityName": "cat_usersettings",
                   "$select": "cat_name,cat_data",
-                  "$filter": "contains(cat_name,'@{triggerBody()['text']}') and contains(cat_name,'@{body('Get_Test_Environment')?['urltest']}')",
+                  "$filter": "cat_name eq '@{outputs('Compose_REC')}'",
                   "$top": 1
                 },
                 "host": {
@@ -172,7 +172,7 @@
                 "parameters": {
                   "entityName": "cat_usersettings",
                   "$select": "cat_name,cat_data",
-                  "$filter": "contains(cat_name,'@{triggerBody()['text']}') and contains(cat_name,'@{body('Get_Validation_Environment')?['urlvalidation']}')",
+                  "$filter": "cat_name eq '@{outputs('Compose_Validation')}'",
                   "$top": 1
                 },
                 "host": {
@@ -244,7 +244,7 @@
                 "parameters": {
                   "entityName": "cat_usersettings",
                   "$select": "cat_name,cat_data",
-                  "$filter": "contains(cat_name,'@{triggerBody()['text']}') and contains(cat_name,'@{body('Get_Prod_Environment')?['urlprod']}')",
+                  "$filter": "cat_name eq '@{outputs('Compose_PROD')}'",
                   "$top": 1
                 },
                 "host": {
@@ -312,8 +312,8 @@
             }
           },
           "runAfter": {
-            "Get_Prod_Environment": [
-              "Succeeded"
+            "Compose_PROD": [
+              "SUCCEEDED"
             ]
           },
           "metadata": {
@@ -374,8 +374,8 @@
             }
           },
           "runAfter": {
-            "Get_Validation_Environment": [
-              "Succeeded"
+            "Compose_Validation": [
+              "SUCCEEDED"
             ]
           }
         },
@@ -390,7 +390,34 @@
             }
           },
           "runAfter": {
+            "Compose_REC": [
+              "SUCCEEDED"
+            ]
+          }
+        },
+        "Compose_Validation": {
+          "type": "Compose",
+          "inputs": "@concat('Deployment -  - ',triggerBody()?['text'],' - ',body('Get_Validation_Environment')?['urlvalidation'])",
+          "runAfter": {
+            "Get_Validation_Environment": [
+              "Succeeded"
+            ]
+          }
+        },
+        "Compose_REC": {
+          "type": "Compose",
+          "inputs": "@concat('Deployment -  - ',triggerBody()?['text'],' - ',body('Get_Test_Environment')?['urltest'])",
+          "runAfter": {
             "Get_Test_Environment": [
+              "Succeeded"
+            ]
+          }
+        },
+        "Compose_PROD": {
+          "type": "Compose",
+          "inputs": "@concat('Deployment -  - ',triggerBody()?['text'],' - ',body('Get_Prod_Environment')?['urlprod'])",
+          "runAfter": {
+            "Get_Prod_Environment": [
               "Succeeded"
             ]
           }

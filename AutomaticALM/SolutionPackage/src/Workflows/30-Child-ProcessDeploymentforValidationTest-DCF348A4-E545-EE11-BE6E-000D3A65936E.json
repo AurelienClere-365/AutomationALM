@@ -56,6 +56,20 @@
                   "type": "string",
                   "x-ms-content-hint": "TEXT",
                   "x-ms-dynamically-added": true
+                },
+                "text_5": {
+                  "description": "Please enter your input",
+                  "title": "Export_Only",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                },
+                "text_6": {
+                  "description": "Please enter your input",
+                  "title": "Deployment_Only",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
                 }
               },
               "required": [
@@ -63,7 +77,9 @@
                 "text_1",
                 "text_2",
                 "text_3",
-                "text_4"
+                "text_4",
+                "text_5",
+                "text_6"
               ]
             }
           },
@@ -73,29 +89,6 @@
         }
       },
       "actions": {
-        "Launch_the_whole_deployment_for_solution_end2end": {
-          "type": "Workflow",
-          "inputs": {
-            "host": {
-              "workflowReferenceName": "9edadfd3-e445-ee11-be6e-000d3aba3dad"
-            },
-            "body": {
-              "text": "@triggerBody()['text']",
-              "text_1": "@body('Get_Data_Deployment_settings')?['data']",
-              "text_2": "@triggerBody()?['text_1']",
-              "text_3": "@triggerBody()?['text_2']",
-              "text_4": "@body('Get_Dev_Environment_URL')?['urldevenvironment']"
-            }
-          },
-          "runAfter": {
-            "Get_Dev_Environment_URL": [
-              "Succeeded"
-            ]
-          },
-          "metadata": {
-            "operationMetadataId": "f4ddd224-ea51-40bc-aac5-97f3698a0ef4"
-          }
-        },
         "Get_Data_Deployment_settings": {
           "type": "Workflow",
           "inputs": {
@@ -112,29 +105,6 @@
             "operationMetadataId": "00a6503e-aa20-484c-9c30-15049769579f"
           }
         },
-        "Check_Progress": {
-          "type": "Workflow",
-          "inputs": {
-            "host": {
-              "workflowReferenceName": "5d14b3f8-d454-ef11-a317-00224806bd16"
-            },
-            "body": {
-              "text": "@body('Launch_the_whole_deployment_for_solution_end2end')?['buildId']",
-              "text_1": "@triggerBody()?['text']",
-              "text_2": "QA",
-              "text_3": "@triggerBody()?['text_3']",
-              "text_4": "@triggerBody()?['text_4']"
-            },
-            "retryPolicy": {
-              "type": "none"
-            }
-          },
-          "runAfter": {
-            "Launch_the_whole_deployment_for_solution_end2end": [
-              "Succeeded"
-            ]
-          }
-        },
         "Respond_to_a_Power_App_or_flow": {
           "type": "Response",
           "kind": "PowerApp",
@@ -147,7 +117,7 @@
             "statusCode": 200
           },
           "runAfter": {
-            "Check_Progress": [
+            "Condition_Deployment_Only": [
               "Succeeded"
             ]
           }
@@ -164,6 +134,108 @@
           },
           "runAfter": {
             "Get_Data_Deployment_settings": [
+              "Succeeded"
+            ]
+          }
+        },
+        "Condition_Deployment_Only": {
+          "type": "If",
+          "expression": {
+            "and": [
+              {
+                "equals": [
+                  "@triggerBody()?['text_6']",
+                  "YES"
+                ]
+              }
+            ]
+          },
+          "actions": {
+            "Run_directly_the_deployment_via_a_PR": {
+              "type": "Workflow",
+              "inputs": {
+                "host": {
+                  "workflowReferenceName": "219cb947-e445-ee11-be6e-000d3aba3dad"
+                },
+                "body": {
+                  "text": "@triggerBody()?['text']"
+                }
+              }
+            },
+            "Run_Check_Progress_only_deployment": {
+              "type": "Workflow",
+              "inputs": {
+                "host": {
+                  "workflowReferenceName": "5d14b3f8-d454-ef11-a317-00224806bd16"
+                },
+                "body": {
+                  "text": "NA",
+                  "text_1": "@triggerBody()?['text']",
+                  "text_2": "QA",
+                  "text_3": "@triggerBody()?['text_3']",
+                  "text_4": "@triggerBody()?['text_4']",
+                  "text_5": "@triggerBody()?['text_5']",
+                  "text_6": "@triggerBody()?['text_6']"
+                }
+              },
+              "runAfter": {
+                "Run_directly_the_deployment_via_a_PR": [
+                  "Succeeded"
+                ]
+              }
+            }
+          },
+          "else": {
+            "actions": {
+              "Launch_the_whole_deployment_for_solution_end2end": {
+                "type": "Workflow",
+                "inputs": {
+                  "host": {
+                    "workflowReferenceName": "9edadfd3-e445-ee11-be6e-000d3aba3dad"
+                  },
+                  "body": {
+                    "text": "@triggerBody()['text']",
+                    "text_1": "@body('Get_Data_Deployment_settings')?['data']",
+                    "text_2": "@triggerBody()?['text_1']",
+                    "text_3": "@triggerBody()?['text_2']",
+                    "text_4": "@body('Get_Dev_Environment_URL')?['urldevenvironment']",
+                    "text_5": "@triggerBody()?['text_5']",
+                    "text_6": "@triggerBody()?['text_6']"
+                  }
+                },
+                "metadata": {
+                  "operationMetadataId": "f4ddd224-ea51-40bc-aac5-97f3698a0ef4"
+                }
+              },
+              "Check_Progress": {
+                "type": "Workflow",
+                "inputs": {
+                  "host": {
+                    "workflowReferenceName": "5d14b3f8-d454-ef11-a317-00224806bd16"
+                  },
+                  "body": {
+                    "text": "@body('Launch_the_whole_deployment_for_solution_end2end')?['buildId']",
+                    "text_1": "@triggerBody()?['text']",
+                    "text_2": "QA",
+                    "text_3": "@triggerBody()?['text_3']",
+                    "text_4": "@triggerBody()?['text_4']",
+                    "text_5": "@triggerBody()?['text_5']",
+                    "text_6": "@triggerBody()?['text_6']"
+                  },
+                  "retryPolicy": {
+                    "type": "none"
+                  }
+                },
+                "runAfter": {
+                  "Launch_the_whole_deployment_for_solution_end2end": [
+                    "Succeeded"
+                  ]
+                }
+              }
+            }
+          },
+          "runAfter": {
+            "Get_Dev_Environment_URL": [
               "Succeeded"
             ]
           }

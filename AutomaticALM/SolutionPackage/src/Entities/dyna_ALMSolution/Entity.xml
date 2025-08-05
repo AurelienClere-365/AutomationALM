@@ -206,6 +206,45 @@
             <Description description="Unique identifier for entity instances" languagecode="1033" />
           </Descriptions>
         </attribute>
+        <attribute PhysicalName="dyna_ALMType">
+          <Type>picklist</Type>
+          <Name>dyna_almtype</Name>
+          <LogicalName>dyna_almtype</LogicalName>
+          <RequiredLevel>required</RequiredLevel>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
+          <ValidForUpdateApi>1</ValidForUpdateApi>
+          <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
+          <IsCustomField>1</IsCustomField>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsSecured>0</IsSecured>
+          <IntroducedVersion>1.0.0.2</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <CanModifySearchSettings>1</CanModifySearchSettings>
+          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <SourceType>0</SourceType>
+          <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+          <IsSortableEnabled>0</IsSortableEnabled>
+          <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+          <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+          <IsDataSourceSecret>0</IsDataSourceSecret>
+          <AutoNumberFormat></AutoNumberFormat>
+          <IsSearchable>0</IsSearchable>
+          <IsFilterable>0</IsFilterable>
+          <IsRetrievable>0</IsRetrievable>
+          <IsLocalizable>0</IsLocalizable>
+          <AppDefaultValue>538000000</AppDefaultValue>
+          <OptionSetName>dyna_almtype</OptionSetName>
+          <displaynames>
+            <displayname description="ALM Type" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="Applicable only for ValidationTest deployment in order to split the commit from the deployment if necessary. You can still do both (default one), or just commit (export only) or deployment as a PR directly to Validation and Test. Not applicable for PROD as it's always a deployment through a PR to main." languagecode="1033" />
+          </Descriptions>
+        </attribute>
         <attribute PhysicalName="dyna_CommitScope">
           <Type>picklist</Type>
           <Name>dyna_commitscope</Name>
@@ -645,7 +684,7 @@
           <Type>lookup</Type>
           <Name>owningbusinessunit</Name>
           <LogicalName>owningbusinessunit</LogicalName>
-          <RequiredLevel>systemrequired</RequiredLevel>
+          <RequiredLevel>none</RequiredLevel>
           <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
           <ImeMode>auto</ImeMode>
           <ValidForUpdateApi>0</ValidForUpdateApi>

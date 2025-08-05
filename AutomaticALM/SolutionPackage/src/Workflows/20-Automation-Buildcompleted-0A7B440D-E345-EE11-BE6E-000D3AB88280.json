@@ -2,13 +2,13 @@
   "properties": {
     "connectionReferences": {
       "shared_visualstudioteamservices": {
-        "runtimeSource": "embedded",
+        "api": {
+          "name": "shared_visualstudioteamservices"
+        },
         "connection": {
           "connectionReferenceLogicalName": "dyna_sharedvisualstudioteamservices_0874f"
         },
-        "api": {
-          "name": "shared_visualstudioteamservices"
-        }
+        "runtimeSource": "embedded"
       }
     },
     "definition": {
@@ -43,20 +43,13 @@
           "defaultValue": "4",
           "type": "String",
           "metadata": {
-            "schemaName": "dyna_almbuildidexportgit"
+            "schemaName": "dyna_almbuildidexportgit",
+            "description": "Pipeline Id of DevOps to Export Solution."
           }
         }
       },
       "triggers": {
         "When_a_build_completes": {
-          "recurrence": {
-            "frequency": "Minute",
-            "interval": 1
-          },
-          "splitOn": "@triggerOutputs()?['body/value']",
-          "metadata": {
-            "operationMetadataId": "2d5351d6-32c6-4d8f-8cfa-0a9dba7e18f7"
-          },
           "type": "OpenApiConnection",
           "inputs": {
             "parameters": {
@@ -66,15 +59,24 @@
             },
             "host": {
               "apiId": "/providers/Microsoft.PowerApps/apis/shared_visualstudioteamservices",
-              "connectionName": "shared_visualstudioteamservices",
-              "operationId": "OnBuildCompleted"
-            },
-            "authentication": "@parameters('$authentication')"
+              "operationId": "OnBuildCompleted",
+              "connectionName": "shared_visualstudioteamservices"
+            }
+          },
+          "recurrence": {
+            "frequency": "Minute",
+            "interval": 1
+          },
+          "splitOn": "@triggerOutputs()?['body/value']",
+          "metadata": {
+            "operationMetadataId": "2d5351d6-32c6-4d8f-8cfa-0a9dba7e18f7"
           }
         }
       },
       "actions": {
         "build_name": {
+          "type": "Compose",
+          "inputs": "@triggerOutputs()?['body/definition/name']",
           "runAfter": {
             "formatDate": [
               "Succeeded"
@@ -82,28 +84,37 @@
           },
           "metadata": {
             "operationMetadataId": "052c6160-681c-41f1-a0dc-71923c216f6d"
-          },
-          "type": "Compose",
-          "inputs": "@triggerOutputs()?['body/definition/name']"
+          }
         },
         "Only_go_on_if_it_is_Export_Git_Build": {
-          "actions": {
-            "SolutionName": {
-              "metadata": {
-                "operationMetadataId": "ac122368-268b-4d92-890d-3049801d699f"
-              },
-              "type": "Compose",
-              "inputs": "@split(triggerOutputs()?['body/buildNumber'], '-')[1]"
-            },
-            "Launch_the_PR_for_this_Solution": {
-              "runAfter": {
-                "SolutionName": [
-                  "Succeeded"
+          "type": "If",
+          "expression": {
+            "and": [
+              {
+                "equals": [
+                  "@int(triggerOutputs()?['body/definition/id'])",
+                  "@int(parameters('ALM_BuildId_ExportGit (dyna_almbuildidexportgit)'))"
                 ]
               },
+              {
+                "not": {
+                  "equals": [
+                    "@outputs('Commit_Message')",
+                    "export_only"
+                  ]
+                }
+              }
+            ]
+          },
+          "actions": {
+            "SolutionName": {
+              "type": "Compose",
+              "inputs": "@split(triggerOutputs()?['body/buildNumber'], '-')[1]",
               "metadata": {
-                "operationMetadataId": "469f27e1-029c-479f-bfc8-64f5f26e131e"
-              },
+                "operationMetadataId": "ac122368-268b-4d92-890d-3049801d699f"
+              }
+            },
+            "Launch_the_PR_for_this_Solution": {
               "type": "Workflow",
               "inputs": {
                 "host": {
@@ -115,33 +126,32 @@
                 "retryPolicy": {
                   "type": "none"
                 }
+              },
+              "runAfter": {
+                "SolutionName": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "469f27e1-029c-479f-bfc8-64f5f26e131e"
               }
             }
+          },
+          "else": {
+            "actions": {}
           },
           "runAfter": {
             "build_id": [
               "Succeeded"
             ]
           },
-          "else": {
-            "actions": {}
-          },
-          "expression": {
-            "and": [
-              {
-                "equals": [
-                  "@int(triggerOutputs()?['body/definition/id'])",
-                  "@int(parameters('ALM_BuildId_ExportGit (dyna_almbuildidexportgit)'))"
-                ]
-              }
-            ]
-          },
           "metadata": {
             "operationMetadataId": "b9292bd6-37bc-4f84-824f-12594c82e11e"
-          },
-          "type": "If"
+          }
         },
         "build_id": {
+          "type": "Compose",
+          "inputs": "@triggerOutputs()?['body/id']",
           "runAfter": {
             "build_name": [
               "Succeeded"
@@ -149,15 +159,9 @@
           },
           "metadata": {
             "operationMetadataId": "d9d672de-6bab-42ee-bf20-fd128b8c2ba7"
-          },
-          "type": "Compose",
-          "inputs": "@triggerOutputs()?['body/id']"
+          }
         },
         "todayDate": {
-          "runAfter": {},
-          "metadata": {
-            "operationMetadataId": "683af396-a322-4459-a1cd-633ed62601ac"
-          },
           "type": "InitializeVariable",
           "inputs": {
             "variables": [
@@ -167,9 +171,19 @@
                 "value": "@{utcNow()}"
               }
             ]
+          },
+          "runAfter": {
+            "Commit_Message": [
+              "SUCCEEDED"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "683af396-a322-4459-a1cd-633ed62601ac"
           }
         },
         "formatDate": {
+          "type": "Compose",
+          "inputs": "@formatDateTime(variables('todayDate'),'ddMMyy')",
           "runAfter": {
             "todayDate": [
               "Succeeded"
@@ -177,11 +191,503 @@
           },
           "metadata": {
             "operationMetadataId": "3789dc74-6edb-40ff-a1e1-72774dce9819"
+          }
+        },
+        "Get_more_details_about_the_Build": {
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "account": "@parameters('ALM_DevOps_OrganizationName (dyna_almdevopsorganizationname)')",
+              "parameters/Method": "GET",
+              "parameters/Uri": "@{parameters('ALM_DevOps_ProjectName (dyna_almdevopsprojectname)')}/_apis/build/builds/@{triggerOutputs()?['body/id']}"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_visualstudioteamservices",
+              "operationId": "HttpRequest",
+              "connectionName": "shared_visualstudioteamservices"
+            }
           },
+          "runAfter": {}
+        },
+        "Parse_JSON": {
+          "type": "ParseJson",
+          "inputs": {
+            "content": "@body('Get_more_details_about_the_Build')",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_links": {
+                  "type": "object",
+                  "properties": {
+                    "self": {
+                      "type": "object",
+                      "properties": {
+                        "href": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "web": {
+                      "type": "object",
+                      "properties": {
+                        "href": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "sourceVersionDisplayUri": {
+                      "type": "object",
+                      "properties": {
+                        "href": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "timeline": {
+                      "type": "object",
+                      "properties": {
+                        "href": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "badge": {
+                      "type": "object",
+                      "properties": {
+                        "href": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "properties": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "tags": {
+                  "type": "array"
+                },
+                "validationResults": {
+                  "type": "array"
+                },
+                "plans": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "planId": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "planId"
+                    ]
+                  }
+                },
+                "templateParameters": {
+                  "type": "object",
+                  "properties": {
+                    "Branch": {
+                      "type": "string"
+                    },
+                    "BranchToCreate": {
+                      "type": "string"
+                    },
+                    "BuildDefinitionId": {
+                      "type": "string"
+                    },
+                    "CommitMessage": {
+                      "type": "string"
+                    },
+                    "CommitScope": {
+                      "type": "string"
+                    },
+                    "DATA": {
+                      "type": "string"
+                    },
+                    "Email": {
+                      "type": "string"
+                    },
+                    "EnvironmentName": {
+                      "type": "string"
+                    },
+                    "ImportUnmanaged": {
+                      "type": "string"
+                    },
+                    "PipelineId": {
+                      "type": "string"
+                    },
+                    "PortalSiteName": {
+                      "type": "string"
+                    },
+                    "Project": {
+                      "type": "string"
+                    },
+                    "PublishCustomizations": {
+                      "type": "string"
+                    },
+                    "Repo": {
+                      "type": "string"
+                    },
+                    "ServiceConnectionName": {
+                      "type": "string"
+                    },
+                    "ServiceConnectionUrl": {
+                      "type": "string"
+                    },
+                    "SolutionName": {
+                      "type": "string"
+                    },
+                    "UserName": {
+                      "type": "string"
+                    },
+                    "AgentPool": {
+                      "type": "string"
+                    },
+                    "VMImage": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "triggerInfo": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "id": {
+                  "type": "integer"
+                },
+                "buildNumber": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "result": {
+                  "type": "string"
+                },
+                "queueTime": {
+                  "type": "string"
+                },
+                "startTime": {
+                  "type": "string"
+                },
+                "finishTime": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "definition": {
+                  "type": "object",
+                  "properties": {
+                    "drafts": {
+                      "type": "array"
+                    },
+                    "id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "uri": {
+                      "type": "string"
+                    },
+                    "path": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "queueStatus": {
+                      "type": "string"
+                    },
+                    "revision": {
+                      "type": "integer"
+                    },
+                    "project": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "url": {
+                          "type": "string"
+                        },
+                        "state": {
+                          "type": "string"
+                        },
+                        "revision": {
+                          "type": "integer"
+                        },
+                        "visibility": {
+                          "type": "string"
+                        },
+                        "lastUpdateTime": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "project": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "state": {
+                      "type": "string"
+                    },
+                    "revision": {
+                      "type": "integer"
+                    },
+                    "visibility": {
+                      "type": "string"
+                    },
+                    "lastUpdateTime": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "uri": {
+                  "type": "string"
+                },
+                "sourceBranch": {
+                  "type": "string"
+                },
+                "sourceVersion": {
+                  "type": "string"
+                },
+                "queue": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "pool": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "isHosted": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                },
+                "priority": {
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string"
+                },
+                "requestedFor": {
+                  "type": "object",
+                  "properties": {
+                    "displayName": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "_links": {
+                      "type": "object",
+                      "properties": {
+                        "avatar": {
+                          "type": "object",
+                          "properties": {
+                            "href": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "uniqueName": {
+                      "type": "string"
+                    },
+                    "imageUrl": {
+                      "type": "string"
+                    },
+                    "descriptor": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "requestedBy": {
+                  "type": "object",
+                  "properties": {
+                    "displayName": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "_links": {
+                      "type": "object",
+                      "properties": {
+                        "avatar": {
+                          "type": "object",
+                          "properties": {
+                            "href": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "uniqueName": {
+                      "type": "string"
+                    },
+                    "imageUrl": {
+                      "type": "string"
+                    },
+                    "descriptor": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "lastChangedDate": {
+                  "type": "string"
+                },
+                "lastChangedBy": {
+                  "type": "object",
+                  "properties": {
+                    "displayName": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "_links": {
+                      "type": "object",
+                      "properties": {
+                        "avatar": {
+                          "type": "object",
+                          "properties": {
+                            "href": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "uniqueName": {
+                      "type": "string"
+                    },
+                    "imageUrl": {
+                      "type": "string"
+                    },
+                    "descriptor": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "orchestrationPlan": {
+                  "type": "object",
+                  "properties": {
+                    "planId": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "logs": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "repository": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "clean": {},
+                    "checkoutSubmodules": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "retainedByRelease": {
+                  "type": "boolean"
+                },
+                "appendCommitMessageToRunName": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "runAfter": {
+            "Get_more_details_about_the_Build": [
+              "Succeeded"
+            ]
+          }
+        },
+        "Commit_Message": {
           "type": "Compose",
-          "inputs": "@formatDateTime(variables('todayDate'),'ddMMyy')"
+          "inputs": "@body('Parse_JSON')?['templateParameters']?['CommitMessage']",
+          "runAfter": {
+            "Parse_JSON": [
+              "SUCCEEDED"
+            ]
+          }
         }
-      }
+      },
+      "description": "This flow is here to trigger the Pull Request after the export solution has been done"
     },
     "templateName": null
   },

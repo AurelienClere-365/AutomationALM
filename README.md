@@ -62,7 +62,7 @@ The ALM Accelerator is a very good starter kit to configure a DevOps for Power P
 <!-- GETTING STARTED -->
 ## 🚀 Download the latest release
 
-To get the managed solution to install, download the ZIP on the latest one available [HERE](https://github.com/AurelienClere-365/AutomationALM/releases) *Latest Release August 2024 - v1.0.20240822.1*
+To get the managed solution to install, download the ZIP on the latest one available [HERE](https://github.com/AurelienClere-365/AutomationALM/releases) *Latest Release August 2025 - v1.0.20250805.1*
 
 ## ❗Prerequisites
 

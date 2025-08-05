@@ -63,6 +63,20 @@
                   "type": "string",
                   "x-ms-content-hint": "TEXT",
                   "x-ms-dynamically-added": true
+                },
+                "text_6": {
+                  "description": "Please enter your input",
+                  "title": "Export_Only",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                },
+                "text_7": {
+                  "description": "Please enter your input",
+                  "title": "Deployment_Only",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
                 }
               },
               "required": [
@@ -105,7 +119,9 @@
                   "text_1": "@triggerBody()?['text_2']",
                   "text_2": "@string(triggerBody()?['text_3'])",
                   "text_3": "@triggerBody()?['text_4']",
-                  "text_4": "@triggerBody()?['text_5']"
+                  "text_4": "@triggerBody()?['text_5']",
+                  "text_5": "@triggerBody()?['text_6']",
+                  "text_6": "@triggerBody()?['text_7']"
                 }
               }
             }
@@ -167,7 +183,7 @@
           },
           "runAfter": {
             "Condition_for_TEST": [
-              "SUCCEEDED"
+              "Succeeded"
             ]
           }
         }
