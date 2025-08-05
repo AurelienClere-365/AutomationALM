@@ -14,7 +14,8 @@
           <cell name="dyna_almdeployment" width="144" />
           <cell name="dyna_commitscope" width="247" />
           <cell name="dyna_solution" width="291" />
-          <cell name="dyna_powerpages" width="291" />
+          <cell name="dyna_almtype" width="278" />
+          <cell name="dyna_powerpages" width="129" />
           <cell name="createdon" width="105" />
         </row>
       </grid>
@@ -35,6 +36,7 @@
           <attribute name="createdon" />
           <order attribute="dyna_almdeployment" descending="false" />
           <order attribute="dyna_step" descending="false" />
+          <attribute name="dyna_almtype" />
         </entity>
       </fetch>
     </fetchxml>

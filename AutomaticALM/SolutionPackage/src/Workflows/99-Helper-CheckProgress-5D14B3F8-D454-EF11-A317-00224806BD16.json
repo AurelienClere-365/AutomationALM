@@ -94,7 +94,7 @@
           "type": "String",
           "metadata": {
             "schemaName": "dyna_ALMDevOpsAPIVersion",
-            "description": "Version of DevOps API (7.2-preview suggested)"
+            "description": "Version of DevOps API (7.2-preview suggested for now)"
           }
         }
       },
@@ -140,6 +140,20 @@
                   "type": "string",
                   "x-ms-content-hint": "TEXT",
                   "x-ms-dynamically-added": true
+                },
+                "text_5": {
+                  "description": "Please enter your input",
+                  "title": "Export_Only",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
+                },
+                "text_6": {
+                  "description": "Please enter your input",
+                  "title": "Deployment_Only",
+                  "type": "string",
+                  "x-ms-content-hint": "TEXT",
+                  "x-ms-dynamically-added": true
                 }
               },
               "required": [
@@ -171,6 +185,12 @@
                 "equals": [
                   "@variables('GoOnOrNot')",
                   true
+                ]
+              },
+              {
+                "equals": [
+                  "@triggerBody()?['text_6']",
+                  "NO"
                 ]
               }
             ]
@@ -1252,6 +1272,12 @@
                 "equals": [
                   "@variables('GoOnOrNot')",
                   true
+                ]
+              },
+              {
+                "equals": [
+                  "@triggerBody()?['text_5']",
+                  "NO"
                 ]
               }
             ]
@@ -4380,6 +4406,12 @@
                 "equals": [
                   "@variables('GoOnOrNot')",
                   true
+                ]
+              },
+              {
+                "equals": [
+                  "@triggerBody()?['text_5']",
+                  "NO"
                 ]
               }
             ]

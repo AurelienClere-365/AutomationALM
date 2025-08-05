@@ -65,6 +65,14 @@
                       </cell>
                     </row>
                     <row>
+                      <cell id="{e6ade66e-adf2-4ba4-bd85-ae27c8aafd37}" locklevel="0" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="ALM Type" languagecode="1033" />
+                        </labels>
+                        <control id="dyna_almtype" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="dyna_almtype" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
                       <cell id="{12730f5b-60b6-434a-904c-5558d7a5e547}" visible="false" locklevel="1">
                         <labels>
                           <label description="Name" languagecode="1033" />

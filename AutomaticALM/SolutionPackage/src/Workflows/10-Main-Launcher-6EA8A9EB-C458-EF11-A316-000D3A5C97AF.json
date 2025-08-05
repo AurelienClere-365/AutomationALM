@@ -255,14 +255,16 @@
                                   "text_1": "@variables('PowerPages')",
                                   "text_2": "@string(item()?['dyna_commitscope'])",
                                   "text_3": "@triggerBody()?['dyna_almdeploymentid']",
-                                  "text_4": "@item()?['dyna_almsolutionid']"
+                                  "text_4": "@item()?['dyna_almsolutionid']",
+                                  "text_5": "@variables('CommitOnly')",
+                                  "text_6": "@variables('DeploymentOnly')"
                                 },
                                 "retryPolicy": {
                                   "type": "none"
                                 }
                               },
                               "runAfter": {
-                                "Update_ALM_Status_Reason": [
+                                "Switch_ALM_Type": [
                                   "Succeeded"
                                 ]
                               }
@@ -304,6 +306,112 @@
                               },
                               "runAfter": {
                                 "Launch_deployment_": [
+                                  "Succeeded"
+                                ]
+                              }
+                            },
+                            "Switch_ALM_Type": {
+                              "type": "Switch",
+                              "expression": "@items('For_each')?['dyna_almtype']",
+                              "default": {
+                                "actions": {
+                                  "Set_variable_6": {
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                      "name": "CommitOnly",
+                                      "value": "NO"
+                                    }
+                                  },
+                                  "Set_variable_7": {
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                      "name": "DeploymentOnly",
+                                      "value": "NO"
+                                    },
+                                    "runAfter": {
+                                      "Set_variable_6": [
+                                        "Succeeded"
+                                      ]
+                                    }
+                                  }
+                                }
+                              },
+                              "cases": {
+                                "Both": {
+                                  "actions": {
+                                    "Set_variable": {
+                                      "type": "SetVariable",
+                                      "inputs": {
+                                        "name": "CommitOnly",
+                                        "value": "NO"
+                                      }
+                                    },
+                                    "Set_variable_1": {
+                                      "type": "SetVariable",
+                                      "inputs": {
+                                        "name": "DeploymentOnly",
+                                        "value": "NO"
+                                      },
+                                      "runAfter": {
+                                        "Set_variable": [
+                                          "Succeeded"
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  "case": 538000000
+                                },
+                                "Commit_Only": {
+                                  "actions": {
+                                    "Set_variable_2": {
+                                      "type": "SetVariable",
+                                      "inputs": {
+                                        "name": "CommitOnly",
+                                        "value": "YES"
+                                      }
+                                    },
+                                    "Set_variable_3": {
+                                      "type": "SetVariable",
+                                      "inputs": {
+                                        "name": "DeploymentOnly",
+                                        "value": "NO"
+                                      },
+                                      "runAfter": {
+                                        "Set_variable_2": [
+                                          "Succeeded"
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  "case": 538000001
+                                },
+                                "Deployment_only": {
+                                  "actions": {
+                                    "Set_variable_4": {
+                                      "type": "SetVariable",
+                                      "inputs": {
+                                        "name": "CommitOnly",
+                                        "value": "NO"
+                                      }
+                                    },
+                                    "Set_variable_5": {
+                                      "type": "SetVariable",
+                                      "inputs": {
+                                        "name": "DeploymentOnly",
+                                        "value": "YES"
+                                      },
+                                      "runAfter": {
+                                        "Set_variable_4": [
+                                          "Succeeded"
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  "case": 538000002
+                                }
+                              },
+                              "runAfter": {
+                                "Update_ALM_Status_Reason": [
                                   "Succeeded"
                                 ]
                               }
@@ -470,7 +578,7 @@
             "actions": {}
           },
           "runAfter": {
-            "Initialize_PowerPages": [
+            "Initialize_DeploymentOnly": [
               "Succeeded"
             ]
           },
@@ -490,6 +598,40 @@
             ]
           },
           "runAfter": {}
+        },
+        "Initialize_CommitOnly": {
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "CommitOnly",
+                "type": "string",
+                "value": "NO"
+              }
+            ]
+          },
+          "runAfter": {
+            "Initialize_PowerPages": [
+              "Succeeded"
+            ]
+          }
+        },
+        "Initialize_DeploymentOnly": {
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "DeploymentOnly",
+                "type": "string",
+                "value": "NO"
+              }
+            ]
+          },
+          "runAfter": {
+            "Initialize_CommitOnly": [
+              "Succeeded"
+            ]
+          }
         }
       }
     },

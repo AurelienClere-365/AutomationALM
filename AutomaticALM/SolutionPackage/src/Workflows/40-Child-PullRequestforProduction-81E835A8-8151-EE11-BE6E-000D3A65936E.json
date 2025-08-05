@@ -60,7 +60,7 @@
           "type": "String",
           "metadata": {
             "schemaName": "dyna_ALMDevOpsAPIVersion",
-            "description": "Version of DevOps API (7.2-preview suggested)"
+            "description": "Version of DevOps API (7.2-preview suggested for now)"
           }
         }
       },
@@ -121,7 +121,7 @@
         },
         "repo": {
           "type": "InitializeVariable",
-          "description": "TODO : Add Environment variable",
+          "description": "",
           "inputs": {
             "variables": [
               {
